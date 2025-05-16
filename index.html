@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
-  <title>Énergie Guyane - Mission Cahier des Charges</title>
+  <title>Tilesia - Mission Cahier des Charges</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -59,7 +59,7 @@
     }
     .modal {
       position: fixed;
-      top: 10%;
+      top: 5%;
       left: 50%;
       transform: translateX(-50%);
       background: white;
@@ -68,8 +68,8 @@
       box-shadow: 0 5px 15px rgba(0,0,0,0.3);
       display: none;
       z-index: 1000;
-      width: 80%;
-      max-width: 600px;
+      width: 90%;
+      max-width: 800px;
     }
     .modal.active {
       display: block;
@@ -84,12 +84,6 @@
     }
     .overlay.active {
       display: block;
-    }
-    .avatar {
-      width: 100px;
-      height: auto;
-      display: block;
-      margin: 1em auto;
     }
     .info-log {
       margin-top: 1em;
@@ -112,7 +106,7 @@
 <body>
 
 <audio autoplay loop>
-  <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_cee1a7d848.mp3" type="audio/mpeg">
+  <source src="https://cdn.pixabay.com/download/audio/2022/03/29/audio_d2d7f6a30e.mp3" type="audio/mpeg">
   Votre navigateur ne supporte pas l'audio.
 </audio>
 <audio id="clickSound">
@@ -122,15 +116,13 @@
 
 <!-- Accueil -->
 <div class="screen active" id="home">
-  <h1>Bienvenue chez Énergie Guyane</h1>
-  <img src="https://cdn-icons-png.flaticon.com/512/1995/1995531.png" alt="Avatar Alex" class="avatar">
-  <p>Vous êtes Alex, nouvel employé. Votre arrivée est accueillie par Karine, votre manager. Elle vous confie une mission importante : rédiger le cahier des charges pour la future prestation de nettoyage des locaux de l'entreprise.</p>
+  <img src="tilesia_accueil_alex.png" alt="Accueil Alex">
   <button class="btn" onclick="goTo('map')">Commencer la mission</button>
 </div>
 
 <!-- Carte du site -->
 <div class="screen" id="map">
-  <h2>Explorez les services de l'entreprise</h2>
+  <h2>Explorez les services de Tilesia</h2>
   <div class="map">
     <div class="location" onclick="playClick(); openModal('Direction')">
       <img src="https://cdn-icons-png.flaticon.com/512/219/219986.png" alt="Direction">
@@ -187,20 +179,20 @@
 
   const modalData = {
     'Direction': {
-      text: "Le président de l'entreprise vous accueille et insiste sur un point crucial : la santé et la sécurité des salariés sont les priorités. C'est la clé du bon fonctionnement de l'entreprise et du bien-être collectif.",
-      image: "https://cdn-icons-png.flaticon.com/512/3177/3177440.png"
+      text: "Le président vous accueille : ‘La santé et la sécurité sont mes priorités pour garantir le bon fonctionnement de l’entreprise et le bien-être des salariés.’",
+      image: "tilesia_direction.png"
     },
     'Technique': {
-      text: `Vos collègues vous expliquent que le futur titulaire devra intervenir pendant les heures ouvrables, sauf cas exceptionnel.\n\nPour les locaux électriques, le titulaire sera accompagné d'un employé habilité.\n\nLes locaux à nettoyer incluent : bureaux, couloirs, escaliers, ascenseur, sanitaires, vestiaires, réfectoires.\n\nUn avis de passage devra être rempli et un rapport semestriel sera rédigé par le service technique.\n\nLes consommables à fournir par le prestataire :\n- Le papier toilette\n- Le papier essuie-mains\n- Le savon liquide à mains\n- Les sacs poubelles\n- Les blocs ou bombes désodorisants`,
-      image: "https://cdn-icons-png.flaticon.com/512/1141/1141784.png"
+      text: "Vos collègues vous expliquent que le futur titulaire devra intervenir pendant les heures ouvrables, sauf cas exceptionnel.\nPour les locaux électriques, il sera accompagné d’un agent habilité.\nBureaux, couloirs, escaliers, ascenseur, sanitaires, vestiaires, réfectoires : tous ces espaces sont concernés.\nLe titulaire remplira un avis de passage et un rapport semestriel sera rédigé par le service technique.\nConsommables à fournir : papier toilette, essuie-mains, savon liquide, sacs poubelles, désodorisants.",
+      image: "tilesia_technique.png"
     },
     'Salaries': {
-      text: "Vous observez les salariés dans leur environnement de travail : certains collaborent en équipe, d'autres sont en réunion. Vous découvrez une vue d'ensemble du bâtiment qui fait 4100 m². Ces informations vous permettent de mieux cerner les contraintes liées au nettoyage.",
-      image: "https://cdn-icons-png.flaticon.com/512/2857/2857706.png"
+      text: "Il y a 300 salariés dans le bâtiment répartis sur les 4 étages. Le bâtiment dispose d’une superficie de 4100 m². Vous observez une ambiance de coopération et de réunions dans les locaux.",
+      image: "tilesia_salaries.png"
     },
     'Juridique': {
-      text: "La juriste vous reçoit et vous rappelle les règles du Décret 92-158 du 20 février 1992, repris dans le Code du travail (articles R.237-1 et R.237-28). Elles concernent les prescriptions particulières d'hygiène et de sécurité applicables aux travaux effectués dans un établissement par une entreprise extérieure.",
-      image: "https://cdn-icons-png.flaticon.com/512/4203/4203905.png"
+      text: "La juriste rappelle les prescriptions du Décret 92-158 du 20 février 1992 reprises dans le Code du travail (R.237-1 à R.237-28), concernant les travaux réalisés dans l’établissement par une entreprise extérieure.",
+      image: "tilesia_juridique.png"
     }
   };
 
