@@ -69,7 +69,7 @@
       display: none;
       z-index: 1000;
       width: 80%;
-      max-width: 500px;
+      max-width: 600px;
     }
     .modal.active {
       display: block;
@@ -102,6 +102,11 @@
       border-radius: 10px;
       box-shadow: 0 0 10px rgba(0,0,0,0.1);
     }
+    .modal img {
+      width: 100%;
+      margin-top: 1em;
+      border-radius: 10px;
+    }
   </style>
 </head>
 <body>
@@ -110,12 +115,16 @@
   <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_cee1a7d848.mp3" type="audio/mpeg">
   Votre navigateur ne supporte pas l'audio.
 </audio>
+<audio id="clickSound">
+  <source src="https://cdn.pixabay.com/download/audio/2022/03/23/audio_32901fa291.mp3" type="audio/mpeg">
+  Votre navigateur ne supporte pas l'audio.
+</audio>
 
 <!-- Accueil -->
 <div class="screen active" id="home">
   <h1>Bienvenue chez Énergie Guyane</h1>
   <img src="https://cdn-icons-png.flaticon.com/512/1995/1995531.png" alt="Avatar Alex" class="avatar">
-  <p>Vous êtes Alex, nouvel employé. Votre mission : rédiger un cahier des charges pour un nouveau système de gestion énergétique.</p>
+  <p>Vous êtes Alex, nouvel employé. Votre arrivée est accueillie par Karine, votre manager. Elle vous confie une mission importante : rédiger le cahier des charges pour la future prestation de nettoyage des locaux de l'entreprise.</p>
   <button class="btn" onclick="goTo('map')">Commencer la mission</button>
 </div>
 
@@ -123,19 +132,19 @@
 <div class="screen" id="map">
   <h2>Explorez les services de l'entreprise</h2>
   <div class="map">
-    <div class="location" onclick="openModal('Direction')">
+    <div class="location" onclick="playClick(); openModal('Direction')">
       <img src="https://cdn-icons-png.flaticon.com/512/219/219986.png" alt="Direction">
       Direction
     </div>
-    <div class="location" onclick="openModal('Technique')">
+    <div class="location" onclick="playClick(); openModal('Technique')">
       <img src="https://cdn-icons-png.flaticon.com/512/2621/2621140.png" alt="Technique">
       Service Technique
     </div>
-    <div class="location" onclick="openModal('Utilisateurs')">
-      <img src="https://cdn-icons-png.flaticon.com/512/847/847969.png" alt="Utilisateurs">
-      Utilisateurs
+    <div class="location" onclick="playClick(); openModal('Salaries')">
+      <img src="https://cdn-icons-png.flaticon.com/512/847/847969.png" alt="Salaries">
+      Salariés
     </div>
-    <div class="location" onclick="openModal('Juridique')">
+    <div class="location" onclick="playClick(); openModal('Juridique')">
       <img src="https://cdn-icons-png.flaticon.com/512/2569/2569069.png" alt="Juridique">
       Juridique
     </div>
@@ -156,6 +165,7 @@
 <div class="modal" id="modal">
   <h3 id="modalTitle"></h3>
   <p id="modalContent"></p>
+  <img id="modalImage" src="" alt="Illustration">
   <button class="btn" onclick="collectInfo()">Collecter l'information</button>
   <button class="btn" onclick="closeModal()">Retour à la carte</button>
 </div>
@@ -163,6 +173,12 @@
 <script>
   const screens = document.querySelectorAll('.screen');
   let collected = new Set();
+  const clickSound = document.getElementById('clickSound');
+
+  function playClick() {
+    clickSound.currentTime = 0;
+    clickSound.play();
+  }
 
   function goTo(id) {
     screens.forEach(s => s.classList.remove('active'));
@@ -170,10 +186,22 @@
   }
 
   const modalData = {
-    'Direction': "La Direction vous explique les enjeux stratégiques et le budget alloué au projet. Pensez à intégrer ces éléments dans votre cahier des charges.",
-    'Technique': "Le Service Technique vous informe des contraintes techniques et des infrastructures existantes à prendre en compte.",
-    'Utilisateurs': "Les utilisateurs finaux vous font part de leurs besoins fonctionnels pour améliorer leur quotidien.",
-    'Juridique': "Le service juridique vous alerte sur les réglementations et les normes à respecter."
+    'Direction': {
+      text: "Le président de l'entreprise vous accueille et insiste sur un point crucial : la santé et la sécurité des salariés sont les priorités. C'est la clé du bon fonctionnement de l'entreprise et du bien-être collectif.",
+      image: "https://cdn-icons-png.flaticon.com/512/3177/3177440.png"
+    },
+    'Technique': {
+      text: `Vos collègues vous expliquent que le futur titulaire devra intervenir pendant les heures ouvrables, sauf cas exceptionnel.\n\nPour les locaux électriques, le titulaire sera accompagné d'un employé habilité.\n\nLes locaux à nettoyer incluent : bureaux, couloirs, escaliers, ascenseur, sanitaires, vestiaires, réfectoires.\n\nUn avis de passage devra être rempli et un rapport semestriel sera rédigé par le service technique.\n\nLes consommables à fournir par le prestataire :\n- Le papier toilette\n- Le papier essuie-mains\n- Le savon liquide à mains\n- Les sacs poubelles\n- Les blocs ou bombes désodorisants`,
+      image: "https://cdn-icons-png.flaticon.com/512/1141/1141784.png"
+    },
+    'Salaries': {
+      text: "Vous observez les salariés dans leur environnement de travail : certains collaborent en équipe, d'autres sont en réunion. Vous découvrez une vue d'ensemble du bâtiment qui fait 4100 m². Ces informations vous permettent de mieux cerner les contraintes liées au nettoyage.",
+      image: "https://cdn-icons-png.flaticon.com/512/2857/2857706.png"
+    },
+    'Juridique': {
+      text: "La juriste vous reçoit et vous rappelle les règles du Décret 92-158 du 20 février 1992, repris dans le Code du travail (articles R.237-1 et R.237-28). Elles concernent les prescriptions particulières d'hygiène et de sécurité applicables aux travaux effectués dans un établissement par une entreprise extérieure.",
+      image: "https://cdn-icons-png.flaticon.com/512/4203/4203905.png"
+    }
   };
 
   let currentService = '';
@@ -181,7 +209,8 @@
   function openModal(service) {
     currentService = service;
     document.getElementById('modalTitle').innerText = service;
-    document.getElementById('modalContent').innerText = modalData[service];
+    document.getElementById('modalContent').innerText = modalData[service].text;
+    document.getElementById('modalImage').src = modalData[service].image;
     document.getElementById('overlay').classList.add('active');
     document.getElementById('modal').classList.add('active');
   }
@@ -208,7 +237,7 @@
   function showSummary() {
     let html = '<ul>';
     collected.forEach(service => {
-      html += `<li><strong>${service} :</strong> ${modalData[service]}</li>`;
+      html += `<li><strong>${service} :</strong> ${modalData[service].text}</li>`;
     });
     html += '</ul>';
     document.getElementById('summaryContent').innerHTML = html;
