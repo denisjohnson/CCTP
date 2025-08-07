@@ -2,240 +2,67 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
-  <title>Tilesia - Mission Cahier des Charges</title>
+  <title>Présentation TILESIA</title>
   <style>
     body {
       font-family: Arial, sans-serif;
-      margin: 0;
-      background: #f4f4f4;
-      overflow-x: hidden;
-    }
-    .screen {
-      display: none;
-      padding: 2em;
-      animation: fadeIn 0.5s ease-in;
-    }
-    .active {
-      display: block;
-    }
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(10px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    .btn {
-      padding: 10px 20px;
-      background: #0a74da;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      margin-top: 1em;
-    }
-    .btn:hover {
-      background: #095aba;
-    }
-    .map {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 1em;
-      margin-top: 2em;
-    }
-    .location {
-      background: white;
-      padding: 1em;
-      border-radius: 8px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
       text-align: center;
-      cursor: pointer;
-      transition: transform 0.2s;
+      background-color: #fff;
+      margin: 0;
+      padding: 0;
     }
-    .location:hover {
-      transform: scale(1.05);
+
+    h1 {
+      color: #2c3e50;
+      margin-top: 20px;
     }
-    .location img {
-      width: 50px;
-      height: 50px;
-      margin-bottom: 10px;
+
+    .scene {
+      margin: 40px auto;
+      max-width: 900px;
     }
-    .modal {
-      position: fixed;
-      top: 5%;
-      left: 50%;
-      transform: translateX(-50%);
-      background: white;
-      padding: 2em;
-      border-radius: 10px;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-      display: none;
-      z-index: 1000;
-      width: 90%;
-      max-width: 800px;
-    }
-    .modal.active {
-      display: block;
-      animation: fadeIn 0.3s ease-in;
-    }
-    .overlay {
-      position: fixed;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(0,0,0,0.4);
-      display: none;
-      z-index: 999;
-    }
-    .overlay.active {
-      display: block;
-    }
-    .info-log {
-      margin-top: 1em;
-      font-size: 0.9em;
-      color: green;
-    }
-    .summary {
-      background: #fff;
-      padding: 1em;
-      border-radius: 10px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
-    }
-    .modal img {
+
+    .scene img {
       width: 100%;
-      margin-top: 1em;
-      border-radius: 10px;
+      height: auto;
+      border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+    }
+
+    footer {
+      margin: 40px 0;
+      font-size: 0.9em;
+      color: #999;
     }
   </style>
 </head>
 <body>
 
-<audio autoplay loop>
-  <source src="https://cdn.pixabay.com/download/audio/2022/03/29/audio_d2d7f6a30e.mp3" type="audio/mpeg">
-  Votre navigateur ne supporte pas l'audio.
-</audio>
-<audio id="clickSound">
-  <source src="https://cdn.pixabay.com/download/audio/2022/03/23/audio_32901fa291.mp3" type="audio/mpeg">
-  Votre navigateur ne supporte pas l'audio.
-</audio>
+  <h1>Bienvenue chez TILESIA</h1>
 
-<!-- Accueil -->
-<div class="screen active" id="home">
-  <img src="images/tilesia_accueil_alex.png" alt="Accueil Alex">
-  <button class="btn" onclick="goTo('map')">Commencer la mission</button>
-</div>
-
-<!-- Carte du site -->
-<div class="screen" id="map">
-  <h2>Explorez les services de Tilesia</h2>
-  <div class="map">
-    <div class="location" onclick="playClick(); openModal('Direction')">
-      <img src="https://cdn-icons-png.flaticon.com/512/219/219986.png" alt="Direction">
-      Direction
-    </div>
-    <div class="location" onclick="playClick(); openModal('Technique')">
-      <img src="https://cdn-icons-png.flaticon.com/512/2621/2621140.png" alt="Technique">
-      Service Technique
-    </div>
-    <div class="location" onclick="playClick(); openModal('Salaries')">
-      <img src="https://cdn-icons-png.flaticon.com/512/847/847969.png" alt="Salaries">
-      Salariés
-    </div>
-    <div class="location" onclick="playClick(); openModal('Juridique')">
-      <img src="https://cdn-icons-png.flaticon.com/512/2569/2569069.png" alt="Juridique">
-      Juridique
-    </div>
+  <div class="scene">
+    <img src="images/accueil.png" alt="Accueil">
   </div>
-  <button class="btn" onclick="validateCollection()">Rédiger le cahier des charges</button>
-  <div class="info-log" id="infoLog"></div>
-</div>
 
-<!-- Résumé du cahier des charges -->
-<div class="screen" id="summary">
-  <h2>Résumé du cahier des charges</h2>
-  <div class="summary" id="summaryContent"></div>
-  <button class="btn" onclick="goTo('home')">Retour à l'accueil</button>
-</div>
+  <div class="scene">
+    <img src="images/direction.png" alt="Direction">
+  </div>
 
-<!-- Modale + overlay -->
-<div class="overlay" id="overlay" onclick="closeModal()"></div>
-<div class="modal" id="modal">
-  <h3 id="modalTitle"></h3>
-  <p id="modalContent"></p>
-  <img id="modalImage" src="" alt="Illustration">
-  <button class="btn" onclick="collectInfo()">Collecter l'information</button>
-  <button class="btn" onclick="closeModal()">Retour à la carte</button>
-</div>
+  <div class="scene">
+    <img src="images/technique.png" alt="Services Techniques">
+  </div>
 
-<script>
-  const screens = document.querySelectorAll('.screen');
-  let collected = new Set();
-  const clickSound = document.getElementById('clickSound');
+  <div class="scene">
+    <img src="images/salaries.png" alt="Salariés">
+  </div>
 
-  function playClick() {
-    clickSound.currentTime = 0;
-    clickSound.play();
-  }
+  <div class="scene">
+    <img src="images/juriste.png" alt="Juriste et Décret">
+  </div>
 
-  function goTo(id) {
-    screens.forEach(s => s.classList.remove('active'));
-    document.getElementById(id).classList.add('active');
-  }
-
-  const modalData = {
-    'Direction': {
-      text: "Le président vous accueille : ‘La santé et la sécurité sont mes priorités pour garantir le bon fonctionnement de l’entreprise et le bien-être des salariés.’",
-      image: "images/tilesia_direction.png"
-    },
-    'Technique': {
-      text: `Intervention pendant les heures ouvrables, sauf cas exceptionnel. Pour les locaux électriques, le titulaire sera accompagné d'un employé disposant des habilitations requises.\nLes espaces concernés sont les suivants : bureaux, couloirs, escaliers, ascenseur, sanitaires, vestiaires, réfectoires.\nLe titulaire remplira un avis de passage. Le rapport semestriel sera rédigé par le service technique.\n\nLes consommables à la charge du prestataire sont les suivants :\n- Le papier toilette\n- Le papier essuie-mains\n- Le savon liquide à mains\n- Les sacs poubelles\n- Désodorisants.`,
-      image: "images/tilesia_technique.png"
-    },
-    'Salaries': {
-      text: "Il y a 300 salariés dans le bâtiment répartis sur les 4 étages. Le bâtiment dispose d’une superficie de 4100 m². Vous observez une ambiance de coopération et de réunions dans les locaux.",
-      image: "images/tilesia_salaries.png"
-    },
-    'Juridique': {
-      text: "Je vous rappelle les règles du Décret 92-158 du 20 février 1992 reprises dans le Code du travail (articles R.237-1 et R.237-28) concernant les prescriptions particulières d’hygiène et de sécurité applicables aux travaux effectués dans un établissement par une entreprise extérieure.",
-      image: "images/tilesia_juridique.png"
-    }
-  };
-
-  let currentService = '';
-
-  function openModal(service) {
-    currentService = service;
-    document.getElementById('modalTitle').innerText = service;
-    document.getElementById('modalContent').innerText = modalData[service].text;
-    document.getElementById('modalImage').src = modalData[service].image;
-    document.getElementById('overlay').classList.add('active');
-    document.getElementById('modal').classList.add('active');
-  }
-
-  function closeModal() {
-    document.getElementById('overlay').classList.remove('active');
-    document.getElementById('modal').classList.remove('active');
-  }
-
-  function collectInfo() {
-    collected.add(currentService);
-    document.getElementById('infoLog').innerText = `Informations collectées : ${Array.from(collected).join(', ')}`;
-    closeModal();
-  }
-
-  function validateCollection() {
-    if (collected.size < 4) {
-      alert("Vous devez visiter tous les services avant de rédiger le cahier des charges.");
-    } else {
-      showSummary();
-    }
-  }
-
-  function showSummary() {
-    let html = '<ul>';
-    collected.forEach(service => {
-      html += `<li><strong>${service} :</strong> ${modalData[service].text}</li>`;
-    });
-    html += '</ul>';
-    document.getElementById('summaryContent').innerHTML = html;
-    goTo('summary');
-  }
-</script>
+  <footer>
+    &copy; 2025 TILESIA – Tous droits réservés.
+  </footer>
 
 </body>
 </html>
