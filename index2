@@ -1,1 +1,413 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>Tilesia - Mission Cahier des Charges</title>
+  <style>
+    :root{
+      --primary:#0a74da;
+      --primary-dark:#095aba;
+      --bg:#f4f7fb;
+      --card:#ffffff;
+      --text:#22324a;
+      --warn:#b45309;
+    }
+    *{box-sizing:border-box}
+    body{font-family:Arial,Helvetica,sans-serif;margin:0;background:var(--bg);color:var(--text);overflow-x:hidden;}
+    .screen{display:none;padding:clamp(16px,4vw,32px);animation:fadeIn .4s ease-in;max-width:1100px;margin:0 auto;}
+    .active{display:block;}
+    @keyframes fadeIn{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:translateY(0);}}
+    h1,h2,h3{margin:0 0 .6rem}
+    .btn{padding:.7rem 1.1rem;background:#0a74da;color:#fff;border:none;border-radius:10px;cursor:pointer;font-weight:600;box-shadow:0 2px 6px rgba(10,116,218,.25);}
+    .btn:hover{background:#095aba;}
+    .btn.secondary{background:#e9eef5;color:#18324a;box-shadow:none;}
+    .map{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem;margin-top:1rem;}
+    .location{background:#fff;padding:1rem;border-radius:14px;box-shadow:0 6px 18px rgba(0,0,0,.06);text-align:center;cursor:pointer;transition:transform .15s ease,box-shadow .2s ease;}
+    .location:hover{transform:translateY(-2px);box-shadow:0 10px 22px rgba(0,0,0,.08);}
+    .location img{width:48px;height:48px;margin-bottom:.5rem;}
+    .modal{position:fixed;top:5%;left:50%;transform:translateX(-50%);background:#fff;padding:clamp(16px,3vw,24px);border-radius:14px;box-shadow:0 18px 50px rgba(0,0,0,.25);display:none;z-index:1000;width:min(92vw,820px);}
+    .modal.active{display:block;}
+    .overlay{position:fixed;inset:0;background:rgba(0,0,0,.45);display:none;z-index:999;}
+    .overlay.active{display:block;}
+    .info-log{margin-top:.75rem;font-size:.95rem;color:#0f7a31;}
+    .summary{background:#fff;padding:1rem;border-radius:12px;box-shadow:0 6px 18px rgba(0,0,0,.06);}
+    .score{margin-top:12px;background:#f0f9ff;border:1px solid #bae6fd;color:#0c4a6e;padding:.75rem 1rem;border-radius:12px;font-weight:600;display:none;}
+    .badge{display:inline-block;padding:.35rem .6rem;border-radius:999px;font-size:.9rem;font-weight:700;margin-left:.5rem;}
+    .badge.intermediaire{background:#fff7ed;color:#b45309;border:1px solid #fed7aa;}
+    .badge.avance{background:#eff6ff;color:#1d4ed8;border:1px solid #93c5fd;}
+    .badge.expert{background:#ecfdf5;color:#065f46;border:1px solid #a7f3d0;}
+    .errors{margin-top:10px;background:#fff;border:1px solid #e5e7eb;border-radius:12px;padding:.75rem 1rem;display:none;}
+    .errors h4{margin:.2rem 0 .4rem;}
+    .errors ul{margin:.2rem 0 0 1rem;}
+    .toggle{margin-top:8px;background:#e9eef5;color:#22324a;}
+    .modal img{width:70%;max-height:400px;margin:1em auto 0;display:block;border-radius:12px;}
+    #home img.hero{width:100%;max-width:980px;border-radius:16px;box-shadow:0 10px 26px rgba(0,0,0,.08);display:block;margin:0 auto 12px;}
+    .builder{max-width:1000px;margin:0 auto;}
+    .progress{height:10px;background:#e9eef5;border-radius:999px;overflow:hidden;margin:10px 0 18px;}
+    .progress>span{display:block;height:100%;background:#0a74da;width:0%;transition:width .25s ease;}
+    .tabs{display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:.8rem;}
+    .tab-btn{padding:.45rem .7rem;border-radius:10px;border:1px solid #d8e0ea;background:#fff;cursor:pointer;font-size:.92rem;color:#213347;}
+    .tab-btn.active{background:#0a74da;color:#fff;border-color:#0a74da;}
+    .tab-panel{display:none;background:#fff;padding:1rem;border-radius:12px;box-shadow:0 6px 18px rgba(0,0,0,.06);}
+    .tab-panel.active{display:block;}
+    .option-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:.75rem;margin-top:.75rem;}
+    .option{border:1px solid #e6e6e6;border-radius:10px;padding:.75rem;background:#fafafa;}
+    .option label{display:block;cursor:pointer;line-height:1.35;}
+    .helper{font-size:.92rem;color:#526479;margin:.4rem 0 .1rem}
+    .step-actions{display:flex;flex-wrap:wrap;gap:.5rem;justify-content:space-between;margin-top:1rem;}
+    .warn{color:#b54708;background:#fff7ed;padding:.5rem .75rem;border-radius:8px;border:1px solid #fde68a;display:none;}
+    .small{font-size:.9rem;color:#516170;}
+    ul{margin:.4rem 0 0 1rem}
+    .footer-space{height:12px;}
+    .help details{background:#fffef5;border:1px solid #f3e6a2;border-radius:10px;padding:.6rem .8rem;margin:.6rem 0 .2rem;}
+    .help summary{cursor:pointer;font-weight:600;color:#7a5e00;list-style:none;}
+    .help summary::-webkit-details-marker{display:none;}
+    .help summary::before{content:"💡 ";}
+    .help p{margin:.4rem 0 0;color:#4a4a4a;}
+  </style>
+</head>
+<body>
 
+<audio autoplay loop>
+  <source src="https://cdn.pixabay.com/download/audio/2022/03/29/audio_d2d7f6a30e.mp3" type="audio/mpeg">
+  Votre navigateur ne supporte pas l'audio.
+</audio>
+<audio id="clickSound">
+  <source src="https://cdn.pixabay.com/download/audio/2022/03/23/audio_32901fa291.mp3" type="audio/mpeg">
+  Votre navigateur ne supporte pas l'audio.
+</audio>
+
+<div class="screen active" id="home">
+  <img class="hero" src="images/tilesia_accueil_alex.png" alt="Accueil Alex - Tilesia">
+  <div style="text-align:center">
+    <button class="btn" onclick="goTo('map')">Commencer la mission</button>
+  </div>
+</div>
+
+<div class="screen" id="map">
+  <h2>Explorez les services de Tilesia</h2>
+  <div class="map">
+    <div class="location" onclick="playClick(); openModal('Direction')">
+      <img src="https://cdn-icons-png.flaticon.com/512/219/219986.png" alt="Direction">Direction
+    </div>
+    <div class="location" onclick="playClick(); openModal('Technique')">
+      <img src="https://cdn-icons-png.flaticon.com/512/2621/2621140.png" alt="Technique">Service Technique
+    </div>
+    <div class="location" onclick="playClick(); openModal('Salaries')">
+      <img src="https://cdn-icons-png.flaticon.com/512/847/847969.png" alt="Salariés">Salariés
+    </div>
+    <div class="location" onclick="playClick(); openModal('Juridique')">
+      <img src="https://cdn-icons-png.flaticon.com/512/2569/2569069.png" alt="Juridique">Juridique
+    </div>
+  </div>
+  <div class="footer-space"></div>
+  <button class="btn" onclick="validateCollection()">Rédiger le cahier des charges</button>
+  <div class="info-log" id="infoLog"></div>
+</div>
+
+<div class="screen" id="builder">
+  <h2>Rédiger le cahier des charges</h2>
+  <div class="small">Sélectionnez les éléments pertinents à chaque étape.</div>
+  <div class="builder">
+    <div class="progress"><span id="builderProgress"></span></div>
+    <div class="tabs" id="builderTabs"></div>
+    <div id="builderPanels"></div>
+    <div class="warn" id="builderWarn">Veuillez sélectionner au moins un élément dans cet onglet pour continuer.</div>
+    <div class="step-actions">
+      <button class="btn secondary" id="prevStep">◀ Précédent</button>
+      <div>
+        <button class="btn secondary" id="saveAndExit">Sauvegarder & Revenir à la carte</button>
+        <button class="btn" id="nextStep">Suivant ▶</button>
+        <button class="btn" id="finishBuilder" style="display:none">Générer le résumé</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="screen" id="summary">
+  <h2>Résumé du cahier des charges</h2>
+  <div class="summary" id="summaryContent"></div>
+  <div id="scoreContent" class="score"></div>
+  <button class="btn toggle" id="toggleErrors" style="display:none">Voir mes erreurs</button>
+  <div id="errorsPanel" class="errors"></div>
+  <div style="display:flex; gap:.5rem; margin-top:12px;">
+    <button class="btn secondary" onclick="goTo('builder')">Modifier</button>
+    <button class="btn" onclick="goTo('home')">Retour à l'accueil</button>
+  </div>
+</div>
+
+<div class="overlay" id="overlay" onclick="closeModal()"></div>
+<div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+  <h3 id="modalTitle"></h3>
+  <p id="modalContent"></p>
+  <img id="modalImage" src="" alt="Illustration du service">
+  <div style="display:flex; gap:.5rem; margin-top:.8rem;">
+    <button class="btn" onclick="collectInfo()">Collecter l'information</button>
+    <button class="btn secondary" onclick="closeModal()">Retour à la carte</button>
+  </div>
+</div>
+
+<script>
+  const screens=document.querySelectorAll('.screen');
+  let collected=new Set();
+  const clickSound=document.getElementById('clickSound');
+
+  function playClick(){try{clickSound.currentTime=0;clickSound.play();}catch(e){}}
+  function goTo(id){screens.forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');}
+
+  const modalData={
+    'Direction':{
+      text:"Le président vous accueille : « La santé et la sécurité sont mes priorités pour garantir le bon fonctionnement de l’entreprise et le bien-être des salariés. »",
+      image:"images/tilesia_direction.png"
+    },
+    'Technique':{
+      text:'Intervention pendant les heures ouvrables, sauf cas exceptionnel. Pour les locaux électriques, le titulaire sera accompagné d\'un employé disposant des habilitations requises.\nLes espaces concernés sont les suivants : bureaux, couloirs, escaliers, ascenseur, sanitaires, vestiaires, réfectoires.\nLe titulaire remplira un avis de passage. Le rapport semestriel sera rédigé par le service technique.\n\nLes consommables à la charge du prestataire sont les suivants :\n- Le papier toilette\n- Le papier essuie-mains\n- Le savon liquide à mains\n- Les sacs poubelles\n- Désodorisants.',
+      image:"images/tilesia_technique.png"
+    },
+    'Salaries':{
+      text:"Il y a 300 salariés dans le bâtiment répartis sur les 4 étages. Le bâtiment dispose d’une superficie de 4100 m². Vous observez une ambiance de coopération et de réunions dans les locaux.",
+      image:"images/tilesia_salaries.png"
+    },
+    'Juridique':{
+      text:"La juriste rappelle les prescriptions du Décret 92-158 du 20 février 1992 reprises dans le Code du travail (articles R.237-1 et R.237-28), applicables aux travaux réalisés dans l’établissement par une entreprise extérieure.",
+      image:"images/tilesia_juridique.png"
+    }
+  };
+
+  let currentService='';
+  function openModal(service){
+    currentService=service;
+    document.getElementById('modalTitle').innerText=service;
+    document.getElementById('modalContent').innerText=modalData[service].text;
+    document.getElementById('modalImage').src=modalData[service].image;
+    document.getElementById('overlay').classList.add('active');
+    document.getElementById('modal').classList.add('active');
+  }
+  function closeModal(){
+    document.getElementById('overlay').classList.remove('active');
+    document.getElementById('modal').classList.remove('active');
+  }
+  function collectInfo(){
+    collected.add(currentService);
+    document.getElementById('infoLog').innerText=`Informations collectées : ${Array.from(collected).join(', ')}`;
+    closeModal();
+  }
+  function validateCollection(){
+    if(collected.size<4){alert("Vous devez visiter tous les services avant de rédiger le cahier des charges.");}
+    else{startBuilder(true);}
+  }
+
+  const steps=[
+    {id:"objet",label:"Objet",help:"Il sert à définir l’objet du cahier des charges. Il ne doit pas comporter d’autre mention que cette définition.",options:[
+      "Prestation de nettoyage intérieur des locaux du site TILESIA",
+      "Périmètre: bureaux, circulation, escaliers, ascenseur, sanitaires, vestiaires, réfectoires",
+      "Objectif: propreté, hygiène et confort des utilisateurs"
+    ]},
+    {id:"contexte",label:"Contexte",help:"Situer le contexte de l’affaire (évènements historiques, politique d’entreprise).",options:[
+      "Bâtiment R+3, 4100 m², ~300 salariés",
+      "La politique santé sécurité est un enjeu majeur pour l’entreprise",
+      "Locaux électriques accompagnés par personnel habilité"
+    ]},
+    {id:"definition",label:"Définition de la prestation",help:"Définir la prestation ainsi que la volumétrie (tous les éléments quantitatifs et qualitatifs).",options:[
+      "Nettoyage des sols (aspiration, balayage humide, lavage)",
+      "Dépoussiérage des surfaces et mobiliers",
+      "Désinfection des points de contact",
+      "Sanitaires: nettoyage, désinfection et réassort"
+    ]},
+    {id:"limites_titulaire",label:"Limites à la charge du titulaire",help:"Mentionner clairement les limites de la prestation du Titulaire (outillages, produits).",options:[
+      "Approvisionnement consommables: papier toilette, essuie-mains, savon mains, sacs poubelles, désodorisants",
+      "Fourniture matériels et produits de nettoyage",
+      "Avis de passage après intervention"
+    ]},
+    {id:"limites_entreprise",label:"Limites à la charge de l’entreprise",help:"Prestations et matériels à charge d’EDF.",options:[
+      "Mise à disposition des locaux d’entretien et points d’eau",
+      "Accompagnement zones électriques par agents habilités",
+      "Accès / badges / consignes de sécurité"
+    ]},
+    {id:"qualite",label:"Qualité",help:"Certification, homologation des produits.",options:[
+      "Plan qualité et fiches techniques produits",
+      "Traçabilité des interventions (registre / app)",
+      "Indicateurs de propreté et plan d’amélioration"
+    ]},
+    {id:"conditions",label:"Conditions d’interventions",help:"Précautions, délais horaires, conditions d’accès, sécurité.",options:[
+      "Respect sécurité / environnement (tri, stockage produits)",
+      "Signalisation des zones en intervention",
+      "Interventions en heures ouvrables",
+      "Décret 92-158 & C. travail (R.237-1 à R.237-28), normes d’hygiène"
+    ]},
+    {id:"resultats",label:"Résultats attendus",help:"Quantifiables, mesurables et contrôlables (seuil, niveau, température).",options:[
+      "Sols propres sans traces visibles",
+      "Sanitaires propres, désinfectés et réapprovisionnés",
+      "Mobilier dépoussiéré, points de contact désinfectés"
+    ]},
+    {id:"reception_ref",label:"Réception",help:"Décrire les éléments qui permettront de réaliser la réception technique (livrables).",options:[
+      "Rapport semestriel rédigé par le service technique",
+      "Procès-verbal signé et daté par les deux parties",
+      "Références: Décret 92-158 & C. travail (R.237-1 à R.237-28), normes d’hygiène"
+    ]}
+  ];
+
+  const answerKey={
+    objet:[0],
+    contexte:[0,1],
+    definition:[0,1,2,3],
+    limites_titulaire:[0,1],
+    limites_entreprise:[0,1,2],
+    qualite:[0,2],
+    conditions:[0,1,2,3],
+    resultats:[0,1,2],
+    reception_ref:[0,1]
+  };
+
+  let builderSelections={};
+  let builderIndex=0;
+
+  function startBuilder(reset=false){
+    const tabs=document.getElementById('builderTabs');
+    const panels=document.getElementById('builderPanels');
+    if(reset){builderSelections={};tabs.innerHTML="";panels.innerHTML="";tabs.dataset.ready="";}
+    if(!tabs.dataset.ready){
+      steps.forEach((s,i)=>{
+        const b=document.createElement('button');
+        b.className='tab-btn'+(i===0?' active':''); b.textContent=`${i+1}. ${s.label}`;
+        b.onclick=()=>goStep(i); tabs.appendChild(b);
+
+        const p=document.createElement('div');
+        p.className='tab-panel'+(i===0?' active':''); p.id=`panel-${s.id}`;
+        p.innerHTML=`
+          <h3>${i+1}. ${s.label}</h3>
+          <div class="help">
+            <details><summary>Aide (facultatif)</summary><p>${s.help||""}</p></details>
+          </div>
+          <div class="helper">Sélectionnez les éléments pertinents pour votre CCTP.</div>
+          <div class="option-grid">
+            ${s.options.map((opt,idx)=>`
+              <div class="option">
+                <label>
+                  <input type="checkbox" data-step="${s.id}" data-opt="${idx}"> ${opt}
+                </label>
+              </div>
+            `).join('')}
+          </div>`;
+        panels.appendChild(p);
+      });
+
+      panels.addEventListener('change',(e)=>{
+        const box=e.target;
+        if(box && box.type==='checkbox'){
+          const stepId=box.dataset.step;
+          const idx=Number(box.dataset.opt);
+          if(!builderSelections[stepId]) builderSelections[stepId]=new Set();
+          if(box.checked) builderSelections[stepId].add(idx); else builderSelections[stepId].delete(idx);
+        }
+      });
+
+      document.getElementById('prevStep').onclick=()=>goStep(builderIndex-1);
+      document.getElementById('nextStep').onclick=()=>{
+        if(!hasAtLeastOne(steps[builderIndex].id)){document.getElementById('builderWarn').style.display='block';return;}
+        document.getElementById('builderWarn').style.display='none'; goStep(builderIndex+1);
+      };
+      document.getElementById('saveAndExit').onclick=()=>goTo('map');
+      document.getElementById('finishBuilder').onclick=()=>{
+        if(!hasAtLeastOne(steps[builderIndex].id)){document.getElementById('builderWarn').style.display='block';return;}
+        document.getElementById('builderWarn').style.display='none'; finishBuilder();
+      };
+
+      tabs.dataset.ready="1";
+    }
+    goStep(0); goTo('builder');
+  }
+
+  function hasAtLeastOne(stepId){
+    const set=builderSelections[stepId];
+    return set && set.size>0;
+  }
+
+  function goStep(i){
+    if(i<0 || i>=steps.length) return;
+    builderIndex=i;
+    [...document.querySelectorAll('.tab-btn')].forEach((b,k)=>b.classList.toggle('active',k===i));
+    [...document.querySelectorAll('.tab-panel')].forEach(p=>p.classList.remove('active'));
+    document.getElementById(`panel-${steps[i].id}`).classList.add('active');
+    const pct=Math.round((i)/(steps.length-1)*100);
+    document.getElementById('builderProgress').style.width=pct+'%';
+    document.getElementById('prevStep').disabled=(i===0);
+    document.getElementById('nextStep').style.display=(i===steps.length-1)?'none':'inline-block';
+    document.getElementById('finishBuilder').style.display=(i===steps.length-1)?'inline-block':'none';
+  }
+
+  function levelBadge(pct){
+    if(pct<=50) return {label:"Intermédiaire",cls:"intermediaire"};
+    if(pct<=80) return {label:"Avancé",cls:"avance"};
+    return {label:"Expert",cls:"expert"};
+  }
+
+  function finishBuilder(){
+    let html='';
+    steps.forEach((s,i)=>{
+      const picked=[...(builderSelections[s.id]||[])].sort((a,b)=>a-b);
+      if(picked.length){
+        html+=`<h4>${i+1}. ${s.label}</h4><ul>`;
+        picked.forEach(idx=>html+=`<li>${s.options[idx]}</li>`);
+        html+=`</ul>`;
+      }
+    });
+    if(!html) html="<p>Aucun élément sélectionné. Revenez dans l’assistant pour choisir vos options.</p>";
+    document.getElementById('summaryContent').innerHTML=html;
+
+    // Score + erreurs
+    let totalCorrect=0, selectedCorrect=0, wrongSelected=0;
+    const errors=[];
+    for(const step of steps){
+      const key=answerKey[step.id]||[];
+      totalCorrect+=key.length;
+      const picked=builderSelections[step.id]?Array.from(builderSelections[step.id]):[];
+      const ok=picked.filter(i=>key.includes(i));
+      const wrong=picked.filter(i=>!key.includes(i));
+      const missed=key.filter(i=>!picked.includes(i));
+      selectedCorrect+=ok.length;
+      wrongSelected+=wrong.length;
+      if(wrong.length || missed.length){
+        errors.push({
+          label:step.label,
+          wrong:wrong.map(i=>step.options[i]),
+          missed:missed.map(i=>step.options[i])
+        });
+      }
+    }
+    const pct=totalCorrect>0?Math.round((selectedCorrect/totalCorrect)*100):0;
+    const level=levelBadge(pct);
+    const scoreEl=document.getElementById('scoreContent');
+    scoreEl.style.display='block';
+    scoreEl.innerHTML=`Score : ${selectedCorrect} sur ${totalCorrect} (${pct}%) <span class="badge ${level.cls}">${level.label}</span>`;
+
+    const toggleBtn=document.getElementById('toggleErrors');
+    const panel=document.getElementById('errorsPanel');
+    if(errors.length){
+      toggleBtn.style.display='inline-block';
+      panel.style.display='none';
+      panel.innerHTML=errors.map(e=>{
+        let block=`<div style="margin:.4rem 0">`;
+        block+=`<h4>${e.label}</h4>`;
+        if(e.wrong.length) block+=`<div style="color:#b91c1c"><strong>Choix non attendus :</strong><ul>${e.wrong.map(t=>`<li>${t}</li>`).join('')}</ul></div>`;
+        if(e.missed.length) block+=`<div style="color:#92400e"><strong>À ne pas oublier :</strong><ul>${e.missed.map(t=>`<li>${t}</li>`).join('')}</ul></div>`;
+        block+=`</div>`;
+        return block;
+      }).join('');
+      toggleBtn.onclick=()=>{
+        panel.style.display=(panel.style.display==='none')?'block':'none';
+        toggleBtn.textContent=panel.style.display==='none'?'Voir mes erreurs':'Masquer les erreurs';
+      };
+    }else{
+      toggleBtn.style.display='none';
+      panel.style.display='none';
+      panel.innerHTML='';
+    }
+
+    goTo('summary');
+  }
+</script>
+
+</body>
+</html>
