@@ -27,15 +27,17 @@
     .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1rem;}
     .card{background:#fff;border-radius:14px;box-shadow:0 10px 26px rgba(0,0,0,.08);padding:1rem;}
     .card h3{margin-bottom:.4rem}
-    .hero{width:100%;max-width:980px;border-radius:16px;box-shadow:0 10px 26px rgba(0,0,0,.08);display:block;margin:0 auto 12px;object-fit:cover;}
+    .hero{width:100%;max-width:980px;border-radius:16px;box-shadow:0 10px 26px rgba(0,0,0,.08);display:block;margin:0 auto 12px;object-fit:contain;max-height:60vh;}
     .map{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem;margin-top:1rem;}
     .location{background:#fff;padding:1rem;border-radius:14px;box-shadow:0 6px 18px rgba(0,0,0,.06);text-align:center;cursor:pointer;transition:transform .15s ease,box-shadow .2s ease;}
     .location:hover{transform:translateY(-2px);box-shadow:0 10px 22px rgba(0,0,0,.08);}
     .location img{width:48px;height:48px;margin-bottom:.5rem;}
-    .modal{position:fixed;top:5%;left:50%;transform:translateX(-50%);background:#fff;padding:clamp(16px,3vw,24px);border-radius:14px;box-shadow:0 18px 50px rgba(0,0,0,.25);display:none;z-index:1000;width:min(92vw,820px);}
+    .modal{position:fixed;top:5%;left:50%;transform:translateX(-50%);background:#fff;padding:clamp(16px,3vw,24px);border-radius:14px;box-shadow:0 18px 50px rgba(0,0,0,.25);display:none;z-index:1000;width:min(92vw,820px);max-height:90vh;overflow:auto;}
     .modal.active{display:block;}
     .overlay{position:fixed;inset:0;background:rgba(0,0,0,.45);display:none;z-index:999;}
     .overlay.active{display:block;}
+    .modal img{max-width:100%;max-height:40vh;object-fit:contain;display:block;margin:.5rem 0;}
+    .modal-actions{position:sticky;bottom:0;background:#fff;padding-top:.5rem;margin-top:.5rem;}
     .info-log{margin-top:.75rem;font-size:.95rem;color:#0f7a31;}
     .summary{background:#fff;padding:1rem;border-radius:12px;box-shadow:0 6px 18px rgba(0,0,0,.06);}
     .score{margin-top:12px;background:#f0f9ff;border:1px solid #bae6fd;color:#0c4a6e;padding:.75rem 1rem;border-radius:12px;font-weight:600;display:none;}
@@ -70,7 +72,7 @@
 </head>
 <body>
 
-<!-- Audio -->
+<!-- Audio (optionnel) -->
 <audio autoplay loop>
   <source src="https://cdn.pixabay.com/download/audio/2022/03/29/audio_d2d7f6a30e.mp3" type="audio/mpeg">
   Votre navigateur ne supporte pas l'audio.
@@ -80,11 +82,10 @@
   Votre navigateur ne supporte pas l'audio.
 </audio>
 
-<!-- ACCUEIL -->
+<!-- ACCUEIL avec la nouvelle image -->
 <div id="home" class="screen active">
   <div class="container">
-    <!-- Visuel accueil général LESATI -->
-    <img class="hero" src="images/lea_centrale_LESATI.png" alt="Illustration d'accueil LESATI">
+    <img class="hero" src="images/accueil_salle_formation.png" alt="Salle de formation moderne en Guyane avec formateurs et participants">
     <h2>Choisissez votre jeu</h2>
     <div class="grid">
       <div class="card">
@@ -237,7 +238,7 @@
   <h3 id="modalTitle"></h3>
   <p id="modalContent"></p>
   <img id="modalImage" src="" alt="Illustration du service">
-  <div style="display:flex; gap:.5rem; margin-top:.8rem;">
+  <div class="modal-actions" style="display:flex; gap:.5rem; margin-top:.8rem;">
     <button class="btn" onclick="collectInfo()">Collecter l'information</button>
     <button class="btn secondary" onclick="closeModal()">Retour</button>
   </div>
@@ -249,11 +250,9 @@
   const clickSound=document.getElementById('clickSound');
   function playClick(){try{clickSound.currentTime=0;clickSound.play();}catch(e){}}
   function goTo(id){screens.forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');}
-
-  // Accueil -> redirige vers les écrans d'intro
   function startGame(n){ goTo(n===1?'game1_intro':'game2_intro'); }
 
-  // Textes & images Jeu 1 (inchangé)
+  // Textes & images Jeu 1
   const modalData1={
     'Direction':{ text:"Le président vous accueille : « La santé et la sécurité sont mes priorités pour garantir le bon fonctionnement de l’entreprise et le bien-être des salariés. »", image:"images/tilesia_direction.png" },
     'Technique':{ text:`Intervention pendant les heures ouvrables, sauf cas exceptionnel. Pour les locaux électriques, le titulaire sera accompagné d'un employé disposant des habilitations requises.
@@ -270,7 +269,7 @@ Les consommables à la charge du prestataire sont les suivants :
     'Juridique':{ text:"La juriste rappelle les prescriptions du Décret 92-158 du 20 février 1992 reprises dans le Code du travail (articles R.237-1 et R.237-28), applicables aux travaux réalisés dans l’établissement par une entreprise extérieure.", image:"images/tilesia_juridique.png" }
   };
 
-  // Textes & images Jeu 2 (LESATI) — fichiers nommés avec suffixe _LESATI.png
+  // Textes & images Jeu 2 (LESATI) — fichiers _LESATI.png
   const modalData2={
     'Direction':{ text:"La directrice explique : « La mission de service public et la proximité client sont nos priorités. »", image:"images/direction_directrice_LESATI.png" },
     'Service production':{ text:`Photo de trois salariés dont Léa, devant les groupes électrogènes endommagés.
@@ -304,7 +303,7 @@ Conditions d'utilisation : utilisation continue en milieu humide et chaud.`, ima
     if(currentGame===2){
       collected2.add(currentService);
       document.getElementById('infoLog2').innerText=`Informations collectées (LESATI) : ${Array.from(collected2).join(', ')}`;
-      // NE PAS rediriger : afficher le bouton quand 4 services visités
+      // Afficher le bouton quand 4 services visités, sans redirection
       if(collected2.size>=4){
         const btn = document.getElementById('btnCCTP2');
         if(btn) btn.style.display='inline-block';
@@ -344,7 +343,6 @@ Conditions d'utilisation : utilisation continue en milieu humide et chaud.`, ima
     const set = game===1 ? collected1 : collected2;
     if(set.size<4){ alert("Vous devez visiter tous les services avant de continuer."); return; }
     if(game===1){ startBuilder1(true); }
-    // jeu 2 : pas de redirection, le bouton est géré dans collectInfo()
   }
 
   function startBuilder1(reset=false){
