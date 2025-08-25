@@ -65,6 +65,7 @@
     .footer-space{height:12px;}
     .scenario{background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px;padding:1rem;margin-top:12px;}
     .scenario h4{margin:.2rem 0 .4rem}
+    .notice-panel{background:#f8fafc;border:1px solid #d1d5db;border-radius:12px;padding:1rem;margin-top:1rem;display:none;}
   </style>
 </head>
 <body>
@@ -82,21 +83,31 @@
 <!-- ACCUEIL -->
 <div id="home" class="screen active">
   <div class="container">
-    <!-- Visuel jeu 2 (SGO) : Léa + collègues devant centrale de Saint-Georges -->
-    <img class="hero" src="images/lea_centrale_SGO.png" alt="Léa et ses collègues devant la centrale de Saint-Georges">
+    <!-- Visuel accueil général LESATI -->
+    <img class="hero" src="images/lea_centrale_LESATI.png" alt="Illustration d'accueil LESATI">
     <h2>Choisissez votre jeu</h2>
     <div class="grid">
       <div class="card">
-        <h3>Jeu n°1 — CCTP Quiz (QCM)</h3>
-        <p class="muted">Explorez les services, puis rédigez le cahier des charges via un assistant à étapes avec score.</p>
+        <h3>Jeu n°1 — CCTP Tilesa</h3>
+        <p class="muted">Explorez les services du groupe TILESA avec Alex, puis rédigez le cahier des charges via un assistant à étapes avec score.</p>
         <button class="btn" onclick="startGame(1)">Lancer le jeu n°1</button>
       </div>
       <div class="card">
-        <h3>Jeu n°2 — Scénario LESATI (exploration SGO)</h3>
-        <p class="muted">Suivez Léa. Collectez les informations auprès des 4 services de Saint-Georges (SGO).</p>
+        <h3>Jeu n°2 — CCTP Lesati</h3>
+        <p class="muted">Suivez Léa, chargée d'affaires, qui doit rédiger un cahier des charges en intégralité pour l'entreprise LESATI.</p>
         <button class="btn" onclick="startGame(2)">Lancer le jeu n°2</button>
       </div>
     </div>
+  </div>
+</div>
+
+<!-- JEU 1 : écran d'accueil spécifique -->
+<div id="game1_intro" class="screen">
+  <div class="container">
+    <img class="hero" src="images/tilesia_accueil_alex.png" alt="Accueil du jeu 1 - Alex TILESA">
+    <h2>Jeu n°1 — CCTP Tilesa</h2>
+    <p>Alex vous accueille pour explorer les services du groupe TILESA avant de rédiger le cahier des charges.</p>
+    <button class="btn" onclick="goTo('game1')">Démarrer la mission</button>
   </div>
 </div>
 
@@ -158,37 +169,56 @@
   </div>
 </div>
 
-<!-- JEU 2 : carte (4 onglets SGO) + fin automatique -->
+<!-- JEU 2 : écran d'accueil spécifique -->
+<div id="game2_intro" class="screen">
+  <div class="container">
+    <img class="hero" src="images/lea_centrale_SGO.png" alt="Accueil du jeu 2 - Léa devant la centrale">
+    <h2>Jeu n°2 — CCTP Lesati</h2>
+    <p>Léa, chargée d'affaires du service production, est volontaire pour réaliser l'expression du besoin.</p>
+    <button class="btn" onclick="goTo('game2')">Démarrer la mission</button>
+  </div>
+</div>
+
+<!-- JEU 2 : carte (4 onglets LESATI) + bouton CCTP (pas de redirection) -->
 <div id="game2" class="screen">
   <div class="container">
-    <h2>Jeu n°2 — Suivez Léa (SGO)</h2>
+    <h2>Jeu n°2 — Suivez Léa (LESATI)</h2>
     <div class="map">
       <div class="location" onclick="playClick(); openModal('Direction',2)">
-        <img src="https://cdn-icons-png.flaticon.com/512/219/219986.png" alt="Direction">Direction (SGO)
+        <img src="https://cdn-icons-png.flaticon.com/512/219/219986.png" alt="Direction">Direction (LESATI)
       </div>
       <div class="location" onclick="playClick(); openModal('Service production',2)">
-        <img src="https://cdn-icons-png.flaticon.com/512/1995/1995525.png" alt="Production">Service production (SGO)
+        <img src="https://cdn-icons-png.flaticon.com/512/1995/1995525.png" alt="Production">Service production (LESATI)
       </div>
       <div class="location" onclick="playClick(); openModal('Salaries',2)">
-        <img src="https://cdn-icons-png.flaticon.com/512/847/847969.png" alt="Salariés">Salariés (SGO)
+        <img src="https://cdn-icons-png.flaticon.com/512/847/847969.png" alt="Salariés">Salariés (LESATI)
       </div>
       <div class="location" onclick="playClick(); openModal('Juridique',2)">
-        <img src="https://cdn-icons-png.flaticon.com/512/2569/2569069.png" alt="Juridique">Juridique (SGO)
+        <img src="https://cdn-icons-png.flaticon.com/512/2569/2569069.png" alt="Juridique">Juridique (LESATI)
       </div>
     </div>
     <div class="footer-space"></div>
     <button class="btn secondary" onclick="goTo('home')">⬅ Retour accueil</button>
     <div class="info-log" id="infoLog2"></div>
+
+    <!-- Bouton qui apparaît après collecte complète -->
+    <button id="btnCCTP2" class="btn" style="display:none; margin-top:1rem;" onclick="document.getElementById('notice2').style.display='block'">
+      Rédiger le cahier des charges
+    </button>
+    <div id="notice2" class="notice-panel">
+      <p><strong>Vous disposez de toutes les informations pour écrire un cahier des charges en 30 minutes.</strong></p>
+    </div>
   </div>
 </div>
 
+<!-- (Conservé mais non déclenché automatiquement) -->
 <div id="summary2" class="screen">
   <div class="container">
     <h2>Fin de mission — Jeu n°2</h2>
     <div class="summary">
       <p><strong>Bravo !</strong> Vous avez collecté toutes les informations auprès des 4 services.</p>
       <div class="scenario">
-        <h4>🎯 Scénario LESATI (SGO)</h4>
+        <h4>🎯 Scénario LESATI</h4>
         <p><strong>Contexte :</strong> L’entreprise <strong>LESATI</strong> assure les missions de production, distribution et commercialisation de l’énergie pour la commune de <strong>Saint Georges</strong>.</p>
         <p>Certains groupes ont atteint leurs limites techniques (dépassement du nombre d’heures limites prévues par le constructeur) et devront être révisés. À ce stade, une révision des groupes coûte très cher, potentiellement plus onéreuse que l’achat de matériels neufs.</p>
         <p><strong>Objet :</strong> Achat de <strong>3 groupes électrogènes neufs</strong> comprenant la livraison à Saint Georges.</p>
@@ -220,10 +250,10 @@
   function playClick(){try{clickSound.currentTime=0;clickSound.play();}catch(e){}}
   function goTo(id){screens.forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');}
 
-  // Accueil
-  function startGame(n){ goTo(n===1?'game1':'game2'); }
+  // Accueil -> redirige vers les écrans d'intro
+  function startGame(n){ goTo(n===1?'game1_intro':'game2_intro'); }
 
-  // Textes & images Jeu 1 (comme avant)
+  // Textes & images Jeu 1 (inchangé)
   const modalData1={
     'Direction':{ text:"Le président vous accueille : « La santé et la sécurité sont mes priorités pour garantir le bon fonctionnement de l’entreprise et le bien-être des salariés. »", image:"images/tilesia_direction.png" },
     'Technique':{ text:`Intervention pendant les heures ouvrables, sauf cas exceptionnel. Pour les locaux électriques, le titulaire sera accompagné d'un employé disposant des habilitations requises.
@@ -240,14 +270,14 @@ Les consommables à la charge du prestataire sont les suivants :
     'Juridique':{ text:"La juriste rappelle les prescriptions du Décret 92-158 du 20 février 1992 reprises dans le Code du travail (articles R.237-1 et R.237-28), applicables aux travaux réalisés dans l’établissement par une entreprise extérieure.", image:"images/tilesia_juridique.png" }
   };
 
-  // Textes & images Jeu 2 (SGO) — fichiers nommés avec suffixe SGO
+  // Textes & images Jeu 2 (LESATI) — fichiers nommés avec suffixe _LESATI.png
   const modalData2={
-    'Direction':{ text:"La directrice explique : « La mission de service public et la proximité client sont nos priorités. »", image:"images/direction_directrice_SGO.png" },
+    'Direction':{ text:"La directrice explique : « La mission de service public et la proximité client sont nos priorités. »", image:"images/direction_directrice_LESATI.png" },
     'Service production':{ text:`Photo de trois salariés dont Léa, devant les groupes électrogènes endommagés.
 Nous souhaitons remplacer à neuf ces matériels et les livrer à Saint Georges.
-Conditions d'utilisation : utilisation continue en milieu humide et chaud.`, image:"images/production_groupes_SGO.png" },
-    'Salaries':{ text:"Photo des 30 salariés de l'entreprise devant l'entrée du bâtiment. L'entreprise est en forte croissance et noue de plus en plus de partenariats stratégiques.", image:"images/salaries_30_SGO.png" },
-    'Juridique':{ text:"La juriste rappelle qu'il est indispensable d'ajouter une garantie technique lors de l'achat des groupes électrogènes.", image:"images/juridique_garantie_SGO.png" }
+Conditions d'utilisation : utilisation continue en milieu humide et chaud.`, image:"images/production_groupes_LESATI.png" },
+    'Salaries':{ text:"Photo des 30 salariés de l'entreprise devant l'entrée du bâtiment. L'entreprise est en forte croissance et noue de plus en plus de partenariats stratégiques.", image:"images/salaries_30_LESATI.png" },
+    'Juridique':{ text:"La juriste rappelle qu'il est indispensable d'ajouter une garantie technique lors de l'achat des groupes électrogènes.", image:"images/juridique_garantie_LESATI.png" }
   };
 
   let currentService='';
@@ -273,8 +303,12 @@ Conditions d'utilisation : utilisation continue en milieu humide et chaud.`, ima
   function collectInfo(){
     if(currentGame===2){
       collected2.add(currentService);
-      document.getElementById('infoLog2').innerText=`Informations collectées (SGO) : ${Array.from(collected2).join(', ')}`;
-      if(collected2.size>=4){ goTo('summary2'); }
+      document.getElementById('infoLog2').innerText=`Informations collectées (LESATI) : ${Array.from(collected2).join(', ')}`;
+      // NE PAS rediriger : afficher le bouton quand 4 services visités
+      if(collected2.size>=4){
+        const btn = document.getElementById('btnCCTP2');
+        if(btn) btn.style.display='inline-block';
+      }
     }else{
       collected1.add(currentService);
       document.getElementById('infoLog1').innerText=`Informations collectées : ${Array.from(collected1).join(', ')}`;
@@ -310,7 +344,7 @@ Conditions d'utilisation : utilisation continue en milieu humide et chaud.`, ima
     const set = game===1 ? collected1 : collected2;
     if(set.size<4){ alert("Vous devez visiter tous les services avant de continuer."); return; }
     if(game===1){ startBuilder1(true); }
-    else{ /* jeu 2 géré via collectInfo -> summary2 */ }
+    // jeu 2 : pas de redirection, le bouton est géré dans collectInfo()
   }
 
   function startBuilder1(reset=false){
