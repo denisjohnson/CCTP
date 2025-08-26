@@ -14,14 +14,12 @@
       --warn:#b45309;
     }
     *{box-sizing:border-box}
-    html,body{height:100%}
     body{font-family:Arial,Helvetica,sans-serif;margin:0;background:var(--bg);color:var(--text);overflow-x:hidden;}
     .container{max-width:1100px;margin:0 auto;padding:clamp(16px,4vw,32px);}
     .screen{display:none;animation:fadeIn .4s ease-in;}
     .active{display:block;}
     @keyframes fadeIn{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:translateY(0);}}
     h1,h2,h3{margin:0 0 .6rem}
-    p{line-height:1.5}
     .muted{color:#64748b}
     .btn{padding:.7rem 1.1rem;background:#0a74da;color:#fff;border:none;border-radius:10px;cursor:pointer;font-weight:600;box-shadow:0 2px 6px rgba(10,116,218,.25);}
     .btn:hover{background:#095aba;}
@@ -74,15 +72,17 @@
 </head>
 <body>
 
-<!-- Audio -->
+<!-- Audio (optionnel) -->
 <audio autoplay loop>
   <source src="https://cdn.pixabay.com/download/audio/2022/03/29/audio_d2d7f6a30e.mp3" type="audio/mpeg">
+  Votre navigateur ne supporte pas l'audio.
 </audio>
 <audio id="clickSound">
   <source src="https://cdn.pixabay.com/download/audio/2022/03/23/audio_32901fa291.mp3" type="audio/mpeg">
+  Votre navigateur ne supporte pas l'audio.
 </audio>
 
-<!-- ACCUEIL -->
+<!-- ACCUEIL avec la nouvelle image -->
 <div id="home" class="screen active">
   <div class="container">
     <img class="hero" src="images/accueil_salle_formation.png" alt="Salle de formation moderne en Guyane avec formateurs et participants">
@@ -90,7 +90,7 @@
     <div class="grid">
       <div class="card">
         <h3>Jeu n°1 — CCTP Tilesa</h3>
-        <p class="muted">Explorez les services du groupe TILESA avec Alex, puis rédigez le cahier des charges via un assistant.</p>
+        <p class="muted">Explorez les services du groupe TILESA avec Alex, puis rédigez le cahier des charges via un assistant à étapes avec score.</p>
         <button class="btn" onclick="startGame(1)">Lancer le jeu n°1</button>
       </div>
       <div class="card">
@@ -102,18 +102,17 @@
   </div>
 </div>
 
-<!-- Jeu 1 intro -->
+<!-- JEU 1 : écran d'accueil spécifique -->
 <div id="game1_intro" class="screen">
   <div class="container">
     <img class="hero" src="images/tilesia_accueil_alex.png" alt="Accueil du jeu 1 - Alex TILESA">
-    <div style="display:flex; gap:.5rem; margin-top:.5rem;">
-      <button class="btn" onclick="goTo('game1')">Démarrer la mission</button>
-      <button class="btn secondary" onclick="goTo('home')">⬅ Retour à l'accueil</button>
-    </div>
+    <h2>Jeu n°1 — CCTP Tilesa</h2>
+    <p>Alex vous accueille pour explorer les services du groupe TILESA avant de rédiger le cahier des charges.</p>
+    <button class="btn" onclick="goTo('game1')">Démarrer la mission</button>
   </div>
 </div>
 
-<!-- Jeu 1 carte -->
+<!-- JEU 1 : carte + assistant QCM + résumé + score -->
 <div id="game1" class="screen">
   <div class="container">
     <h2>Jeu n°1 — Explorer les services</h2>
@@ -138,7 +137,6 @@
   </div>
 </div>
 
-<!-- Jeu 1 Assistant QCM -->
 <div id="builder1" class="screen">
   <div class="container">
     <h2>Jeu n°1 — Assistant (QCM)</h2>
@@ -158,7 +156,6 @@
   </div>
 </div>
 
-<!-- Jeu 1 Résumé -->
 <div id="summary1" class="screen">
   <div class="container">
     <h2>Résumé — Jeu n°1</h2>
@@ -173,20 +170,17 @@
   </div>
 </div>
 
-<!-- Jeu 2 intro -->
+<!-- JEU 2 : écran d'accueil spécifique -->
 <div id="game2_intro" class="screen">
   <div class="container">
-    <img class="hero" src="images/lea_centrale_LESATI.png" alt="Accueil du jeu 2 - Léa devant la centrale">
+    <img class="hero" src="images/lea_centrale_SGO.png" alt="Accueil du jeu 2 - Léa devant la centrale">
     <h2>Jeu n°2 — CCTP Lesati</h2>
     <p>Léa, chargée d'affaires du service production, est volontaire pour réaliser l'expression du besoin.</p>
-    <div style="display:flex; gap:.5rem; margin-top:.5rem;">
-      <button class="btn" onclick="goTo('game2')">Démarrer la mission</button>
-      <button class="btn secondary" onclick="goTo('home')">⬅ Retour à l'accueil</button>
-    </div>
+    <button class="btn" onclick="goTo('game2')">Démarrer la mission</button>
   </div>
 </div>
 
-<!-- Jeu 2 carte -->
+<!-- JEU 2 : carte (4 onglets LESATI) + bouton CCTP (pas de redirection) -->
 <div id="game2" class="screen">
   <div class="container">
     <h2>Jeu n°2 — Suivez Léa (LESATI)</h2>
@@ -207,16 +201,18 @@
     <div class="footer-space"></div>
     <button class="btn secondary" onclick="goTo('home')">⬅ Retour accueil</button>
     <div class="info-log" id="infoLog2"></div>
+
+    <!-- Bouton qui apparaît après collecte complète -->
     <button id="btnCCTP2" class="btn" style="display:none; margin-top:1rem;" onclick="document.getElementById('notice2').style.display='block'">
       Rédiger le cahier des charges
     </button>
     <div id="notice2" class="notice-panel">
-      <p><strong>Vous disposez de toutes les informations pour écrire un cahier des charges en 45 minutes.</strong></p>
+      <p><strong>Vous disposez de toutes les informations pour écrire un cahier des charges en 30 minutes.</strong></p>
     </div>
   </div>
 </div>
 
-<!-- Jeu 2 (optionnel) fin -->
+<!-- (Conservé mais non déclenché automatiquement) -->
 <div id="summary2" class="screen">
   <div class="container">
     <h2>Fin de mission — Jeu n°2</h2>
@@ -236,7 +232,7 @@
   </div>
 </div>
 
-<!-- Modale -->
+<!-- Modale partagée -->
 <div class="overlay" id="overlay" onclick="closeModal()"></div>
 <div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
   <h3 id="modalTitle"></h3>
@@ -255,10 +251,8 @@
   function playClick(){try{clickSound.currentTime=0;clickSound.play();}catch(e){}}
   function goTo(id){screens.forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');}
   function startGame(n){ goTo(n===1?'game1_intro':'game2_intro'); }
-  // expose globally
-  window.playClick=playClick; window.goTo=goTo; window.startGame=startGame;
 
-  // Jeu 1 data
+  // Textes & images Jeu 1
   const modalData1={
     'Direction':{ text:"Le président vous accueille : « La santé et la sécurité sont mes priorités pour garantir le bon fonctionnement de l’entreprise et le bien-être des salariés. »", image:"images/tilesia_direction.png" },
     'Technique':{ text:`Intervention pendant les heures ouvrables, sauf cas exceptionnel. Pour les locaux électriques, le titulaire sera accompagné d'un employé disposant des habilitations requises.
@@ -275,24 +269,14 @@ Les consommables à la charge du prestataire sont les suivants :
     'Juridique':{ text:"La juriste rappelle les prescriptions du Décret 92-158 du 20 février 1992 reprises dans le Code du travail (articles R.237-1 et R.237-28), applicables aux travaux réalisés dans l’établissement par une entreprise extérieure.", image:"images/tilesia_juridique.png" }
   };
 
-  // Jeu 2 data (LESATI)
+  // Textes & images Jeu 2 (LESATI) — fichiers _LESATI.png
   const modalData2={
-    'Direction':{
-      text:'La directrice s\\'explique: "L\\'entreprise LESATI assure les missions de production, distribution et commercialisation de l\\'énergie dans la commune de Saint Georges. La mission de service public et la proximité client sont nos priorités".',
-      image:"images/direction_directrice_LESATI.png"
-    },
-    'Service production':{
-      text:"Certains de ces groupes ont atteint leurs limites techniques (dépassement du nombre d’heures limites prévues par le constructeur) et devront être révisés. A ce stade une révision des groupes coûte très chère, elle serait même plus onéreuse que l’achat de matériels neufs.",
-      image:"images/production_groupes_LESATI.png"
-    },
-    'Salaries':{
-      text:"Photo des 30 salariés de l'entreprise devant l'entrée du bâtiment. L'entreprise est en forte croissance et noue de plus en plus de partenariats stratégiques.",
-      image:"images/salaries_30_LESATI.png"
-    },
-    'Juridique':{
-      text:"La juriste rappelle qu'il est indispensable d'ajouter une garantie technique lors de l'achat des groupes 3 électrogènes avec la livraison à Saint Georges. Les groupes seront utilisées en continue dans un milieu humide et avec température élevée..",
-      image:"images/juridique_garantie_LESATI.png"
-    }
+    'Direction':{ text:"La directrice explique : « La mission de service public et la proximité client sont nos priorités. »", image:"images/direction_directrice_LESATI.png" },
+    'Service production':{ text:`Photo de trois salariés dont Léa, devant les groupes électrogènes endommagés.
+Nous souhaitons remplacer à neuf ces matériels et les livrer à Saint Georges.
+Conditions d'utilisation : utilisation continue en milieu humide et chaud.`, image:"images/production_groupes_LESATI.png" },
+    'Salaries':{ text:"Photo des 30 salariés de l'entreprise devant l'entrée du bâtiment. L'entreprise est en forte croissance et noue de plus en plus de partenariats stratégiques.", image:"images/salaries_30_LESATI.png" },
+    'Juridique':{ text:"La juriste rappelle qu'il est indispensable d'ajouter une garantie technique lors de l'achat des groupes électrogènes.", image:"images/juridique_garantie_LESATI.png" }
   };
 
   let currentService='';
@@ -319,6 +303,7 @@ Les consommables à la charge du prestataire sont les suivants :
     if(currentGame===2){
       collected2.add(currentService);
       document.getElementById('infoLog2').innerText=`Informations collectées (LESATI) : ${Array.from(collected2).join(', ')}`;
+      // Afficher le bouton quand 4 services visités, sans redirection
       if(collected2.size>=4){
         const btn = document.getElementById('btnCCTP2');
         if(btn) btn.style.display='inline-block';
@@ -329,7 +314,6 @@ Les consommables à la charge du prestataire sont les suivants :
     }
     closeModal();
   }
-  window.openModal=openModal; window.closeModal=closeModal; window.collectInfo=collectInfo;
 
   // ---------- Jeu 1 : Assistant QCM + score ----------
   const steps1=[
@@ -360,7 +344,6 @@ Les consommables à la charge du prestataire sont les suivants :
     if(set.size<4){ alert("Vous devez visiter tous les services avant de continuer."); return; }
     if(game===1){ startBuilder1(true); }
   }
-  window.validateCollection=validateCollection;
 
   function startBuilder1(reset=false){
     const tabs=document.getElementById('builderTabs1');
@@ -401,8 +384,6 @@ Les consommables à la charge du prestataire sont les suivants :
     }
     goStep1(0); goTo('builder1');
   }
-  window.startBuilder1=startBuilder1;
-
   function hasAtLeastOne1(stepId){const set=builderSelections1[stepId];return set && set.size>0;}
   function goStep1(i){
     if(i<0||i>=steps1.length) return; builderIndex1=i;
@@ -453,7 +434,6 @@ Les consommables à la charge du prestataire sont les suivants :
 
     goTo('summary1');
   }
-  window.finishBuilder1=finishBuilder1;
 </script>
 
 </body>
