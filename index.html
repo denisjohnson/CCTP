@@ -5,14 +5,23 @@
   <meta name="viewport" content="width=device-width,initial-scale=1.0">
   <title>Tilesia - Jeux pédagogiques (2 en 1)</title>
   <style>
-    :root{--primary:#0a74da;--primary-dark:#095aba;--bg:#f4f7fb;--card:#ffffff;--text:#22324a;--warn:#b45309;}
+    :root{
+      --primary:#0a74da;
+      --primary-dark:#095aba;
+      --bg:#f4f7fb;
+      --card:#ffffff;
+      --text:#22324a;
+      --warn:#b45309;
+    }
     *{box-sizing:border-box}
+    html,body{height:100%}
     body{font-family:Arial,Helvetica,sans-serif;margin:0;background:var(--bg);color:var(--text);overflow-x:hidden;}
     .container{max-width:1100px;margin:0 auto;padding:clamp(16px,4vw,32px);}
     .screen{display:none;animation:fadeIn .4s ease-in;}
     .active{display:block;}
     @keyframes fadeIn{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:translateY(0);}}
     h1,h2,h3{margin:0 0 .6rem}
+    p{line-height:1.5}
     .muted{color:#64748b}
     .btn{padding:.7rem 1.1rem;background:#0a74da;color:#fff;border:none;border-radius:10px;cursor:pointer;font-weight:600;box-shadow:0 2px 6px rgba(10,116,218,.25);}
     .btn:hover{background:#095aba;}
@@ -65,14 +74,6 @@
 </head>
 <body>
 
-<!-- Audio (optionnel) -->
-<audio autoplay loop>
-  <source src="https://cdn.pixabay.com/download/audio/2022/03/29/audio_d2d7f6a30e.mp3" type="audio/mpeg">
-</audio>
-<audio id="clickSound">
-  <source src="https://cdn.pixabay.com/download/audio/2022/03/23/audio_32901fa291.mp3" type="audio/mpeg">
-</audio>
-
 <!-- ACCUEIL -->
 <div id="home" class="screen active">
   <div class="container">
@@ -81,7 +82,7 @@
     <div class="grid">
       <div class="card">
         <h3>Jeu n°1 — CCTP Tilesa</h3>
-        <p class="muted">Explorez les services du groupe TILESA avec Alex, puis rédigiez le cahier des charges via un assistant.</p>
+        <p class="muted">Explorez les services du groupe TILESA avec Alex, puis rédigez le cahier des charges via un assistant.</p>
         <button class="btn" onclick="startGame(1)">Lancer le jeu n°1</button>
       </div>
       <div class="card">
@@ -93,26 +94,34 @@
   </div>
 </div>
 
-<!-- JEU 1 : intro -->
+<!-- Jeu 1 intro -->
 <div id="game1_intro" class="screen">
   <div class="container">
     <img class="hero" src="images/tilesia_accueil_alex.png" alt="Accueil du jeu 1 - Alex TILESA">
-    <div style="display:flex;gap:.5rem">
+    <div style="display:flex; gap:.5rem; margin-top:.5rem;">
       <button class="btn" onclick="goTo('game1')">Démarrer la mission</button>
       <button class="btn secondary" onclick="goTo('home')">⬅ Retour à l'accueil</button>
     </div>
   </div>
 </div>
 
-<!-- JEU 1 -->
+<!-- Jeu 1 carte -->
 <div id="game1" class="screen">
   <div class="container">
     <h2>Jeu n°1 — Explorer les services</h2>
     <div class="map">
-      <div class="location" onclick="playClick();openModal('Direction')"><img src="https://cdn-icons-png.flaticon.com/512/219/219986.png" alt="">Direction</div>
-      <div class="location" onclick="playClick();openModal('Technique')"><img src="https://cdn-icons-png.flaticon.com/512/2621/2621140.png" alt="">Service Technique</div>
-      <div class="location" onclick="playClick();openModal('Salaries')"><img src="https://cdn-icons-png.flaticon.com/512/847/847969.png" alt="">Salariés</div>
-      <div class="location" onclick="playClick();openModal('Juridique')"><img src="https://cdn-icons-png.flaticon.com/512/2569/2569069.png" alt="">Juridique</div>
+      <div class="location" onclick="openModal('Direction',1)">
+        <img src="https://cdn-icons-png.flaticon.com/512/219/219986.png" alt="Direction">Direction
+      </div>
+      <div class="location" onclick="openModal('Technique',1)">
+        <img src="https://cdn-icons-png.flaticon.com/512/2621/2621140.png" alt="Technique">Service Technique
+      </div>
+      <div class="location" onclick="openModal('Salaries',1)">
+        <img src="https://cdn-icons-png.flaticon.com/512/847/847969.png" alt="Salariés">Salariés
+      </div>
+      <div class="location" onclick="openModal('Juridique',1)">
+        <img src="https://cdn-icons-png.flaticon.com/512/2569/2569069.png" alt="Juridique">Juridique
+      </div>
     </div>
     <div class="footer-space"></div>
     <button class="btn" onclick="validateCollection(1)">Rédiger le cahier des charges</button>
@@ -121,7 +130,7 @@
   </div>
 </div>
 
-<!-- JEU 1 : Assistant QCM -->
+<!-- Jeu 1 Assistant QCM -->
 <div id="builder1" class="screen">
   <div class="container">
     <h2>Jeu n°1 — Assistant (QCM)</h2>
@@ -141,7 +150,7 @@
   </div>
 </div>
 
-<!-- JEU 1 : Résumé -->
+<!-- Jeu 1 Résumé -->
 <div id="summary1" class="screen">
   <div class="container">
     <h2>Résumé — Jeu n°1</h2>
@@ -149,41 +158,53 @@
     <div id="scoreContent1" class="score"></div>
     <button class="btn toggle" id="toggleErrors1" style="display:none">Voir mes erreurs</button>
     <div id="errorsPanel1" class="errors"></div>
-    <div style="display:flex;gap:.5rem;margin-top:12px;">
+    <div style="display:flex; gap:.5rem; margin-top:12px;">
       <button class="btn secondary" onclick="goTo('builder1')">Modifier</button>
       <button class="btn" onclick="goTo('home')">Retour à l'accueil</button>
     </div>
   </div>
 </div>
 
-<!-- JEU 2 : intro -->
+<!-- Jeu 2 intro -->
 <div id="game2_intro" class="screen">
   <div class="container">
     <img class="hero" src="images/lea_centrale_LESATI.png" alt="Accueil du jeu 2 - Léa devant la centrale">
     <h2>Jeu n°2 — CCTP Lesati</h2>
-    <p>Léa, chargée d'affaires du service production est volontaire pour réaliser l'expression du besoin.</p>
-    <div style="display:flex;gap:.5rem">
+    <p>Léa, chargée d'affaires du service production, est volontaire pour réaliser l'expression du besoin.</p>
+    <div style="display:flex; gap:.5rem; margin-top:.5rem;">
       <button class="btn" onclick="goTo('game2')">Démarrer la mission</button>
       <button class="btn secondary" onclick="goTo('home')">⬅ Retour à l'accueil</button>
     </div>
   </div>
 </div>
 
-<!-- JEU 2 -->
+<!-- Jeu 2 carte -->
 <div id="game2" class="screen">
   <div class="container">
     <h2>Jeu n°2 — Suivez Léa (LESATI)</h2>
     <div class="map">
-      <div class="location" onclick="playClick();openModal('Direction',2)"><img src="https://cdn-icons-png.flaticon.com/512/219/219986.png" alt="">Direction (LESATI)</div>
-      <div class="location" onclick="playClick();openModal('Service production',2)"><img src="https://cdn-icons-png.flaticon.com/512/1995/1995525.png" alt="">Service production (LESATI)</div>
-      <div class="location" onclick="playClick();openModal('Salaries',2)"><img src="https://cdn-icons-png.flaticon.com/512/847/847969.png" alt="">Salariés (LESATI)</div>
-      <div class="location" onclick="playClick();openModal('Juridique',2)"><img src="https://cdn-icons-png.flaticon.com/512/2569/2569069.png" alt="">Juridique (LESATI)</div>
+      <div class="location" onclick="openModal('Direction',2)">
+        <img src="https://cdn-icons-png.flaticon.com/512/219/219986.png" alt="Direction">Direction (LESATI)
+      </div>
+      <div class="location" onclick="openModal('Service production',2)">
+        <img src="https://cdn-icons-png.flaticon.com/512/1995/1995525.png" alt="Production">Service production (LESATI)
+      </div>
+      <div class="location" onclick="openModal('Salaries',2)">
+        <img src="https://cdn-icons-png.flaticon.com/512/847/847969.png" alt="Salariés">Salariés (LESATI)
+      </div>
+      <div class="location" onclick="openModal('Juridique',2)">
+        <img src="https://cdn-icons-png.flaticon.com/512/2569/2569069.png" alt="Juridique">Juridique (LESATI)
+      </div>
     </div>
     <div class="footer-space"></div>
     <button class="btn secondary" onclick="goTo('home')">⬅ Retour accueil</button>
     <div class="info-log" id="infoLog2"></div>
-    <button id="btnCCTP2" class="btn" style="display:none;margin-top:1rem;" onclick="document.getElementById('notice2').style.display='block'">Rédiger le cahier des charges</button>
-    <div id="notice2" class="notice-panel"><p><strong>Vous disposez de toutes les informations pour écrire un cahier des charges en 45 minutes.</strong></p></div>
+    <button id="btnCCTP2" class="btn" style="display:none; margin-top:1rem;" onclick="document.getElementById('notice2').style.display='block'">
+      Rédiger le cahier des charges
+    </button>
+    <div id="notice2" class="notice-panel">
+      <p><strong>Vous disposez de toutes les informations pour écrire un cahier des charges en 45 minutes.</strong></p>
+    </div>
   </div>
 </div>
 
@@ -193,26 +214,23 @@
   <h3 id="modalTitle"></h3>
   <p id="modalContent"></p>
   <img id="modalImage" src="" alt="Illustration du service">
-  <div class="modal-actions" style="display:flex;gap:.5rem;margin-top:.8rem;">
+  <div class="modal-actions" style="display:flex; gap:.5rem; margin-top:.8rem;">
     <button class="btn" onclick="collectInfo()">Collecter l'information</button>
     <button class="btn secondary" onclick="closeModal()">Retour</button>
   </div>
 </div>
 
 <script>
-  // --- Base
+  // Base
   const screens=document.querySelectorAll('.screen');
-  const clickSound=document.getElementById('clickSound');
-  function playClick(){try{clickSound.currentTime=0;clickSound.play();}catch(e){}}
   function goTo(id){screens.forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');}
-  function startGame(n){goTo(n===1?'game1_intro':'game2_intro');}
-  // Exposer pour les onClick (sécurité)
-  window.playClick=playClick; window.goTo=goTo; window.startGame=startGame;
+  function startGame(n){ goTo(n===1?'game1_intro':'game2_intro'); }
+  window.goTo=goTo; window.startGame=startGame;
 
-  // --- Jeu 1 : contenus
+  // Jeu 1 data
   const modalData1={
-    'Direction':{text:"Le président vous accueille : « La santé et la sécurité sont mes priorités pour garantir le bon fonctionnement de l’entreprise et le bien-être des salariés. »",image:"images/tilesia_direction.png"},
-    'Technique':{text:`Intervention pendant les heures ouvrables, sauf cas exceptionnel. Pour les locaux électriques, le titulaire sera accompagné d'un employé disposant des habilitations requises.
+    'Direction':{ text:"Le président vous accueille : « La santé et la sécurité sont mes priorités pour garantir le bon fonctionnement de l’entreprise et le bien-être des salariés. »", image:"images/tilesia_direction.png" },
+    'Technique':{ text:`Intervention pendant les heures ouvrables, sauf cas exceptionnel. Pour les locaux électriques, le titulaire sera accompagné d'un employé disposant des habilitations requises.
 Les espaces concernés sont les suivants : bureaux, couloirs, escaliers, ascenseur, sanitaires, vestiaires, réfectoires.
 Le titulaire remplira un avis de passage. Le rapport semestriel sera rédigé par le service technique.
 
@@ -221,12 +239,12 @@ Les consommables à la charge du prestataire sont les suivants :
 - Le papier essuie-mains
 - Le savon liquide à mains
 - Les sacs poubelles
-- Désodorisants.`,image:"images/tilesia_technique.png"},
-    'Salaries':{text:"Il y a 300 salariés dans le bâtiment répartis sur les 4 étages. Le bâtiment dispose d’une superficie de 4100 m². Vous observez une ambiance de coopération et de réunions dans les locaux.",image:"images/tilesia_salaries.png"},
-    'Juridique':{text:"La juriste rappelle les prescriptions du Décret 92-158 du 20 février 1992 reprises dans le Code du travail (articles R.237-1 et R.237-28), applicables aux travaux réalisés dans l’établissement par une entreprise extérieure.",image:"images/tilesia_juridique.png"}
+- Désodorisants.`, image:"images/tilesia_technique.png" },
+    'Salaries':{ text:"Il y a 300 salariés dans le bâtiment répartis sur les 4 étages. Le bâtiment dispose d’une superficie de 4100 m². Vous observez une ambiance de coopération et de réunions dans les locaux.", image:"images/tilesia_salaries.png" },
+    'Juridique':{ text:"La juriste rappelle les prescriptions du Décret 92-158 du 20 février 1992 reprises dans le Code du travail (articles R.237-1 et R.237-28), applicables aux travaux réalisés dans l’établissement par une entreprise extérieure.", image:"images/tilesia_juridique.png" }
   };
 
-  // --- Jeu 2 : contenus LESATI (phrases demandées)
+  // Jeu 2 data (LESATI)
   const modalData2={
     'Direction':{
       text:'La directrice s\'explique: "L\'entreprise LESATI assure les missions de production, distribution et commercialisation de l\'énergie dans la commune de Saint Georges. La mission de service public et la proximité client sont nos priorités".',
@@ -241,29 +259,39 @@ Les consommables à la charge du prestataire sont les suivants :
       image:"images/salaries_30_LESATI.png"
     },
     'Juridique':{
-      text:"La juriste rappelle qu'il est indispensable d'ajouter une garantie technique lors de l'achat des groupes 3 électrogènes avec la livraison à Saint Georges. Les groupes seront utilisés en continu dans un milieu humide et avec une température élevée.",
+      text:"La juriste rappelle qu'il est indispensable d'ajouter une garantie technique lors de l'achat des groupes 3 électrogènes avec la livraison à Saint Georges. Les groupes seront utilisées en continue dans un milieu humide et avec température élevée..",
       image:"images/juridique_garantie_LESATI.png"
     }
   };
 
-  let currentService=''; let currentGame=1; let collected1=new Set(); let collected2=new Set();
+  let currentService='';
+  let currentGame=1;
+  let collected1=new Set();
+  let collected2=new Set();
 
-  function openModal(service,game=1){
-    currentGame=game; currentService=service;
-    const data=(game===2)?modalData2:modalData1;
-    const item=data[service];
+  function openModal(service, game=1){
+    currentGame = game;
+    currentService = service;
+    const data = game===2 ? modalData2 : modalData1;
+    const item = data[service];
     document.getElementById('modalTitle').innerText=service;
     document.getElementById('modalContent').innerText=item.text;
     document.getElementById('modalImage').src=item.image;
     document.getElementById('overlay').classList.add('active');
     document.getElementById('modal').classList.add('active');
   }
-  function closeModal(){document.getElementById('overlay').classList.remove('active');document.getElementById('modal').classList.remove('active');}
+  function closeModal(){
+    document.getElementById('overlay').classList.remove('active');
+    document.getElementById('modal').classList.remove('active');
+  }
   function collectInfo(){
     if(currentGame===2){
       collected2.add(currentService);
       document.getElementById('infoLog2').innerText=`Informations collectées (LESATI) : ${Array.from(collected2).join(', ')}`;
-      if(collected2.size>=4){ document.getElementById('btnCCTP2').style.display='inline-block'; }
+      if(collected2.size>=4){
+        const btn = document.getElementById('btnCCTP2');
+        if(btn) btn.style.display='inline-block';
+      }
     }else{
       collected1.add(currentService);
       document.getElementById('infoLog1').innerText=`Informations collectées : ${Array.from(collected1).join(', ')}`;
@@ -301,6 +329,7 @@ Les consommables à la charge du prestataire sont les suivants :
     if(set.size<4){ alert("Vous devez visiter tous les services avant de continuer."); return; }
     if(game===1){ startBuilder1(true); }
   }
+  window.validateCollection=validateCollection;
 
   function startBuilder1(reset=false){
     const tabs=document.getElementById('builderTabs1');
@@ -315,7 +344,9 @@ Les consommables à la charge du prestataire sont les suivants :
           <div class="help"><details><summary>Aide (facultatif)</summary><p>${s.help||""}</p></details></div>
           <div class="helper">Sélectionnez les éléments pertinents pour votre CCTP.</div>
           <div class="option-grid">
-            ${s.options.map((opt,idx)=>`<div class="option"><label><input type="checkbox" data-step="${s.id}" data-opt="${idx}"> ${opt}</label></div>`).join('')}
+            ${s.options.map((opt,idx)=>`
+              <div class="option"><label><input type="checkbox" data-step="${s.id}" data-opt="${idx}"> ${opt}</label></div>
+            `).join('')}
           </div>`;
         panels.appendChild(p);
       });
@@ -339,6 +370,8 @@ Les consommables à la charge du prestataire sont les suivants :
     }
     goStep1(0); goTo('builder1');
   }
+  window.startBuilder1=startBuilder1;
+
   function hasAtLeastOne1(stepId){const set=builderSelections1[stepId];return set && set.size>0;}
   function goStep1(i){
     if(i<0||i>=steps1.length) return; builderIndex1=i;
@@ -389,6 +422,7 @@ Les consommables à la charge du prestataire sont les suivants :
 
     goTo('summary1');
   }
+  window.finishBuilder1=finishBuilder1;
 </script>
 
 </body>
