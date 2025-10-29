@@ -38,7 +38,11 @@
     .modal.active{display:block;}
     .overlay{position:fixed;inset:0;background:rgba(0,0,0,.45);display:none;z-index:999;}
     .overlay.active{display:block;}
-    .modal img{max-width:100%;max-height:40vh;object-fit:contain;display:block;margin:.5rem 0;}
+    /* Image + légende liées au texte */
+    .modal figure{margin:.5rem 0;}
+    .modal img{max-width:100%;max-height:40vh;object-fit:contain;display:block;margin:0 auto;}
+    .modal figcaption{font-size:.95rem;color:#334155;background:#f8fafc;border:1px solid #e2e8f0;border-radius:10px;padding:.6rem .75rem;margin-top:.5rem;white-space:pre-line;}
+    .modal p{white-space:pre-line;}
     .modal-actions{position:sticky;bottom:0;background:#fff;padding-top:.5rem;margin-top:.5rem;}
     .info-log{margin-top:.75rem;font-size:.95rem;color:#0f7a31;}
     .summary{background:#fff;padding:1rem;border-radius:12px;box-shadow:0 6px 18px rgba(0,0,0,.06);}
@@ -208,12 +212,15 @@
   </div>
 </div>
 
-<!-- Modale -->
+<!-- Modale (image + légende liées au texte) -->
 <div class="overlay" id="overlay" onclick="closeModal()"></div>
 <div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
   <h3 id="modalTitle"></h3>
+  <figure>
+    <img id="modalImage" src="" alt="Illustration du service">
+    <figcaption id="modalCaption"></figcaption>
+  </figure>
   <p id="modalContent"></p>
-  <img id="modalImage" src="" alt="Illustration du service">
   <div class="modal-actions" style="display:flex; gap:.5rem; margin-top:.8rem;">
     <button class="btn" onclick="collectInfo()">Collecter l'information</button>
     <button class="btn secondary" onclick="closeModal()">Retour</button>
@@ -244,7 +251,7 @@ Les consommables à la charge du prestataire sont les suivants :
     'Juridique':{ text:"La juriste rappelle les prescriptions du Décret 92-158 du 20 février 1992 reprises dans le Code du travail (articles R.237-1 et R.237-28), applicables aux travaux réalisés dans l’établissement par une entreprise extérieure.", image:"images/tilesia_juridique.png" }
   };
 
-  // Jeu 2 data (LESATI) — UPDATED per request
+  // Jeu 2 data (LESATI) — intègre tes dernières précisions
   const modalData2={
     'Direction':{
       text:'La directrice s\'explique: "L\'entreprise LESATI assure les missions de production, distribution et commercialisation de l\'énergie dans la commune de Saint Georges (800 clients). La mission de service public et la proximité client sont nos priorités".',
@@ -276,6 +283,7 @@ Les consommables à la charge du prestataire sont les suivants :
     const item = data[service];
     document.getElementById('modalTitle').innerText=service;
     document.getElementById('modalContent').innerText=item.text;
+    document.getElementById('modalCaption').innerText=item.text; // lier la légende au texte
     document.getElementById('modalImage').src=item.image;
     document.getElementById('overlay').classList.add('active');
     document.getElementById('modal').classList.add('active');
