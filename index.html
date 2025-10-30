@@ -51,6 +51,30 @@
 </head>
 <body>
 
+<!-- NAV_SHIM_INSERTED -->
+<script>
+(function () {
+  function show(id) {
+    var screens = document.querySelectorAll('.screen');
+    for (var i = 0; i < screens.length; i++) screens[i].classList.remove('active');
+    var el = document.getElementById(id) || document.getElementById('home');
+    if (el) el.classList.add('active');
+    try { window.scrollTo(0, 0); } catch(e) {}
+  }
+  window.goTo = function (id) {
+    show(id);
+    try { history.replaceState(null, '', '#' + id); } catch (e) { location.hash = id; }
+  };
+  window.addEventListener('hashchange', function () {
+    var id = (location.hash || '#home').slice(1);
+    show(id);
+  });
+  var start = (location.hash || '#home').slice(1);
+  show(start);
+})();
+</script>
+
+
 <!-- ACCUEIL -->
 <div id="home" class="screen active">
   <div class="container">
@@ -192,7 +216,7 @@
 
 <div id="game6_intro" class="screen">
   <div class="container">
-    <img class="hero" src="images/accueil_sabrina.png" alt="TILESA - Jeu B">
+    <img class="hero" src="images/tilesia_intro_B.png" alt="TILESA - Jeu B">
     <h2>Jeu B — TILESA</h2>
     <p>Analyse des besoins et sélection de prestataires (texte et images à compléter).</p>
     <button class="btn secondary" onclick="goTo('domain_tertiaire')">⬅ Retour domaine</button>
@@ -347,40 +371,7 @@ Consommables à la charge du prestataire : papier toilette, essuie-mains, savon,
     'Salaries':{ text:"Photo des 30 salariés devant l'entrée, croissance & partenariats.", image:"images/salaries_30_LESATI.png" },
     'Juridique':{ text:"Ajouter une garantie technique lors de l'achat des 3 groupes (livraison à Saint Georges). Utilisation en continu en milieu humide et chaud.", image:"images/juridique_garantie_LESATI.png" }
   };
-  const modalData3
-
-  const modalData6={
-    'Direction':{ text:`Dans le cadre de son engagement en faveur du développement durable et de la réduction des émissions de gaz à effet de serre, Tilesa souhaite électrifier sa flotte de véhicules en Guyane Française. La flotte actuelle compte 150 véhicules dont 30% doivent être remplacés par des modèles électriques.`, image:"images/direction.png" },
-    'Juridique':{ text:`Face à l’urgence climatique, l’Union européenne a mis en place un cadre réglementaire ambitieux pour accélérer l’électrification du parc automobile. Parmi les mesures phares : l’interdiction de la vente des voitures thermiques neuves à partir de 2035, la norme CAFE, le recyclage des batteries et la mise en place d’un passeport numérique de batterie.`, image:"images/juriste.png" },
-    'Manager':{ text:`Le Titulaire du marché devra assurer :
-- La fourniture de véhicules électriques neufs, homologués pour le territoire français et adaptés à l’environnement guyanais ;
-- La livraison des véhicules sur le site de: Cayenne, Kourou, Saint-Laurent-du-Maroni…] ;
-- La mise en service complète (immatriculation locale, première charge, contrôle technique si applicable, nettoyage, vérifications fonctionnelles) ;
-- La formation des utilisateurs à la conduite de véhicules électriques et à l’utilisation des bornes de recharge ;
-- La fourniture de la documentation complète (certificats de conformité, manuels, garanties) ;
-- Le service après-vente assuré localement ou via un partenaire agréé en Guyane.
-Les véhicules seront livrés sur l’ensemble de nos sites uniquement (jours ouvrés)`, image:"images/manager.png" },
-    'Services':{ text:`Trois collègues échangent sur les besoins :
-Service réseau : Véhicules tout-chemin électriques ou hybrides rechargeables pour zones d’accès difficile.
-Clientèle : - Petits utilitaires électriques pour transport de matériel et d’équipes techniques 
-Finance : Berlines ou citadines électriques pour déplacements professionnels`, image:"images/services.png" },
-    'Technique':{ text:`Le Titulaire prendra en charge :
-- Les frais d’acheminement jusqu’en Guyane (transport maritime, douane, manutention, livraison finale) ;
-- Les formalités administratives d’immatriculation sur le territoire ;
-- La fourniture de tous les équipements de base (câbles de recharge, kit sécurité, roue de secours ou kit anti-crevaison) ;
-
-l’entreprise] assurera :
-- La mise à disposition des emplacements nécessaires à la réception et au stationnement des véhicules ;
-- L’assurance des véhicules
-
-- L’installation et l’entretien des bornes de recharge (sauf si cette prestation est incluse dans le marché) ;
-- Le suivi administratif (cartes grises, fiscalité, contrôles périodiques)`, image:"images/technique.png" },
-    'Responsable environnement':{ text:`Nos objectifs sont les suivants :
-- Réduction mesurable des émissions de CO₂ et des coûts énergétiques ;
-- Amélioration du confort de conduite et de la sécurité des utilisateurs ;
-- Fonctionnement optimal des véhicules malgré les contraintes climatiques guyanaises.`, image:"images/responsable_environnement.png" }
-  };
-={
+  const modalData3={
     'Direction B':{ 
       text:`Pour répondre aux besoins énergétiques croissants de la Guyane au début des années 1980, le barrage a été construit au niveau d’un resserrement naturel du fleuve Sinnamary. Grâce à sa retenue d’eau, il alimente deux tiers des foyers du littoral guyanais.`, 
       image:"images/direction_LESATI_B.png" 
@@ -425,7 +416,7 @@ Horaires de livraison : Du lundi au vendredi de 08h00 à 12h00
 
   function openModal(service, game=1){
     currentGame=game; currentService=service;
-    const d= game===2 ? modalData2 : (game===3 ? modalData3 : (game===6 ? modalData6 : modalData1));
+    const d= game===2 ? modalData2 : (game===3 ? modalData3 : modalData1);
     const it=d[service];
     document.getElementById('modalTitle').textContent=service.replace(' B','');
     document.getElementById('modalCaption').textContent=it.text; // légende liée
