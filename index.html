@@ -1,6 +1,4 @@
-# We'll create an index file that includes the earlier "final" structure
-# and adds the QCM assistant (9 tabs) for games 3,4,5,6 using a reusable builder.
-html = r"""<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
@@ -32,29 +30,6 @@ html = r"""<!DOCTYPE html>
   .modal p{white-space:pre-wrap;line-height:1.35}
   .notice{background:#f8fafc;border:1px solid #d1d5db;border-radius:12px;padding:1rem;margin-top:1rem;display:none}
   .info-log{margin-top:.6rem;color:#0f7a31}
-  /* Builder (QCM) */
-  .tabs{display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:.8rem;}
-  .tab-btn{padding:.45rem .7rem;border-radius:10px;border:1px solid #d8e0ea;background:#fff;cursor:pointer;font-size:.92rem;color:#213347;}
-  .tab-btn.active{background:#0a74da;color:#fff;border-color:#0a74da;}
-  .tab-panel{display:none;background:#fff;padding:1rem;border-radius:12px;box-shadow:0 6px 18px rgba(0,0,0,.06);}
-  .tab-panel.active{display:block;}
-  .progress{height:10px;background:#e9eef5;border-radius:999px;overflow:hidden;margin:10px 0 18px;}
-  .progress>span{display:block;height:100%;background:#0a74da;width:0%;transition:width .25s ease;}
-  .option-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:.75rem;margin-top:.75rem;}
-  .option{border:1px solid #e6e6e6;border-radius:10px;padding:.75rem;background:#fafafa;}
-  .option label{display:block;cursor:pointer;line-height:1.35;}
-  .helper{font-size:.92rem;color:#526479;margin:.4rem 0 .1rem}
-  .warn{color:#b54708;background:#fff7ed;padding:.5rem .75rem;border-radius:8px;border:1px solid #fde68a;display:none;margin-top:.5rem;}
-  .summary{background:#fff;padding:1rem;border-radius:12px;box-shadow:0 6px 18px rgba(0,0,0,.06);}
-  .score{margin-top:12px;background:#f0f9ff;border:1px solid #bae6fd;color:#0c4a6e;padding:.75rem 1rem;border-radius:12px;font-weight:600;display:none;}
-  .badge{display:inline-block;padding:.35rem .6rem;border-radius:999px;font-size:.9rem;font-weight:700;margin-left:.5rem;}
-  .badge.intermediaire{background:#fff7ed;color:#b45309;border:1px solid #fed7aa;}
-  .badge.avance{background:#eff6ff;color:#1d4ed8;border:1px solid #93c5fd;}
-  .badge.expert{background:#ecfdf5;color:#065f46;border:1px solid #a7f3d0;}
-  .errors{margin-top:10px;background:#fff;border:1px solid #e5e7eb;border-radius:12px;padding:.75rem 1rem;display:none;}
-  .errors h4{margin:.2rem 0 .4rem;}
-  .errors ul{margin:.2rem 0 0 1rem;}
-  .toggle{margin-top:8px;background:#e9eef5;color:#22324a;}
 </style>
 </head>
 <body>
@@ -243,10 +218,7 @@ html = r"""<!DOCTYPE html>
     <div class="location" onclick="openModal('Sécurité',3)"><img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="">Responsable sécurité</div>
   </div>
   <div class="info-log" id="infoLog3"></div>
-  <div style="margin-top:10px;display:flex;gap:.5rem;flex-wrap:wrap">
-    <button class="btn" onclick="startBuilder(3,true)">Rédiger le cahier des charges</button>
-    <button class="btn secondary" onclick="goTo('domain_production')">⬅ Retour</button>
-  </div>
+  <button class="btn secondary" onclick="goTo('domain_production')">⬅ Retour</button>
 </div></div>
 
 <div id="game4" class="screen"><div class="container">
@@ -259,10 +231,7 @@ html = r"""<!DOCTYPE html>
     <div class="location" onclick="openModal('Sécurité Copaya',4)"><img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="">Sécurité</div>
   </div>
   <div class="info-log" id="infoLog4"></div>
-  <div style="margin-top:10px;display:flex;gap:.5rem;flex-wrap:wrap">
-    <button class="btn" onclick="startBuilder(4,true)">Rédiger le cahier des charges</button>
-    <button class="btn secondary" onclick="goTo('domain_reseau')">⬅ Retour</button>
-  </div>
+  <button class="btn secondary" onclick="goTo('domain_reseau')">⬅ Retour</button>
 </div></div>
 
 <div id="game5" class="screen"><div class="container">
@@ -276,10 +245,7 @@ html = r"""<!DOCTYPE html>
     <div class="location" onclick="openModal('Prévention Carl',5)"><img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="">Prévention</div>
   </div>
   <div class="info-log" id="infoLog5"></div>
-  <div style="margin-top:10px;display:flex;gap:.5rem;flex-wrap:wrap">
-    <button class="btn" onclick="startBuilder(5,true)">Rédiger le cahier des charges</button>
-    <button class="btn secondary" onclick="goTo('domain_reseau')">⬅ Retour</button>
-  </div>
+  <button class="btn secondary" onclick="goTo('domain_reseau')">⬅ Retour</button>
 </div></div>
 
 <div id="game6" class="screen"><div class="container">
@@ -293,13 +259,10 @@ html = r"""<!DOCTYPE html>
     <div class="location" onclick="openModal('Environnement Tilesa B',6)"><img src="https://cdn-icons-png.flaticon.com/512/1535/1535791.png" alt="">Responsable environnement</div>
   </div>
   <div class="info-log" id="infoLog6"></div>
-  <div style="margin-top:10px;display:flex;gap:.5rem;flex-wrap:wrap">
-    <button class="btn" onclick="startBuilder(6,true)">Rédiger le cahier des charges</button>
-    <button class="btn secondary" onclick="goTo('domain_tertiaire')">⬅ Retour</button>
-  </div>
+  <button class="btn secondary" onclick="goTo('domain_tertiaire')">⬅ Retour</button>
 </div></div>
 
-<!-- MODALE -->
+<!-- MODALE (sans légendes sous images) -->
 <div class="overlay" id="overlay" onclick="closeModal()"></div>
 <div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
   <h3 id="modalTitle"></h3>
@@ -311,12 +274,8 @@ html = r"""<!DOCTYPE html>
   </div>
 </div>
 
-<!-- BUILDERS (QCM) for games 3,4,5,6 + summary -->
-<div id="builder" class="screen"><div class="container" id="builderContainer"></div></div>
-<div id="summary" class="screen"><div class="container" id="summaryContainer"></div></div>
-
 <script>
-/* ---------- Données modales (textes exacts) ---------- */
+/* ---------- Données modales (textes exacts + retours à la ligne) ---------- */
 /* TILESA A */
 const data1={
   'Direction':{ text:"Le président vous accueille : « La santé et la sécurité sont mes priorités pour garantir le bon fonctionnement de l’entreprise et le bien-être des salariés. »", image:"images/tilesia_direction.png" },
@@ -339,8 +298,8 @@ Les consommables à la charge du prestataire sont les suivants :
 /* LESATI A */
 const data2={
   'Direction':{ text:'La directrice : "LESATI assure production, distribution et commercialisation à Saint Georges (800 clients). Priorité au service public et à la proximité client."', image:"images/direction_directrice_LESATI.png" },
-  'Service production':{ text:'Certains groupes ont atteint leurs limites techniques (...) \n\nNous aurons besoins de 3 groupes électrogènes d’une puissance nominale de 800 kVA, de type diesel avec les certifications "Ultra" et "Iso 9001". Il faut penser aux documents nécessaires pour la bonne utilisation du matériel.', image:"images/production_groupes_LESATI.png" },
-  'Salaries':{ text:"Les 30 salariés devant l’entrée du bâtiment principal. Ils sont pleinement investis (...).", image:"images/salaries_30_LESATI.png" },
+  'Service production':{ text:'Certains groupes ont atteint leurs limites techniques (dépassement du nombre d’heures limites prévues par le constructeur) et devront être révisés. À ce stade, une révision des groupes coûte très cher, potentiellement plus onéreuse que l’achat de matériels neufs.\n\nNous aurons besoins de 3 groupes électrogènes d’une puissance nominale de 800 kVA, de type diesel avec les certifications "Ultra" et "Iso 9001". Il faut penser aux documents nécessaires pour la bonne utilisation du matériel.', image:"images/production_groupes_LESATI.png" },
+  'Salaries':{ text:"Les 30 salariés devant l’entrée du bâtiment principal. Ils sont pleinement investis dans le développement local et dans la relation avec les clients de la ville.", image:"images/salaries_30_LESATI.png" },
   'Juridique':{ text:"La juriste rappelle qu'il est indispensable d'ajouter une garantie technique lors de l'achat des groupes électrogènes, avec livraison à Saint Georges. Les groupes seront utilisés en continu dans un milieu humide et avec température élevée.", image:"images/juridique_garantie_LESATI.png" }
 };
 
@@ -353,17 +312,17 @@ const data3={
 - Les pompes,
 - Les moteurs électriques,
 - Les kits de maintenance des pompes,
-- Les capteurs analogiques et tout ou rien de niveaux, pressostats, manomètres, 
+- Les capteurs analogiques et Tout ou rien de niveaux, pressostats, manomètres, 
 - Les filtres,
-- Les clapets anti-retour,
+- Les clapets anti retour,
 - Les vannes manuelles et motorisées,
 - Les actionneurs (ex. électrovannes).
 
 Les livrables attendus sont les suivants :
 
 - L’ensemble des équipements, accompagnés de leurs certificats de conformité, notices techniques, plans d'installation si nécessaire.
-- Rapport d’essais.`, image:"images/maintenance_LESATI_B.png" },
-  'Juridique B':{ text:`Le titulaire garantit les fournitures contre tout défaut de fabrication ou de matière pour une durée minimale de 24 mois à compter de la date de mise en service ou 30 mois après la livraison. En cas de défaillance, le remplacement ou la réparation des équipements sera pris en charge par le Titulaire.`, image:"images/juridique_LESATI_B.png" },
+- Rapport d’essais`, image:"images/maintenance_LESATI_B.png" },
+  'Juridique B':{ text:`Le titulaire garantit les fournitures contre tout défaut de fabrication ou de matière pour une durée minimale de 24 mois à compter de la date de mise en service ou 30 mois après livraison, selon la première échéance atteinte. En cas de défaillance, le remplacement ou la réparation des équipements sera pris en charge par le Titulaire.`, image:"images/juridique_LESATI_B.png" },
   'Sécurité':{ text:`Les équipements devront être livrés avec protections contre l’humidité et les chocs. Une étiquette claire indiquant le contenu et la référence doit être visible sur chaque caisse.
 
 Adresse du site :
@@ -378,7 +337,7 @@ Du lundi au vendredi de 08h00 à 12h00`, image:"images/securite_LESATI_B.png" }
 /* COPAYA A */
 const data4={
   'Direction Copaya':{ text:`L'élagage est essentiel pour prévenir les coupures d'électricité et assurer la continuité de l'alimentation électrique des clients. Copaya supervise l'élagage des arbres à proximité des lignes électriques pour éviter les dommages sur le réseau.`, image:"images/copaya_direction.png" },
-  'Clients Copaya':{ text:`Les propriétaires de terrain (...) AIPR (Autorisation Intervention à Proximité des Réseaux). (...)`, image:"images/clients_copaya.png" },
+  'Clients Copaya':{ text:`Les propriétaires de terrain doivent veiller à l'entretien et à la taille régulière des arbres situés sur leurs propriétés, conformément à la réglementation. L’élagage à proximité des réseaux électriques doit être géré par des professionnels disposant d’une autorisation AIPR (Autorisation Intervention à Proximité des Réseaux). La pousse rapide de la végétation peut engendrer des problématiques de sécurité des tiers et également des coupures intempestives de la clientèle.`, image:"images/clients_copaya.png" },
   'Maintenance Copaya':{ text:`Distances attendues :
 
 - 405 KM à élaguer par an sur le réseau HTA
@@ -411,7 +370,7 @@ Avant toute intervention à proximité d’un ouvrage électrique, il est impér
 /* COPAYA B */
 const data5={
   'Directrice Carl':{ 
-    text:`Ce projet est d’une grande importance pour l’entreprise COPAYA. Nous voulons fournir la même qualité de service à l’ensemble des habitants présents sur le territoire. Tous les moyens seront mis en œuvre pour respecter les délais et limiter les nuisances. Il est important de finaliser les travaux avant la prochaine saison des pluies.`,
+    text:`Ce projet est d’une grande importance pour l’entreprise COPAYA. Nous voulons fournir la même qualité de service à l’ensemble des habitants présent sur le territoire. Tous les moyens seront mis en œuvre pour respecter les délais et limiter les nuisances. Il est important de finaliser les travaux avant la prochaine saison des pluies.`,
     image:"images/copaya_directrice.png"
   },
   'Équipe Carl':{
@@ -438,17 +397,16 @@ Copaya fournira les câbles, la boîte de jonction et un local de stockage tandi
     image:"images/copaya_habitants.png"
   },
   'Juriste Carl':{
-    text:`Les tranchées devront respecter les conditions imposées par la DGTM (Direction Générale des Territoires et de la Mer) concernant les travaux prévus sur la voie publique.
-Avant tous travaux sur le domaine public, le prestataire devra effectuer une déclaration de commencement de travaux. Avant l’ouverture du chantier, il transmettra les éléments au Maître d’Ouvrage.
-Le Titulaire réalisera l’ensemble des investigations complémentaires (IC) et opérations de localisation (OL) nécessaires à l’exécution des travaux conformément au décret n°2011-12.`,
+    text:`Les tranchées devront respecter les conditions imposées par la DGTM (Direction Générale des territoires et de la Mer) concernant les travaux prévus sur la voie publique.
+	Avant tout travaux sur le domaine public, le prestataire devra effectuer une déclaration de commencement de travaux. Avant l’ouverture du chantier, il transmettra les éléments au Maitre d’Ouvrage.  Le Titulaire réalisera l’ensemble des investigations complémentaires (IC) et opérations de localisation (OL) nécessaires à l’exécution des travaux conformément au décret n°2011-12.`,
     image:"images/copaya_juriste.png"
   },
   'Prévention Carl':{
-    text:`Le Titulaire devra prendre toutes les dispositions nécessaires pour assurer la sécurité des biens et des personnes :
+    text:`	Le Titulaire devra prendre toutes les dispositions nécessaires pour assurer la sécurité des biens et des personnes :
 
-- Balisage des zones de travail avec cônes pour matérialiser la zone de travail sur route 
-- Gyrophare/voyants lumineux 
-- Panneaux de chantier posés a minima 50 m avant le chantier
+	- Balisage des zones de travail avec cônes pour matérialiser la zone de travail sur route 
+	- Gyrophare/voyants lumineux 
+	- Panneaux de chantier posés a minima 50 m avant le chantier
  
 Des visites régulières de prévention sécurité seront organisées par COPAYA pour s’assurer de la conformité du chantier.`,
     image:"images/copaya_prevention.png"
@@ -531,143 +489,6 @@ function collectInfo(){
   if(el) el.textContent="Infos collectées : "+Array.from(set).map(s=>s.replace(' Tilesa B','').replace(' B','').replace(' Copaya','').replace(' Carl','')).join(', ');
   if(currentGame===2 && set.size>=4) document.getElementById('btnCCTP2').style.display='inline-block';
 }
-
-/* ----------------------- QCM reusable builder ----------------------- */
-const stepsCommon=[
-  { id:"objet", label:"Objet", help:"Il sert à définir l’objet du cahier des charges. Il ne doit pas comporter d’autre mention que cette définition.",
-    options:[ "Prestation de nettoyage intérieur des locaux du site TILESIA", "Périmètre: bureaux, circulation, escaliers, ascenseur, sanitaires, vestiaires, réfectoires", "Objectif: propreté, hygiène et confort des utilisateurs" ] },
-  { id:"contexte", label:"Contexte", help:"Situer le contexte de l’affaire (évènements historiques, politique d’entreprise).",
-    options:[ "Bâtiment R+3, 4100 m², ~300 salariés", "La politique santé sécurité est un enjeu majeur pour l’entreprise", "Locaux électriques accompagnés par personnel habilité" ] },
-  { id:"definition", label:"Définition de la prestation", help:"Définir la prestation ainsi que la volumétrie (tous les éléments quantitatifs et qualitatifs).",
-    options:[ "Nettoyage des sols (aspiration, balayage humide, lavage)", "Dépoussiérage des surfaces et mobiliers", "Désinfection des points de contact", "Sanitaires: nettoyage, désinfection et réassort" ] },
-  { id:"limites_titulaire", label:"Limites à la charge du titulaire", help:"Mentionner clairement les limites de la prestation du Titulaire (outillages, produits).",
-    options:[ "Approvisionnement consommables: papier toilette, essuie-mains, savon mains, sacs poubelles, désodorisants", "Fourniture matériels et produits de nettoyage", "Avis de passage après intervention" ] },
-  { id:"limites_entreprise", label:"Limites à la charge de l’entreprise", help:"Prestations et matériels à charge d’EDF.",
-    options:[ "Mise à disposition des locaux d’entretien et points d’eau", "Accompagnement zones électriques par agents habilités", "Accès / badges / consignes de sécurité" ] },
-  { id:"qualite", label:"Qualité", help:"Certification, homologation des produits.",
-    options:[ "Plan qualité et fiches techniques produits", "Traçabilité des interventions (registre / app)", "Indicateurs de propreté et plan d’amélioration" ] },
-  { id:"conditions", label:"Conditions d’interventions", help:"Précautions, délais horaires, conditions d’accès, sécurité.",
-    options:[ "Respect sécurité / environnement (tri, stockage produits)", "Signalisation des zones en intervention", "Interventions en heures ouvrables", "Décret 92-158 & C. travail (R.237-1 à R.237-28), normes d’hygiène" ] },
-  { id:"resultats", label:"Résultats attendus", help:"Quantifiables, mesurables et contrôlables (seuil, niveau, température).",
-    options:[ "Sols propres sans traces visibles", "Sanitaires propres, désinfectés et réapprovisionnés", "Mobilier dépoussiéré, points de contact désinfectés" ] },
-  { id:"reception_ref", label:"Réception", help:"Décrire les éléments qui permettront de réaliser la réception technique (livrables).",
-    options:[ "Rapport semestriel rédigé par le service technique", "Procès-verbal signé et daté par les deux parties", "Références: Décret 92-158 & C. travail (R.237-1 à R.237-28), normes d’hygiène" ] }
-];
-const answerKeyCommon={ objet:[0], contexte:[0,1], definition:[0,1,2,3], limites_titulaire:[0,1], limites_entreprise:[0,1,2], qualite:[0,2], conditions:[0,1,2,3], resultats:[0,1,2], reception_ref:[0,1] };
-
-function startBuilder(gameId, reset){
-  // Build UI dynamically into #builderContainer
-  const container=document.getElementById('builderContainer');
-  if(reset){ container.innerHTML=''; }
-  // Title
-  const titles={3:"LESATI — Jeu B",4:"COPAYA — Jeu A",5:"COPAYA — Jeu B",6:"TILESA — Jeu B"};
-  container.innerHTML += `<h2>${titles[gameId]} — Assistant (QCM)</h2>
-    <div class="small">Sélectionnez les éléments pertinents à chaque étape.</div>
-    <div class="progress"><span id="builderProgress"></span></div>
-    <div class="tabs" id="builderTabs"></div>
-    <div id="builderPanels"></div>
-    <div class="warn" id="builderWarn">Veuillez sélectionner au moins un élément dans cet onglet pour continuer.</div>
-    <div class="step-actions" style="display:flex;gap:.5rem;justify-content:space-between;margin-top:1rem;">
-      <button class="btn secondary" id="prevStep">◀ Précédent</button>
-      <div>
-        <button class="btn secondary" onclick="goTo('game'+gameId)">Sauvegarder & Revenir à la carte</button>
-        <button class="btn" id="nextStep">Suivant ▶</button>
-        <button class="btn" id="finishBuilder" style="display:none">Générer le résumé</button>
-      </div>
-    </div>`;
-  // Prepare selections state for this game
-  window._builderSelections = {}; window._builderIndex=0;
-  // Build tabs & panels
-  const tabs=document.getElementById('builderTabs');
-  const panels=document.getElementById('builderPanels');
-  stepsCommon.forEach((s,i)=>{
-    const b=document.createElement('button'); b.className='tab-btn'+(i===0?' active':''); b.textContent=`${i+1}. ${s.label}`; b.onclick=()=>goStep(i); tabs.appendChild(b);
-    const p=document.createElement('div'); p.className='tab-panel'+(i===0?' active':''); p.id=`panel-${s.id}`;
-    p.innerHTML=`
-      <h3>${i+1}. ${s.label}</h3>
-      <div class="help"><details><summary>Aide (facultatif)</summary><p>${s.help||""}</p></details></div>
-      <div class="helper">Sélectionnez les éléments pertinents pour votre CCTP.</div>
-      <div class="option-grid">
-        ${s.options.map((opt,idx)=>`
-          <div class="option"><label><input type="checkbox" data-step="${s.id}" data-opt="${idx}"> ${opt}</label></div>
-        `).join('')}
-      </div>`;
-    panels.appendChild(p);
-  });
-  panels.addEventListener('change',(e)=>{
-    const box=e.target; if(box && box.type==='checkbox'){
-      const stepId=box.dataset.step; const idx=Number(box.dataset.opt);
-      if(!window._builderSelections[stepId]) window._builderSelections[stepId]=new Set();
-      if(box.checked) window._builderSelections[stepId].add(idx); else window._builderSelections[stepId].delete(idx);
-    }
-  });
-  document.getElementById('prevStep').onclick=()=>goStep(window._builderIndex-1);
-  document.getElementById('nextStep').onclick=()=>{
-    if(!hasAtLeastOne(stepsCommon[window._builderIndex].id)){document.getElementById('builderWarn').style.display='block';return;}
-    document.getElementById('builderWarn').style.display='none'; goStep(window._builderIndex+1);
-  };
-  document.getElementById('finishBuilder').onclick=()=>{
-    if(!hasAtLeastOne(stepsCommon[window._builderIndex].id)){document.getElementById('builderWarn').style.display='block';return;}
-    document.getElementById('builderWarn').style.display='none'; finishBuilder(gameId);
-  };
-  goStep(0);
-  goTo('builder');
-}
-function hasAtLeastOne(stepId){const set=window._builderSelections[stepId];return set && set.size>0;}
-function goStep(i){
-  if(i<0||i>=stepsCommon.length) return; window._builderIndex=i;
-  [...document.querySelectorAll('#builderTabs .tab-btn')].forEach((b,k)=>b.classList.toggle('active',k===i));
-  [...document.querySelectorAll('#builderPanels .tab-panel')].forEach(p=>p.classList.remove('active'));
-  document.getElementById(`panel-${stepsCommon[i].id}`).classList.add('active');
-  const pct=Math.round((i)/(stepsCommon.length-1)*100); document.getElementById('builderProgress').style.width=pct+'%';
-  document.getElementById('prevStep').disabled=(i===0);
-  document.getElementById('nextStep').style.display=(i===stepsCommon.length-1)?'none':'inline-block';
-  document.getElementById('finishBuilder').style.display=(i===stepsCommon.length-1)?'inline-block':'none';
-}
-function levelBadge(pct){ if(pct<=50) return {label:"Intermédiaire",cls:"intermediaire"}; if(pct<=80) return {label:"Avancé",cls:"avance"}; return {label:"Expert",cls:"expert"}; }
-function finishBuilder(gameId){
-  let html='<h2>Résumé — '+({3:"LESATI — Jeu B",4:"COPAYA — Jeu A",5:"COPAYA — Jeu B",6:"TILESA — Jeu B"}[gameId])+'</h2>';
-  stepsCommon.forEach((s,i)=>{
-    const picked=[...(window._builderSelections[s.id]||[])].sort((a,b)=>a-b);
-    if(picked.length){ html+=`<h4>${i+1}. ${s.label}</h4><ul>`; picked.forEach(idx=>html+=`<li>${s.options[idx]}</li>`); html+='</ul>'; }
-  });
-  if(html==='') html="<p>Aucun élément sélectionné. Revenez dans l’assistant pour choisir vos options.</p>";
-  // score & erreurs
-  let totalCorrect=0, selectedCorrect=0; const errors=[];
-  for(const step of stepsCommon){
-    const key=answerKeyCommon[step.id]||[]; totalCorrect+=key.length;
-    const picked=window._builderSelections[step.id]?Array.from(window._builderSelections[step.id]):[];
-    const ok=picked.filter(i=>key.includes(i));
-    const wrong=picked.filter(i=>!key.includes(i));
-    const missed=key.filter(i=>!picked.includes(i));
-    selectedCorrect+=ok.length;
-    if(wrong.length||missed.length){ errors.push({label:step.label, wrong:wrong.map(i=>step.options[i]), missed:missed.map(i=>step.options[i])}); }
-  }
-  const pct=totalCorrect?Math.round((selectedCorrect/totalCorrect)*100):0; const level=levelBadge(pct);
-  html+=`<div class="score" style="display:block">Score : ${selectedCorrect} sur ${totalCorrect} (${pct}%) <span class="badge ${level.cls}">${level.label}</span></div>`;
-  if(errors.length){
-    html+=`<button class="btn toggle" id="toggleErrors">Voir mes erreurs</button>`;
-    html+=`<div class="errors" id="errorsPanel">`+errors.map(e=>{
-      let block=`<div style="margin:.4rem 0">`;
-      block+=`<h4>${e.label}</h4>`;
-      if(e.wrong.length) block+=`<div style="color:#b91c1c"><strong>Choix non attendus :</strong><ul>${e.wrong.map(t=>`<li>${t}</li>`).join('')}</ul></div>`;
-      if(e.missed.length) block+=`<div style="color:#92400e"><strong>À ne pas oublier :</strong><ul>${e.missed.map(t=>`<li>${t}</li>`).join('')}</ul></div>`;
-      block+=`</div>`; return block;
-    }).join('')+`</div>`;
-  }
-  html+=`<div style="display:flex; gap:.5rem; margin-top:12px;">
-      <button class="btn secondary" onclick="startBuilder(${gameId},true)">Modifier</button>
-      <button class="btn" onclick="goTo('game${gameId}')">Retour à la carte</button>
-    </div>`;
-  const container=document.getElementById('summaryContainer');
-  container.innerHTML=html;
-  goTo('summary');
-  const t=document.getElementById('toggleErrors'), panel=document.getElementById('errorsPanel');
-  if(t && panel){ t.onclick=()=>{ panel.style.display=(panel.style.display==='none' || panel.style.display==='')?'block':'none'; t.textContent=panel.style.display==='none'?'Voir mes erreurs':'Masquer les erreurs'; }; panel.style.display='none'; }
-}
 </script>
 </body>
 </html>
-"""
-open('/mnt/data/index_qcm_extended.html','w',encoding='utf-8').write(html)
-html[:1200]
