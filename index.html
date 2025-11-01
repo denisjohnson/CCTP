@@ -242,7 +242,7 @@
   </div>
   <div class="info-log" id="infoLog3"></div>
   <div style="margin-top:10px;display:flex;gap:.5rem;flex-wrap:wrap">
-    <button class="btn" onclick="startBuilder(3,true)">Rédiger le cahier des charges</button>
+    <button class="btn" onclick="startBuilder(3,true)" id="btnBuild3" style="display:none">Rédiger le cahier des charges</button>
     <button class="btn secondary" onclick="goTo('domain_production')">⬅ Retour</button>
   </div>
 </div></div>
@@ -258,7 +258,7 @@
   </div>
   <div class="info-log" id="infoLog4"></div>
   <div style="margin-top:10px;display:flex;gap:.5rem;flex-wrap:wrap">
-    <button class="btn" onclick="startBuilder(4,true)">Rédiger le cahier des charges</button>
+    <button class="btn" onclick="startBuilder(4,true)" id="btnBuild4" style="display:none">Rédiger le cahier des charges</button>
     <button class="btn secondary" onclick="goTo('domain_reseau')">⬅ Retour</button>
   </div>
 </div></div>
@@ -275,7 +275,7 @@
   </div>
   <div class="info-log" id="infoLog5"></div>
   <div style="margin-top:10px;display:flex;gap:.5rem;flex-wrap:wrap">
-    <button class="btn" onclick="startBuilder(5,true)">Rédiger le cahier des charges</button>
+    <button class="btn" onclick="startBuilder(5,true)" id="btnBuild5" style="display:none">Rédiger le cahier des charges</button>
     <button class="btn secondary" onclick="goTo('domain_reseau')">⬅ Retour</button>
   </div>
 </div></div>
@@ -292,7 +292,7 @@
   </div>
   <div class="info-log" id="infoLog6"></div>
   <div style="margin-top:10px;display:flex;gap:.5rem;flex-wrap:wrap">
-    <button class="btn" onclick="startBuilder(6,true)">Rédiger le cahier des charges</button>
+    <button class="btn" onclick="startBuilder(6,true)" id="btnBuild6" style="display:none">Rédiger le cahier des charges</button>
     <button class="btn secondary" onclick="goTo('domain_tertiaire')">⬅ Retour</button>
   </div>
 </div></div>
@@ -526,8 +526,18 @@ function closeModal(){document.getElementById('overlay').classList.remove('activ
 function collectInfo(){
   const set=sets[currentGame]; set.add(currentKey);
   const el=document.getElementById('infoLog'+currentGame);
-  if(el) el.textContent="Infos collectées : "+Array.from(set).map(s=>s.replace(' Tilesa B','').replace(' B','').replace(' Copaya','').replace(' Carl','')).join(', ');
-  if(currentGame===2 && set.size>=4) document.getElementById('btnCCTP2').style.display='inline-block';
+  if(el){
+    const nice = Array.from(set).map(x=>String(x).replace(' B','').replace(' Copaya','').replace(' Carl',''));
+    el.textContent = "Infos collectées : " + nice.join(', ');
+  }
+  // thresholds per game (nb services à visiter)
+  const thresholds={1:4,2:4,3:5,4:5,5:6,6:6};
+  const mapBtn={1:'btnBuild1',2:'btnCCTP2',3:'btnBuild3',4:'btnBuild4',5:'btnBuild5',6:'btnBuild6'};
+  if(thresholds[currentGame] && set.size>=thresholds[currentGame]){
+    const id = mapBtn[currentGame];
+    const btn = id ? document.getElementById(id) : null;
+    if(btn) btn.style.display = 'inline-block';
+  }
 }
 
 /* ----------------------- QCM reusable builder ----------------------- */
@@ -622,9 +632,14 @@ function goStep(i){
   document.getElementById('nextStep').style.display=(i===stepsCommon.length-1)?'none':'inline-block';
   document.getElementById('finishBuilder').style.display=(i===stepsCommon.length-1)?'inline-block':'none';
 }
-function levelBadge(pct){ if(pct<=50) return {label:"Intermédiaire",cls:"intermediaire"}; if(pct<=80) return {label:"Avancé",cls:"avance"}; return {label:"Expert",cls:"expert"}; }
+function levelBadge(pct){
+  if(pct<50) return {label:"Débutant",cls:"intermediaire"};
+  if(pct<=70) return {label:"Avancé",cls:"avance"};
+  if(pct<=95) return {label:"Expert",cls:"expert"};
+  return {label:"Génie",cls:"expert"};
+}; if(pct<=80) return {label:"Avancé",cls:"avance"}; return {label:"Expert",cls:"expert"}; }
 function finishBuilder(gameId){
-  let html='<h2>Résumé — '+({3:"LESATI — Jeu B",4:"COPAYA — Jeu A",5:"COPAYA — Jeu B",6:"TILESA — Jeu B"}[gameId])+'</h2>';
+  let html='<h2>Résumé du cahier des charges — '+({3:"LESATI — Jeu B",4:"COPAYA — Jeu A",5:"COPAYA — Jeu B",6:"TILESA — Jeu B"}[gameId])+'</h2>';
   stepsCommon.forEach((s,i)=>{
     const picked=[...(window._builderSelections[s.id]||[])].sort((a,b)=>a-b);
     if(picked.length){ html+=`<h4>${i+1}. ${s.label}</h4><ul>`; picked.forEach(idx=>html+=`<li>${s.options[idx]}</li>`); html+='</ul>'; }
