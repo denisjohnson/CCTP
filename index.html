@@ -530,7 +530,6 @@ function collectInfo(){
   const set=sets[currentGame]; set.add(currentKey);
   const el=document.getElementById('infoLog'+currentGame);
   if(el) el.textContent="Infos collectées : "+Array.from(set).map(s=>s.replace(' Tilesa B','').replace(' B','').replace(' Copaya','').replace(' Carl','')).join(', ');
-  // Afficher le bouton quand TOUTES les infos ont été collectées
   var totalNeeded = Object.keys(getDataByGame(currentGame)).length;
   var btn = document.getElementById('btnCCTP'+currentGame);
   if(btn && set.size >= totalNeeded){ btn.style.display='inline-block'; }
@@ -836,11 +835,7 @@ const perGameAnswers = {
 
 function startBuilder(gameId, reset){
   const steps = perGameSteps[gameId] || stepsCommon;
-  function hasAtLeastOneLocal(idx){
-    const stepId = steps[idx].id;
-    const set = window._builderSelections[stepId];
-    return set && set.size>0;
-  }
+  function hasAtLeastOneLocal(idx){ const id = steps[idx].id; const set = window._builderSelections[id]; return set && set.size>0; }
   // Build UI dynamically into #builderContainer
   const container=document.getElementById('builderContainer');
   if(reset){ container.innerHTML=''; }
