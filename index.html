@@ -242,7 +242,7 @@
   </div>
   <div class="info-log" id="infoLog3"></div>
   <div style="margin-top:10px;display:flex;gap:.5rem;flex-wrap:wrap">
-    <button class="btn" onclick="startBuilder(3,true)">Rédiger le cahier des charges</button>
+    <button id="btnCCTP3" class="btn" style="display:none" onclick="startBuilder(3,true)">Rédiger le cahier des charges</button>
     <button class="btn secondary" onclick="goTo('domain_production')">⬅ Retour</button>
   </div>
 </div></div>
@@ -258,7 +258,7 @@
   </div>
   <div class="info-log" id="infoLog4"></div>
   <div style="margin-top:10px;display:flex;gap:.5rem;flex-wrap:wrap">
-    <button class="btn" onclick="startBuilder(4,true)">Rédiger le cahier des charges</button>
+    <button id="btnCCTP4" class="btn" style="display:none" onclick="startBuilder(4,true)">Rédiger le cahier des charges</button>
     <button class="btn secondary" onclick="goTo('domain_reseau')">⬅ Retour</button>
   </div>
 </div></div>
@@ -275,7 +275,7 @@
   </div>
   <div class="info-log" id="infoLog5"></div>
   <div style="margin-top:10px;display:flex;gap:.5rem;flex-wrap:wrap">
-    <button class="btn" onclick="startBuilder(5,true)">Rédiger le cahier des charges</button>
+    <button id="btnCCTP5" class="btn" style="display:none" onclick="startBuilder(5,true)">Rédiger le cahier des charges</button>
     <button class="btn secondary" onclick="goTo('domain_reseau')">⬅ Retour</button>
   </div>
 </div></div>
@@ -292,7 +292,7 @@
   </div>
   <div class="info-log" id="infoLog6"></div>
   <div style="margin-top:10px;display:flex;gap:.5rem;flex-wrap:wrap">
-    <button class="btn" onclick="startBuilder(6,true)">Rédiger le cahier des charges</button>
+    <button id="btnCCTP6" class="btn" style="display:none" onclick="startBuilder(6,true)">Rédiger le cahier des charges</button>
     <button class="btn secondary" onclick="goTo('domain_tertiaire')">⬅ Retour</button>
   </div>
 </div></div>
@@ -524,10 +524,16 @@ function openModal(key,game){
 function closeModal(){document.getElementById('overlay').classList.remove('active');document.getElementById('modal').classList.remove('active');}
 
 function collectInfo(){
+  function getDataByGame(g){
+    return g===2?data2 : g===3?data3 : g===4?data4 : g===5?data5 : g===6?data6 : data1;
+  }
   const set=sets[currentGame]; set.add(currentKey);
   const el=document.getElementById('infoLog'+currentGame);
   if(el) el.textContent="Infos collectées : "+Array.from(set).map(s=>s.replace(' Tilesa B','').replace(' B','').replace(' Copaya','').replace(' Carl','')).join(', ');
-  if(currentGame===2 && set.size>=4) document.getElementById('btnCCTP2').style.display='inline-block';
+  // Afficher le bouton quand TOUTES les infos ont été collectées
+  var totalNeeded = Object.keys(getDataByGame(currentGame)).length;
+  var btn = document.getElementById('btnCCTP'+currentGame);
+  if(btn && set.size >= totalNeeded){ btn.style.display='inline-block'; }
 }
 
 /* ----------------------- QCM reusable builder ----------------------- */
