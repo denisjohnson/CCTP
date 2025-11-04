@@ -827,6 +827,12 @@ const perGameAnswers = {
 
 
 function startBuilder(gameId, reset){
+  // already defined above: const steps = perGameSteps[gameId] || stepsCommon;
+  function hasAtLeastOneLocal(idx){
+    const stepId = steps[idx].id;
+    const set = window._builderSelections[stepId];
+    return set && set.size>0;
+  }
   // Build UI dynamically into #builderContainer
   const container=document.getElementById('builderContainer');
   if(reset){ container.innerHTML=''; }
@@ -874,11 +880,11 @@ function startBuilder(gameId, reset){
   });
   document.getElementById('prevStep').onclick=()=>goStep(window._builderIndex-1);
   document.getElementById('nextStep').onclick=()=>{
-    if(!hasAtLeastOne(stepsCommon[window._builderIndex].id)){document.getElementById('builderWarn').style.display='block';return;}
+    if(!hasAtLeastOneLocal(window._builderIndex)){document.getElementById('builderWarn').style.display='block';return;}
     document.getElementById('builderWarn').style.display='none'; goStep(window._builderIndex+1);
   };
   document.getElementById('finishBuilder').onclick=()=>{
-    if(!hasAtLeastOne(stepsCommon[window._builderIndex].id)){document.getElementById('builderWarn').style.display='block';return;}
+    if(!hasAtLeastOneLocal(window._builderIndex)){document.getElementById('builderWarn').style.display='block';return;}
     document.getElementById('builderWarn').style.display='none'; finishBuilder(gameId);
   };
   goStep(0);
@@ -898,6 +904,9 @@ function goStep(i){
 function levelBadge(pct){ if(pct<=50) return {label:"Intermédiaire",cls:"intermediaire"}; if(pct<=80) return {label:"Avancé",cls:"avance"}; return {label:"Expert",cls:"expert"}; }
 function finishBuilder(gameId){
   let html='<h2>Résumé — '+({3:"LESATI — Jeu B",4:"COPAYA — Jeu A",5:"COPAYA — Jeu B",6:"TILESA — Jeu B"}[gameId])+'</h2>';
+  // already defined above: const steps = perGameSteps[gameId] || stepsCommon;
+  // already defined above: const answers = perGameAnswers[gameId] || answerKeyCommon;
+
   steps.forEach((s,i)=>{
     const picked=[...(window._builderSelections[s.id]||[])].sort((a,b)=>a-b);
     if(picked.length){ html+=`<h4>${i+1}. ${s.label}</h4><ul>`; picked.forEach(idx=>html+=`<li>${s.options[idx]}</li>`); html+='</ul>'; }
@@ -905,8 +914,8 @@ function finishBuilder(gameId){
   if(html==='') html="<p>Aucun élément sélectionné. Revenez dans l’assistant pour choisir vos options.</p>";
   // score & erreurs
   let totalCorrect=0, selectedCorrect=0; const errors=[];
-  const steps = perGameSteps[gameId] || stepsCommon;
-  const answers = perGameAnswers[gameId] || answerKeyCommon;
+  // already defined above: const steps = perGameSteps[gameId] || stepsCommon;
+  // already defined above: const answers = perGameAnswers[gameId] || answerKeyCommon;
   for(const step of steps){
     const key=answers[step.id]||[]; totalCorrect+=key.length;
     const picked=window._builderSelections[step.id]?Array.from(window._builderSelections[step.id]):[];
