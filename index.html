@@ -552,8 +552,7 @@ const stepsCommon=[
     options:[ "Rapport semestriel rédigé par le service technique", "Procès-verbal signé et daté par les deux parties", "Références: Décret 92-158 & C. travail (R.237-1 à R.237-28), normes d’hygiène" ] }
 ];
 const answerKeyCommon={ objet:[0], contexte:[0,1], definition:[0,1,2,3], limites_titulaire:[0,1], limites_entreprise:[0,1,2], qualite:[0,2], conditions:[0,1,2,3], resultats:[0,1,2], reception_ref:[0,1] };
-// === Per-game QCM overrides (steps & answers) ===
-// Game IDs: 3=LESATI B, 4=COPAYA A, 5=COPAYA B, 6=TILESA B
+
 const perGameSteps = {
   3: [ // LESATI B — Centrale Hydraulique
     {id:"objet", label:"Objet", help:"Définir l’objet du marché.",
@@ -826,8 +825,11 @@ const perGameAnswers = {
 };
 
 
+
+
+
 function startBuilder(gameId, reset){
-  // already defined above: const steps = perGameSteps[gameId] || stepsCommon;
+  const steps = perGameSteps[gameId] || stepsCommon;
   function hasAtLeastOneLocal(idx){
     const stepId = steps[idx].id;
     const set = window._builderSelections[stepId];
@@ -892,20 +894,20 @@ function startBuilder(gameId, reset){
 }
 function hasAtLeastOne(stepId){const set=window._builderSelections[stepId];return set && set.size>0;}
 function goStep(i){
-  if(i<0||i>=stepsCommon.length) return; window._builderIndex=i;
+  if(i<0||i>=steps.length) return; window._builderIndex=i;
   [...document.querySelectorAll('#builderTabs .tab-btn')].forEach((b,k)=>b.classList.toggle('active',k===i));
   [...document.querySelectorAll('#builderPanels .tab-panel')].forEach(p=>p.classList.remove('active'));
-  document.getElementById(`panel-${stepsCommon[i].id}`).classList.add('active');
-  const pct=Math.round((i)/(stepsCommon.length-1)*100); document.getElementById('builderProgress').style.width=pct+'%';
+  document.getElementById(`panel-${steps[i].id}`).classList.add('active');
+  const pct=Math.round((i)/(steps.length-1)*100); document.getElementById('builderProgress').style.width=pct+'%';
   document.getElementById('prevStep').disabled=(i===0);
-  document.getElementById('nextStep').style.display=(i===stepsCommon.length-1)?'none':'inline-block';
-  document.getElementById('finishBuilder').style.display=(i===stepsCommon.length-1)?'inline-block':'none';
+  document.getElementById('nextStep').style.display=(i===steps.length-1)?'none':'inline-block';
+  document.getElementById('finishBuilder').style.display=(i===steps.length-1)?'inline-block':'none';
 }
 function levelBadge(pct){ if(pct<=50) return {label:"Intermédiaire",cls:"intermediaire"}; if(pct<=80) return {label:"Avancé",cls:"avance"}; return {label:"Expert",cls:"expert"}; }
 function finishBuilder(gameId){
   let html='<h2>Résumé — '+({3:"LESATI — Jeu B",4:"COPAYA — Jeu A",5:"COPAYA — Jeu B",6:"TILESA — Jeu B"}[gameId])+'</h2>';
-  // already defined above: const steps = perGameSteps[gameId] || stepsCommon;
-  // already defined above: const answers = perGameAnswers[gameId] || answerKeyCommon;
+  const steps = perGameSteps[gameId] || stepsCommon;
+  const answers = perGameAnswers[gameId] || answerKeyCommon;
 
   steps.forEach((s,i)=>{
     const picked=[...(window._builderSelections[s.id]||[])].sort((a,b)=>a-b);
@@ -914,8 +916,6 @@ function finishBuilder(gameId){
   if(html==='') html="<p>Aucun élément sélectionné. Revenez dans l’assistant pour choisir vos options.</p>";
   // score & erreurs
   let totalCorrect=0, selectedCorrect=0; const errors=[];
-  // already defined above: const steps = perGameSteps[gameId] || stepsCommon;
-  // already defined above: const answers = perGameAnswers[gameId] || answerKeyCommon;
   for(const step of steps){
     const key=answers[step.id]||[]; totalCorrect+=key.length;
     const picked=window._builderSelections[step.id]?Array.from(window._builderSelections[step.id]):[];
