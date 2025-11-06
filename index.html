@@ -5,18 +5,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Jeux CCTP — LESATI / COPAYA / TILESA</title>
 <style>
-:root{
-  --primary:#0a66ff;--bg:#f6f8fb;--card:#fff;--text:#1f2937;
-  --muted:#66758a;--ok:#0ea5e9;--bad:#ef4444;--ring:#dbeafe;
-}
+:root{--primary:#0a66ff;--bg:#f6f8fb;--card:#fff;--text:#1f2937;--muted:#66758a;--ring:#dbeafe;}
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Arial,sans-serif}
-.container{max-width:1100px;margin:0 auto;padding:24px}
-h1,h2,h3{margin:.25rem 0 .6rem}
-h1{font-size:clamp(22px,3.4vw,36px)}
-h2{font-size:clamp(18px,2.6vw,26px)}
+.container{max-width:1200px;margin:0 auto;padding:24px}
+h1,h2,h3{margin:.25rem 0 .6rem} h1{font-size:clamp(22px,3.4vw,36px)} h2{font-size:clamp(18px,2.6vw,26px)}
 p{margin:.35rem 0}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:14px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
 .card{background:var(--card);border-radius:14px;padding:16px;box-shadow:0 10px 30px rgba(0,0,0,.06)}
 .btn{background:var(--primary);color:#fff;border:none;border-radius:10px;padding:.65rem 1rem;font-weight:700;cursor:pointer}
 .btn.secondary{background:#e9eef7;color:#1f2937}
@@ -48,6 +43,7 @@ p{margin:.35rem 0}
 </style>
 </head>
 <body>
+
 <div id="home" class="kit active">
   <div class="container">
     <h1>Choisissez votre domaine</h1>
@@ -140,6 +136,7 @@ const S = { domain:null, game:null, visited:new Set(), selections:{}, dataset:{}
 const DOM = id => document.getElementById(id);
 const go = id => { document.querySelectorAll('.kit').forEach(e=>e.classList.remove('active')); DOM(id).classList.add('active'); };
 
+// Jeux & services
 const GAMES = {
   LESATI: { title:'LESATI — Production', items:[
     { id:'LESATI_A', title:'Jeu A (Centrale Thermique — Léa)', intro:"Léa, chargée d’affaires du service production, est volontaire pour réaliser l’expression du besoin. Il s'agit de l'achat de 3 nouveaux groupes électrogènes.", services:['Direction','Service production','Salariés','Juridique']},
@@ -150,11 +147,12 @@ const GAMES = {
     { id:'COPAYA_B', title:'Jeu B (Raccordement HTA — Carl)', intro:'Raccordement HTA : explorez les services puis rédigez le cahier des charges.', services:['La Directrice','Équipe','Manager','Habitants','Juriste','Prévention']},
   ]},
   TILESA: { title:'TILESA — Tertiaire', items:[
-    { id:'TILESA_A', title:'Jeu A (Nettoage — Alex)', intro:'Nettoyage des sites : explorez les services puis rédigez le cahier des charges.', services:['Direction','Technique','Salariés','Juridique']},
+    { id:'TILESA_A', title:'Jeu A (Nettoyage — Alex)', intro:'Nettoyage des sites : explorez les services puis rédigez le cahier des charges.', services:['Direction','Technique','Salariés','Juridique']},
     { id:'TILESA_B', title:'Jeu B (Véhicules électriques — Manon)', intro:'Véhicules Électriques : explorez les services puis rédigez le cahier des charges.', services:['Direction','Manager','Services','Technique','Juriste','Responsable Environnement']},
   ]},
 };
 
+// Aides (affichées en “Aide (facultatif)”)
 const HELP = {
   objet:"Définir l’objet du CCTP en une phrase claire. Évitez les éléments hors périmètre.",
   contexte:"Situer l’environnement du projet et ses enjeux.",
@@ -168,6 +166,7 @@ const HELP = {
 };
 const QCM = { sec:(id,label,help,opts)=>({id,label,help,options:opts}) };
 
+// ===== QCM personnalisés (4 jeux) — selon vos consignes =====
 const COPAYA_A_QCM = [
   QCM.sec('objet','Objet',HELP.objet,[
     ['Élagage de la végétation autour des ouvrages électriques HTA/HTB',1],
@@ -193,7 +192,7 @@ const COPAYA_A_QCM = [
     ['Transmettre un planning après la visite préalable avec COPAYA',1],
   ]),
   QCM.sec('limites_entreprise','Limites à la charge de l’entreprise (COPAYA)',HELP.limites_entreprise,[
-    ['Fourniture des plans et procédures d’accès',1],
+    ['Fourniture des plans et procédures d\'accès',1],
     ['Accompagnement lors de la visite préalable',1],
     ['Fourniture du personnel d’élagage',0],
     ['Mise à disposition du matériel d’ascension',0],
@@ -359,10 +358,11 @@ const LESATI_B_QCM = [
   ]),
 ];
 
+// QCM génériques pour LESATI A & TILESA A (inchangés)
 const GENERIC_A_QCM = [
-  QCM.sec('objet','Objet',HELP.objet,[['Objet — exemple',1],['Hors périmètre',0]]),
-  QCM.sec('contexte','Contexte',HELP.contexte,[['Contexte — exemple',1],['Hors sujet',0]]),
-  QCM.sec('definition','Définition',HELP.def,[['Prestation — exemple',1],['Non inclus',0]]),
+  QCM.sec('objet','Objet',HELP.objet,[['Définir l’objet du marché',1],['Hors périmètre',0]]),
+  QCM.sec('contexte','Contexte',HELP.contexte,[['Contexte pertinent',1],['Hors sujet',0]]),
+  QCM.sec('definition','Définition',HELP.def,[['Prestation incluse',1],['Non inclus',0]]),
   QCM.sec('limites_titulaire','Limites titulaire',HELP.limites_titulaire,[['À charge du titulaire',1]]),
   QCM.sec('limites_entreprise','Limites entreprise',HELP.limites_entreprise,[['À charge de l’entreprise',1]]),
   QCM.sec('qualite','Qualité',HELP.qualite,[['Conformité',1]]),
@@ -370,12 +370,15 @@ const GENERIC_A_QCM = [
   QCM.sec('resultats','Résultats',HELP.resultats,[['Résultat mesurable',1]]),
   QCM.sec('reception','Réception',HELP.reception,[['Procès-verbal',1]]),
 ];
+
+// Registre jeux -> QCM
 const GAME_QCM = {
   LESATI_A: GENERIC_A_QCM, LESATI_B: LESATI_B_QCM,
   COPAYA_A: COPAYA_A_QCM, COPAYA_B: COPAYA_B_QCM,
   TILESA_A: GENERIC_A_QCM, TILESA_B: TILESA_B_QCM,
 };
 
+// Navigation domaine/jeux
 function openDomain(key){
   S.domain = key;
   const d = GAMES[key];
@@ -425,6 +428,7 @@ function startAssistant(){
 }
 function backToMap(){ go('map'); }
 
+// Assistant builder
 function buildAssistant(){
   DOM('asstTitle').textContent = getCurrentItem().title + ' — Assistant (QCM)';
   const tabs = DOM('tabs'); const panels = DOM('panels');
@@ -437,8 +441,9 @@ function buildAssistant(){
 
     const p = document.createElement('div'); p.className='panel'+(i===0?' active':''); p.id='panel-'+s.id;
     const opts = s.options.map((t,idx)=>{
-      const [label,ok] = Array.isArray(t)?t:[t,1];
-      return `<div class="option"><label><input type="checkbox" data-step="${s.id}" data-idx="${idx}"> ${label}</label></div>`;
+      const label = Array.isArray(t)?t[0]:t;
+      const val = Array.isArray(t)?(t[1]!==undefined?t[1]:1):1;
+      return `<div class="option"><label><input type="checkbox" data-step="${s.id}" data-idx="${idx}" data-ok="${val}"> ${label}</label></div>`;
     }).join('');
     p.innerHTML = `<h3>${i+1}. ${s.label}</h3>
       <div class="help"><details><summary>Aide (facultatif)</summary><div>${s.help||''}</div></details></div>
@@ -477,6 +482,8 @@ function hasPick(){
   const set = S.selections[stepId];
   return set && set.size>0;
 }
+
+// Résumé + scoring
 function buildSummary(){
   DOM('sumTitle').textContent = getCurrentItem().title+' — Résumé';
   const wrap = [];
@@ -491,9 +498,11 @@ function buildSummary(){
       });
       wrap.push('</ul>');
     }
-    s.options.forEach((t,idx)=>{ const ok = Array.isArray(t)?t[1]:1; if(ok===1) total++; });
-    picked.forEach(idx=>{ const ok = Array.isArray(s.options[idx])?s.options[idx][1]:1; if(ok===1) good++; else { errors.push({label:s.label, wrong:[Array.isArray(s.options[idx])?s.options[idx][0]:s.options[idx]], missed:[]}); } });
-    const requiredIdx = s.options.map((t,i)=>[i, Array.isArray(t)?t[1]:1]).filter(x=>x[1]===1).map(x=>x[0]);
+    // count correct
+    s.options.forEach((t)=>{ const ok = Array.isArray(t)? (t[1]!==undefined?t[1]:1) : 1; if(ok===1) total++; });
+    picked.forEach(idx=>{ const ok = Array.isArray(s.options[idx])? (s.options[idx][1]!==undefined?s.options[idx][1]:1) : 1; if(ok===1) good++; else { errors.push({label:s.label, wrong:[Array.isArray(s.options[idx])?s.options[idx][0]:s.options[idx]], missed:[]}); } });
+    // missed
+    const requiredIdx = s.options.map((t,i)=>[i, Array.isArray(t)? (t[1]!==undefined?t[1]:1) : 1]).filter(x=>x[1]===1).map(x=>x[0]);
     const missed = requiredIdx.filter(i2=>!picked.includes(i2));
     if(missed.length) errors.push({label:s.label, wrong:[], missed:missed.map(i2=>Array.isArray(s.options[i2])?s.options[i2][0]:s.options[i2])});
   });
@@ -519,3 +528,8 @@ function buildSummary(){
 </script>
 </body>
 </html>
+"""
+with open(file_path,'w',encoding='utf-8') as f:
+    f.write(html)
+file_path
+::contentReference[oaicite:0]{index=0}
