@@ -1,327 +1,266 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Plateforme CCTP — Domaines & Jeux (A/B)</title>
-<style>
-  :root{--primary:#0a74da;--primary-dark:#095aba;--bg:#f4f7fb;--card:#fff;--text:#22324a}
-  *{box-sizing:border-box}body{font-family:Arial,Helvetica,sans-serif;margin:0;background:var(--bg);color:var(--text)}
-  .container{max-width:1100px;margin:0 auto;padding:clamp(16px,4vw,32px)}
-  .screen{display:none;animation:fade .25s ease} .active{display:block}
-  @keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
-  h1,h2,h3{margin:0 0 .8rem}
-  .muted{color:#64748b}
-  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1rem}
-  .card{background:#fff;border-radius:14px;box-shadow:0 10px 26px rgba(0,0,0,.08);padding:1rem}
-  .btn{padding:.7rem 1.1rem;background:#0a74da;color:#fff;border:none;border-radius:10px;font-weight:700;cursor:pointer}
-  .btn:hover{background:#095aba}
-  .btn.secondary{background:#e9eef5;color:#1b304a}
-  .hero{width:100%;max-width:980px;border-radius:16px;box-shadow:0 10px 26px rgba(0,0,0,.08);display:block;margin:0 auto 12px;object-fit:contain;max-height:60vh}
-  .map{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem;margin-top:1rem}
-  .location{background:#fff;padding:1rem;border-radius:14px;box-shadow:0 6px 18px rgba(0,0,0,.06);text-align:center;cursor:pointer;transition:transform .15s ease,box-shadow .2s ease}
-  .location:hover{transform:translateY(-2px);box-shadow:0 10px 22px rgba(0,0,0,.08)}
-  .location img{width:48px;height:48px;margin-bottom:.5rem}
-  .overlay{position:fixed;inset:0;background:rgba(0,0,0,.45);display:none;z-index:999}
-  .overlay.active{display:block}
-  .modal{position:fixed;top:5%;left:50%;transform:translateX(-50%);background:#fff;padding:clamp(16px,3vw,24px);border-radius:14px;box-shadow:0 18px 50px rgba(0,0,0,.25);display:none;z-index:1000;width:min(92vw,820px);max-height:90vh;overflow:auto}
-  .modal.active{display:block}
-  .modal img{max-width:100%;max-height:40vh;object-fit:contain;display:block;margin:0 auto .6rem}
-  .modal p{white-space:pre-wrap;line-height:1.35}
-  .notice{background:#f8fafc;border:1px solid #d1d5db;border-radius:12px;padding:1rem;margin-top:1rem;display:none}
-  .info-log{margin-top:.6rem;color:#0f7a31}
-  /* Builder (QCM) */
-  .tabs{display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:.8rem;}
-  .tab-btn{padding:.45rem .7rem;border-radius:10px;border:1px solid #d8e0ea;background:#fff;cursor:pointer;font-size:.92rem;color:#213347;}
-  .tab-btn.active{background:#0a74da;color:#fff;border-color:#0a74da;}
-  .tab-panel{display:none;background:#fff;padding:1rem;border-radius:12px;box-shadow:0 6px 18px rgba(0,0,0,.06);}
-  .tab-panel.active{display:block;}
-  .progress{height:10px;background:#e9eef5;border-radius:999px;overflow:hidden;margin:10px 0 18px;}
-  .progress>span{display:block;height:100%;background:#0a74da;width:0%;transition:width .25s ease;}
-  .option-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:.75rem;margin-top:.75rem;}
-  .option{border:1px solid #e6e6e6;border-radius:10px;padding:.75rem;background:#fafafa;}
-  .option label{display:block;cursor:pointer;line-height:1.35;}
-  .helper{font-size:.92rem;color:#526479;margin:.4rem 0 .1rem}
-  .warn{color:#b54708;background:#fff7ed;padding:.5rem .75rem;border-radius:8px;border:1px solid #fde68a;display:none;margin-top:.5rem;}
-  .summary{background:#fff;padding:1rem;border-radius:12px;box-shadow:0 6px 18px rgba(0,0,0,.06);}
-  .score{margin-top:12px;background:#f0f9ff;border:1px solid #bae6fd;color:#0c4a6e;padding:.75rem 1rem;border-radius:12px;font-weight:600;display:none;}
-  .badge{display:inline-block;padding:.35rem .6rem;border-radius:999px;font-size:.9rem;font-weight:700;margin-left:.5rem;}
-  .badge.intermediaire{background:#fff7ed;color:#b45309;border:1px solid #fed7aa;}
-  .badge.avance{background:#eff6ff;color:#1d4ed8;border:1px solid #93c5fd;}
-  .badge.expert{background:#ecfdf5;color:#065f46;border:1px solid #a7f3d0;}
-  .errors{margin-top:10px;background:#fff;border:1px solid #e5e7eb;border-radius:12px;padding:.75rem 1rem;display:none;}
-  .errors h4{margin:.2rem 0 .4rem;}
-  .errors ul{margin:.2rem 0 0 1rem;}
-  .toggle{margin-top:8px;background:#e9eef5;color:#22324a;}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>Tilesia - Jeux pédagogiques (2 en 1)</title>
+  <style>
+    :root{
+      --primary:#0a74da;
+      --primary-dark:#095aba;
+      --bg:#f4f7fb;
+      --card:#ffffff;
+      --text:#22324a;
+      --warn:#b45309;
+    }
+    *{box-sizing:border-box}
+    body{font-family:Arial,Helvetica,sans-serif;margin:0;background:var(--bg);color:var(--text);overflow-x:hidden;}
+    .container{max-width:1100px;margin:0 auto;padding:clamp(16px,4vw,32px);}
+    .screen{display:none;animation:fadeIn .4s ease-in;}
+    .active{display:block;}
+    @keyframes fadeIn{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:translateY(0);}}
+    h1,h2,h3{margin:0 0 .6rem}
+    .muted{color:#64748b}
+    .btn{padding:.7rem 1.1rem;background:#0a74da;color:#fff;border:none;border-radius:10px;cursor:pointer;font-weight:600;box-shadow:0 2px 6px rgba(10,116,218,.25);}
+    .btn:hover{background:#095aba;}
+    .btn.secondary{background:#e9eef5;color:#18324a;box-shadow:none;}
+    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1rem;}
+    .card{background:#fff;border-radius:14px;box-shadow:0 10px 26px rgba(0,0,0,.08);padding:1rem;}
+    .card h3{margin-bottom:.4rem}
+    .hero{width:100%;max-width:980px;border-radius:16px;box-shadow:0 10px 26px rgba(0,0,0,.08);display:block;margin:0 auto 12px;object-fit:contain;max-height:60vh;}
+    .map{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem;margin-top:1rem;}
+    .location{background:#fff;padding:1rem;border-radius:14px;box-shadow:0 6px 18px rgba(0,0,0,.06);text-align:center;cursor:pointer;transition:transform .15s ease,box-shadow .2s ease;}
+    .location:hover{transform:translateY(-2px);box-shadow:0 10px 22px rgba(0,0,0,.08);}
+    .location img{width:48px;height:48px;margin-bottom:.5rem;}
+    .modal{position:fixed;top:5%;left:50%;transform:translateX(-50%);background:#fff;padding:clamp(16px,3vw,24px);border-radius:14px;box-shadow:0 18px 50px rgba(0,0,0,.25);display:none;z-index:1000;width:min(92vw,820px);max-height:90vh;overflow:auto;}
+    .modal.active{display:block;}
+    .overlay{position:fixed;inset:0;background:rgba(0,0,0,.45);display:none;z-index:999;}
+    .overlay.active{display:block;}
+    .modal img{max-width:100%;max-height:40vh;object-fit:contain;display:block;margin:.5rem 0;}
+    .modal-actions{position:sticky;bottom:0;background:#fff;padding-top:.5rem;margin-top:.5rem;}
+    .info-log{margin-top:.75rem;font-size:.95rem;color:#0f7a31;}
+    .summary{background:#fff;padding:1rem;border-radius:12px;box-shadow:0 6px 18px rgba(0,0,0,.06);}
+    .score{margin-top:12px;background:#f0f9ff;border:1px solid #bae6fd;color:#0c4a6e;padding:.75rem 1rem;border-radius:12px;font-weight:600;display:none;}
+    .badge{display:inline-block;padding:.35rem .6rem;border-radius:999px;font-size:.9rem;font-weight:700;margin-left:.5rem;}
+    .badge.intermediaire{background:#fff7ed;color:#b45309;border:1px solid #fed7aa;}
+    .badge.avance{background:#eff6ff;color:#1d4ed8;border:1px solid #93c5fd;}
+    .badge.expert{background:#ecfdf5;color:#065f46;border:1px solid #a7f3d0;}
+    .errors{margin-top:10px;background:#fff;border:1px solid #e5e7eb;border-radius:12px;padding:.75rem 1rem;display:none;}
+    .errors h4{margin:.2rem 0 .4rem;}
+    .errors ul{margin:.2rem 0 0 1rem;}
+    .toggle{margin-top:8px;background:#e9eef5;color:#22324a;}
+    .progress{height:10px;background:#e9eef5;border-radius:999px;overflow:hidden;margin:10px 0 18px;}
+    .progress>span{display:block;height:100%;background:#0a74da;width:0%;transition:width .25s ease;}
+    .tabs{display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:.8rem;}
+    .tab-btn{padding:.45rem .7rem;border-radius:10px;border:1px solid #d8e0ea;background:#fff;cursor:pointer;font-size:.92rem;color:#213347;}
+    .tab-btn.active{background:#0a74da;color:#fff;border-color:#0a74da;}
+    .tab-panel{display:none;background:#fff;padding:1rem;border-radius:12px;box-shadow:0 6px 18px rgba(0,0,0,.06);}
+    .tab-panel.active{display:block;}
+    .option-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:.75rem;margin-top:.75rem;}
+    .option{border:1px solid #e6e6e6;border-radius:10px;padding:.75rem;background:#fafafa;}
+    .option label{display:block;cursor:pointer;line-height:1.35;}
+    .helper{font-size:.92rem;color:#526479;margin:.4rem 0 .1rem}
+    .step-actions{display:flex;flex-wrap:wrap;gap:.5rem;justify-content:space-between;margin-top:1rem;}
+    .warn{color:#b54708;background:#fff7ed;padding:.5rem .75rem;border-radius:8px;border:1px solid #fde68a;display:none;}
+    .small{font-size:.9rem;color:#516170;}
+    ul{margin:.4rem 0 0 1rem}
+    .footer-space{height:12px;}
+    .scenario{background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px;padding:1rem;margin-top:12px;}
+    .scenario h4{margin:.2rem 0 .4rem}
+    .notice-panel{background:#f8fafc;border:1px solid #d1d5db;border-radius:12px;padding:1rem;margin-top:1rem;display:none;}
+  </style>
 </head>
 <body>
 
-<script>
-(function () {
-  function show(id) {
-    var screens = document.querySelectorAll('.screen');
-    for (var i = 0; i < screens.length; i++) screens[i].classList.remove('active');
-    var el = document.getElementById(id) || document.getElementById('home');
-    if (el) el.classList.add('active');
-    try { window.scrollTo(0, 0); } catch(e) {}
-  }
-  window.goTo = function (id) {
-    show(id);
-    try { history.replaceState(null, '', '#' + id); } catch (e) { location.hash = id; }
-  };
-  window.addEventListener('hashchange', function () {
-    var id = (location.hash || '#home').slice(1);
-    show(id);
-  });
-  var start = (location.hash || '#home').slice(1);
-  show(start);
-})();
-</script>
+<!-- Audio (optionnel) -->
+<audio autoplay loop>
+  <source src="https://cdn.pixabay.com/download/audio/2022/03/29/audio_d2d7f6a30e.mp3" type="audio/mpeg">
+  Votre navigateur ne supporte pas l'audio.
+</audio>
+<audio id="clickSound">
+  <source src="https://cdn.pixabay.com/download/audio/2022/03/23/audio_32901fa291.mp3" type="audio/mpeg">
+  Votre navigateur ne supporte pas l'audio.
+</audio>
 
-<!-- ACCUEIL -->
+<!-- ACCUEIL avec la nouvelle image -->
 <div id="home" class="screen active">
   <div class="container">
-    <img class="hero" src="images/accueil_salle_formation.png" alt="Salle de formation moderne en Guyane">
-    <h2>Choisissez votre domaine</h2>
+    <img class="hero" src="images/accueil_salle_formation.png" alt="Salle de formation moderne en Guyane avec formateurs et participants">
+    <h2>Choisissez votre jeu</h2>
     <div class="grid">
       <div class="card">
-        <h3>Domaine Production</h3>
-        <p class="muted">Jeux de l'entreprise LESATI (Thermique, Hydraulique, Smart Grids)</p>
-        <button class="btn" onclick="goTo('domain_production')">Accéder</button>
+        <h3>Jeu n°1 — CCTP Tilesa</h3>
+        <p class="muted">Explorez les services du groupe TILESA avec Alex, puis rédigez le cahier des charges via un assistant.</p>
+        <button class="btn" onclick="startGame(1)">Lancer le jeu n°1</button>
       </div>
       <div class="card">
-        <h3>Domaine Réseau</h3>
-        <p class="muted">Jeux de l'entreprise COPAYA (Réseaux & Exploitation)</p>
-        <button class="btn" onclick="goTo('domain_reseau')">Accéder</button>
-      </div>
-      <div class="card">
-        <h3>Domaine Tertiaire</h3>
-        <p class="muted">Jeux de l'entreprise TILESA (Tertiaire et Telecom)</p>
-        <button class="btn" onclick="goTo('domain_tertiaire')">Accéder</button>
+        <h3>Jeu n°2 — CCTP Lesati</h3>
+        <p class="muted">Suivez Léa, chargée d'affaires, qui doit rédiger un cahier des charges en intégralité pour l'entreprise LESATI.</p>
+        <button class="btn" onclick="startGame(2)">Lancer le jeu n°2</button>
       </div>
     </div>
   </div>
 </div>
 
-<!-- DOMAINES -->
-<div id="domain_production" class="screen"><div class="container">
-  <h2>Domaine Production — LESATI</h2>
-  <div class="grid">
-    <div class="card">
-      <h3>Jeu A — Centrale Thermique (Léa)</h3>
-      <p class="muted">Centrale Thermique : explorez les services de la centrale thermique, puis rédigez le cahier des charges.</p>
-      <button class="btn" onclick="goTo('game2_intro')">Lancer</button>
-    </div>
-    <div class="card">
-      <h3>Jeu B — Centrale Hydraulique (Léon)</h3>
-      <p class="muted">Centrale Hydraulique : explorez les services de la centrale hydraulique, puis rédigez le cahier des charges.</p>
-      <button class="btn" onclick="goTo('game3_intro')">Lancer</button>
+<!-- JEU 1 : écran d'accueil spécifique (image + boutons uniquement) -->
+<div id="game1_intro" class="screen">
+  <div class="container">
+    <img class="hero" src="images/tilesia_accueil_alex.png" alt="Accueil du jeu 1 - Alex TILESA">
+    <div style="display:flex; gap:.5rem; margin-top:.5rem;">
+      <button class="btn" onclick="goTo('game1')">Démarrer la mission</button>
+      <button class="btn secondary" onclick="goTo('home')">⬅ Retour à l'accueil</button>
     </div>
   </div>
-  <button class="btn secondary" onclick="goTo('home')">⬅ Retour</button>
-</div></div>
+</div>
 
-<div id="domain_reseau" class="screen"><div class="container">
-  <h2>Domaine Réseau — COPAYA</h2>
-  <div class="grid">
-    <div class="card">
-      <h3>Jeu A — Élagage (Sylvie)</h3>
-      <p class="muted">Élagage : explorez les services, puis rédigez le cahier des charges.</p>
-      <button class="btn" onclick="goTo('game4_intro')">Lancer</button>
+<!-- JEU 1 : carte + assistant QCM + résumé + score -->
+<div id="game1" class="screen">
+  <div class="container">
+    <h2>Jeu n°1 — Explorer les services</h2>
+    <div class="map">
+      <div class="location" onclick="playClick(); openModal('Direction')">
+        <img src="https://cdn-icons-png.flaticon.com/512/219/219986.png" alt="Direction">Direction
+      </div>
+      <div class="location" onclick="playClick(); openModal('Technique')">
+        <img src="https://cdn-icons-png.flaticon.com/512/2621/2621140.png" alt="Technique">Service Technique
+      </div>
+      <div class="location" onclick="playClick(); openModal('Salaries')">
+        <img src="https://cdn-icons-png.flaticon.com/512/847/847969.png" alt="Salariés">Salariés
+      </div>
+      <div class="location" onclick="playClick(); openModal('Juridique')">
+        <img src="https://cdn-icons-png.flaticon.com/512/2569/2569069.png" alt="Juridique">Juridique
+      </div>
     </div>
-    <div class="card">
-      <h3>Jeu B — Raccordement HTA (Carl)</h3>
-      <p class="muted">Raccordement HTA : explorez les services, puis rédigez le cahier des charges.</p>
-      <button class="btn" onclick="goTo('game5_intro')">Lancer</button>
+    <div class="footer-space"></div>
+    <button class="btn" onclick="validateCollection(1)">Rédiger le cahier des charges</button>
+    <button class="btn secondary" onclick="goTo('home')">⬅ Retour accueil</button>
+    <div class="info-log" id="infoLog1"></div>
+  </div>
+</div>
+
+<div id="builder1" class="screen">
+  <div class="container">
+    <h2>Jeu n°1 — Assistant (QCM)</h2>
+    <div class="small">Sélectionnez les éléments pertinents à chaque étape.</div>
+    <div class="progress"><span id="builderProgress1"></span></div>
+    <div class="tabs" id="builderTabs1"></div>
+    <div id="builderPanels1"></div>
+    <div class="warn" id="builderWarn1">Veuillez sélectionner au moins un élément dans cet onglet pour continuer.</div>
+    <div class="step-actions">
+      <button class="btn secondary" id="prevStep1">◀ Précédent</button>
+      <div>
+        <button class="btn secondary" onclick="goTo('game1')">Sauvegarder & Revenir à la carte</button>
+        <button class="btn" id="nextStep1">Suivant ▶</button>
+        <button class="btn" id="finishBuilder1" style="display:none">Générer le résumé</button>
+      </div>
     </div>
   </div>
-  <button class="btn secondary" onclick="goTo('home')">⬅ Retour</button>
-</div></div>
+</div>
 
-<div id="domain_tertiaire" class="screen"><div class="container">
-  <h2>Domaine Tertiaire — TILESA</h2>
-  <div class="grid">
-    <div class="card">
-      <h3>Jeu A — Nettoyage des Sites (Alex)</h3>
-      <p class="muted">Nettoyage des sites : Explorez les services, puis rédigez le cahier des charges.</p>
-      <button class="btn" onclick="goTo('game1_intro')">Lancer</button>
-    </div>
-    <div class="card">
-      <h3>Jeu B — Véhicules Électriques (Manon)</h3>
-      <p class="muted">Véhicules Électriques : Explorez les services, puis rédigez le cahier des charges.</p>
-      <button class="btn" onclick="goTo('game6_intro')">Lancer</button>
+<div id="summary1" class="screen">
+  <div class="container">
+    <h2>Résumé — Jeu n°1</h2>
+    <div class="summary" id="summaryContent1"></div>
+    <div id="scoreContent1" class="score"></div>
+    <button class="btn toggle" id="toggleErrors1" style="display:none">Voir mes erreurs</button>
+    <div id="errorsPanel1" class="errors"></div>
+    <div style="display:flex; gap:.5rem; margin-top:12px;">
+      <button class="btn secondary" onclick="goTo('builder1')">Modifier</button>
+      <button class="btn" onclick="goTo('home')">Retour à l'accueil</button>
     </div>
   </div>
-  <button class="btn secondary" onclick="goTo('home')">⬅ Retour</button>
-</div></div>
+</div>
 
-<!-- INTROS -->
-<div id="game1_intro" class="screen"><div class="container">
-  <img class="hero" src="images/tilesia_accueil_alex.png" alt="">
-  <h2>TILESA — Jeu A (Nettoyage des sites)</h2>
-  <button class="btn" onclick="goTo('game1')">Démarrer</button>
-  <button class="btn secondary" onclick="goTo('domain_tertiaire')">⬅ Retour</button>
-</div></div>
-
-<div id="game2_intro" class="screen"><div class="container">
-  <img class="hero" src="images/lea_centrale_LESATI.png" alt="">
-  <h2>LESATI — Jeu A (Centrale Thermique)</h2>
-  <p>Léa, chargée d'affaires du service production, est volontaire pour réaliser l'expression du besoin. Il s'agit de l'achat de 3 nouveaux groupes électrogènes.</p>
-  <button class="btn" onclick="goTo('game2')">Démarrer</button>
-  <button class="btn secondary" onclick="goTo('domain_production')">⬅ Retour</button>
-</div></div>
-
-<div id="game3_intro" class="screen"><div class="container">
-  <img class="hero" src="images/leon_centrale_LESATI.png" alt="">
-  <h2>LESATI — Jeu B (Centrale Hydraulique)</h2>
-  <p>Léon, nouveau chef de projet de la centrale hydraulique, est volontaire pour rédiger le cahier des charges concernant l’achat de pièces de rechange.</p>
-  <button class="btn" onclick="goTo('game3')">Démarrer</button>
-  <button class="btn secondary" onclick="goTo('domain_production')">⬅ Retour</button>
-</div></div>
-
-<div id="game4_intro" class="screen"><div class="container">
-  <img class="hero" src="images/copaya_accueil.png" alt="">
-  <h2>COPAYA — Jeu A (Élagage)</h2>
-  <p>Vous incarnez Sylvie, chargée d’affaires au sein de l’entreprise Copaya. Vous avez pour objectif de rédiger le cahier des charges pour les prestations d’élagage. La consultation sera lancée dans 8 mois et vous souhaitez anticiper au maximum cette étape.</p>
-  <button class="btn" onclick="goTo('game4')">Démarrer</button>
-  <button class="btn secondary" onclick="goTo('domain_reseau')">⬅ Retour</button>
-</div></div>
-
-<div id="game5_intro" class="screen"><div class="container">
-  <img class="hero" src="images/copaya_intro.png" alt="">
-  <h2>COPAYA — Jeu B (Raccordement HTA)</h2>
-  <p>Vous incarnez Carl, nouveau chargé d’affaires du service réseau. Vous êtes en charge de la rédaction d’un cahier des charges pour le raccordement HTA d’un village. La consultation sera lancée dans 9 mois et vous anticipez cette étape.</p>
-  <button class="btn" onclick="goTo('game5')">Démarrer</button>
-  <button class="btn secondary" onclick="goTo('domain_reseau')">⬅ Retour</button>
-</div></div>
-
-<div id="game6_intro" class="screen"><div class="container">
-  <img class="hero" src="images/accueil_sabrina.png" alt="">
-  <h2>TILESA — Jeu B (Véhicules Électriques)</h2>
-  <p>Vous incarnez Manon, pilote de la maintenance des véhicules. Vous êtes en charge de la rédaction d’un cahier des charges pour l’achat de véhicules électriques neufs permettant de renouveler la flotte. La consultation sera lancée dans 9 mois et vous anticipez cette étape.</p>
-  <button class="btn" onclick="goTo('game6')">Démarrer</button>
-  <button class="btn secondary" onclick="goTo('domain_tertiaire')">⬅ Retour</button>
-</div></div>
-
-<!-- CARTES / JEUX -->
-<div id="game1" class="screen"><div class="container">
-  <h2>TILESA — Jeu A (Nettoyage des sites)</h2>
-  <div class="map">
-    <div class="location" onclick="openModal('Direction',1)"><img src="https://cdn-icons-png.flaticon.com/512/219/219986.png" alt="">Direction</div>
-    <div class="location" onclick="openModal('Technique',1)"><img src="https://cdn-icons-png.flaticon.com/512/2621/2621140.png" alt="">Technique</div>
-    <div class="location" onclick="openModal('Salaries',1)"><img src="https://cdn-icons-png.flaticon.com/512/847/847969.png" alt="">Salariés</div>
-    <div class="location" onclick="openModal('Juridique',1)"><img src="https://cdn-icons-png.flaticon.com/512/2569/2569069.png" alt="">Juridique</div>
+<!-- JEU 2 : écran d'accueil spécifique (avec image + boutons) -->
+<div id="game2_intro" class="screen">
+  <div class="container">
+    <img class="hero" src="images/lea_centrale_LESATI.png" alt="Accueil du jeu 2 - Léa devant la centrale">
+    <h2>Jeu n°2 — CCTP Lesati</h2>
+    <p>Léa, chargée d'affaires du service production, est volontaire pour réaliser l'expression du besoin.</p>
+    <div style="display:flex; gap:.5rem; margin-top:.5rem;">
+      <button class="btn" onclick="goTo('game2')">Démarrer la mission</button>
+      <button class="btn secondary" onclick="goTo('home')">⬅ Retour à l'accueil</button>
+    </div>
   </div>
-  <div class="info-log" id="infoLog1"></div>
-  <button class="btn secondary" onclick="goTo('domain_tertiaire')">⬅ Retour</button>
-</div></div>
+</div>
 
-<div id="game2" class="screen"><div class="container">
-  <h2>LESATI — Jeu A (Centrale Thermique)</h2>
-  <div class="map">
-    <div class="location" onclick="openModal('Direction',2)"><img src="https://cdn-icons-png.flaticon.com/512/219/219986.png" alt="">Direction</div>
-    <div class="location" onclick="openModal('Service production',2)"><img src="https://cdn-icons-png.flaticon.com/512/1995/1995525.png" alt="">Service production</div>
-    <div class="location" onclick="openModal('Salaries',2)"><img src="https://cdn-icons-png.flaticon.com/512/847/847969.png" alt="">Salariés</div>
-    <div class="location" onclick="openModal('Juridique',2)"><img src="https://cdn-icons-png.flaticon.com/512/2569/2569069.png" alt="">Juridique</div>
-  </div>
-  <div class="info-log" id="infoLog2"></div>
-  <button class="btn secondary" onclick="goTo('domain_production')">⬅ Retour</button>
-  <button id="btnCCTP2" class="btn" style="display:none" onclick="document.getElementById('notice2').style.display='block'">Rédiger le cahier des charges</button>
-  <div id="notice2" class="notice" style="display:none"><strong>Vous disposez de toutes les informations pour écrire un cahier des charges en 45 minutes.</strong></div>
-</div></div>
+<!-- JEU 2 : carte (4 onglets LESATI) + bouton CCTP (pas de redirection) -->
+<div id="game2" class="screen">
+  <div class="container">
+    <h2>Jeu n°2 — Suivez Léa (LESATI)</h2>
+    <div class="map">
+      <div class="location" onclick="playClick(); openModal('Direction',2)">
+        <img src="https://cdn-icons-png.flaticon.com/512/219/219986.png" alt="Direction">Direction (LESATI)
+      </div>
+      <div class="location" onclick="playClick(); openModal('Service production',2)">
+        <img src="https://cdn-icons-png.flaticon.com/512/1995/1995525.png" alt="Production">Service production (LESATI)
+      </div>
+      <div class="location" onclick="playClick(); openModal('Salaries',2)">
+        <img src="https://cdn-icons-png.flaticon.com/512/847/847969.png" alt="Salariés">Salariés (LESATI)
+      </div>
+      <div class="location" onclick="playClick(); openModal('Juridique',2)">
+        <img src="https://cdn-icons-png.flaticon.com/512/2569/2569069.png" alt="Juridique">Juridique (LESATI)
+      </div>
+    </div>
+    <div class="footer-space"></div>
+    <button class="btn secondary" onclick="goTo('home')">⬅ Retour accueil</button>
+    <div class="info-log" id="infoLog2"></div>
 
-<div id="game3" class="screen"><div class="container">
-  <h2>LESATI — Jeu B (Centrale Hydraulique)</h2>
-  <div class="map">
-    <div class="location" onclick="openModal('Direction B',3)"><img src="https://cdn-icons-png.flaticon.com/512/219/219986.png" alt="">Direction</div>
-    <div class="location" onclick="openModal('Manager',3)"><img src="https://cdn-icons-png.flaticon.com/512/847/847969.png" alt="">Manager</div>
-    <div class="location" onclick="openModal('Maintenance',3)"><img src="https://cdn-icons-png.flaticon.com/512/1995/1995525.png" alt="">Maintenance</div>
-    <div class="location" onclick="openModal('Juridique B',3)"><img src="https://cdn-icons-png.flaticon.com/512/2569/2569069.png" alt="">Juridique</div>
-    <div class="location" onclick="openModal('Sécurité',3)"><img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="">Responsable sécurité</div>
+    <!-- Bouton qui apparaît après collecte complète -->
+    <button id="btnCCTP2" class="btn" style="display:none; margin-top:1rem;" onclick="document.getElementById('notice2').style.display='block'">
+      Rédiger le cahier des charges
+    </button>
+    <div id="notice2" class="notice-panel">
+      <p><strong>Vous disposez de toutes les informations pour écrire un cahier des charges en 45 minutes.</strong></p>
+    </div>
   </div>
-  <div class="info-log" id="infoLog3"></div>
-  <div style="margin-top:10px;display:flex;gap:.5rem;flex-wrap:wrap">
-    <button class="btn" onclick="startBuilder(3,true)">Rédiger le cahier des charges</button>
-    <button class="btn secondary" onclick="goTo('domain_production')">⬅ Retour</button>
-  </div>
-</div></div>
+</div>
 
-<div id="game4" class="screen"><div class="container">
-  <h2>COPAYA — Jeu A (Élagage)</h2>
-  <div class="map">
-    <div class="location" onclick="openModal('Direction Copaya',4)"><img src="https://cdn-icons-png.flaticon.com/512/219/219986.png" alt="">Direction</div>
-    <div class="location" onclick="openModal('Clients Copaya',4)"><img src="https://cdn-icons-png.flaticon.com/512/602/602220.png" alt="">Clients</div>
-    <div class="location" onclick="openModal('Maintenance Copaya',4)"><img src="https://cdn-icons-png.flaticon.com/512/1995/1995525.png" alt="">Maintenance</div>
-    <div class="location" onclick="openModal('Environnement Copaya',4)"><img src="https://cdn-icons-png.flaticon.com/512/1535/1535791.png" alt="">Environnement</div>
-    <div class="location" onclick="openModal('Sécurité Copaya',4)"><img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="">Sécurité</div>
+<!-- (Conservé mais non déclenché automatiquement) -->
+<div id="summary2" class="screen">
+  <div class="container">
+    <h2>Fin de mission — Jeu n°2</h2>
+    <div class="summary">
+      <p><strong>Bravo !</strong> Vous avez collecté toutes les informations auprès des 4 services.</p>
+      <div class="scenario">
+        <h4>🎯 Scénario LESATI</h4>
+        <p><strong>Contexte :</strong> L’entreprise <strong>LESATI</strong> assure les missions de production, distribution et commercialisation de l’énergie pour la commune de <strong>Saint Georges</strong>.</p>
+        <p>Certains groupes ont atteint leurs limites techniques (dépassement du nombre d’heures limites prévues par le constructeur) et devront être révisés. À ce stade, une révision des groupes coûte très cher, potentiellement plus onéreuse que l’achat de matériels neufs.</p>
+        <p><strong>Objet :</strong> Achat de <strong>3 groupes électrogènes neufs</strong> comprenant la livraison à Saint Georges.</p>
+        <p><strong>Condition :</strong> Utilisation continue du groupe sans restriction dans un milieu humide et avec température élevée.</p>
+      </div>
+    </div>
+    <div style="display:flex; gap:.5rem; margin-top:12px;">
+      <button class="btn" onclick="goTo('home')">Retour à l'accueil</button>
+    </div>
   </div>
-  <div class="info-log" id="infoLog4"></div>
-  <div style="margin-top:10px;display:flex;gap:.5rem;flex-wrap:wrap">
-    <button class="btn" onclick="startBuilder(4,true)">Rédiger le cahier des charges</button>
-    <button class="btn secondary" onclick="goTo('domain_reseau')">⬅ Retour</button>
-  </div>
-</div></div>
+</div>
 
-<div id="game5" class="screen"><div class="container">
-  <h2>COPAYA — Jeu B (Raccordement HTA)</h2>
-  <div class="map">
-    <div class="location" onclick="openModal('Directrice Carl',5)"><img src="https://cdn-icons-png.flaticon.com/512/219/219986.png" alt="">La Directrice</div>
-    <div class="location" onclick="openModal('Équipe Carl',5)"><img src="https://cdn-icons-png.flaticon.com/512/847/847969.png" alt="">Équipe</div>
-    <div class="location" onclick="openModal('Manager Carl',5)"><img src="https://cdn-icons-png.flaticon.com/512/1995/1995525.png" alt="">Manager</div>
-    <div class="location" onclick="openModal('Habitants Carl',5)"><img src="https://cdn-icons-png.flaticon.com/512/1484/1484825.png" alt="">Habitants</div>
-    <div class="location" onclick="openModal('Juriste Carl',5)"><img src="https://cdn-icons-png.flaticon.com/512/2569/2569069.png" alt="">Juriste</div>
-    <div class="location" onclick="openModal('Prévention Carl',5)"><img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="">Prévention</div>
-  </div>
-  <div class="info-log" id="infoLog5"></div>
-  <div style="margin-top:10px;display:flex;gap:.5rem;flex-wrap:wrap">
-    <button class="btn" onclick="startBuilder(5,true)">Rédiger le cahier des charges</button>
-    <button class="btn secondary" onclick="goTo('domain_reseau')">⬅ Retour</button>
-  </div>
-</div></div>
-
-<div id="game6" class="screen"><div class="container">
-  <h2>TILESA — Jeu B (Véhicules Électriques)</h2>
-  <div class="map">
-    <div class="location" onclick="openModal('Direction Tilesa B',6)"><img src="https://cdn-icons-png.flaticon.com/512/219/219986.png" alt="">Direction</div>
-    <div class="location" onclick="openModal('Juriste Tilesa B',6)"><img src="https://cdn-icons-png.flaticon.com/512/2569/2569069.png" alt="">Juriste</div>
-    <div class="location" onclick="openModal('Manager Tilesa B',6)"><img src="https://cdn-icons-png.flaticon.com/512/847/847969.png" alt="">Manager</div>
-    <div class="location" onclick="openModal('Services Tilesa B',6)"><img src="https://cdn-icons-png.flaticon.com/512/1484/1484825.png" alt="">Services</div>
-    <div class="location" onclick="openModal('Technique Tilesa B',6)"><img src="https://cdn-icons-png.flaticon.com/512/1995/1995525.png" alt="">Technique</div>
-    <div class="location" onclick="openModal('Environnement Tilesa B',6)"><img src="https://cdn-icons-png.flaticon.com/512/1535/1535791.png" alt="">Responsable environnement</div>
-  </div>
-  <div class="info-log" id="infoLog6"></div>
-  <div style="margin-top:10px;display:flex;gap:.5rem;flex-wrap:wrap">
-    <button class="btn" onclick="startBuilder(6,true)">Rédiger le cahier des charges</button>
-    <button class="btn secondary" onclick="goTo('domain_tertiaire')">⬅ Retour</button>
-  </div>
-</div></div>
-
-<!-- MODALE -->
+<!-- Modale partagée -->
 <div class="overlay" id="overlay" onclick="closeModal()"></div>
 <div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
   <h3 id="modalTitle"></h3>
-  <img id="modalImage" src="" alt="Illustration">
-  <p id="modalText"></p>
-  <div style="display:flex;gap:.5rem;margin-top:.7rem">
+  <p id="modalContent"></p>
+  <img id="modalImage" src="" alt="Illustration du service">
+  <div class="modal-actions" style="display:flex; gap:.5rem; margin-top:.8rem;">
     <button class="btn" onclick="collectInfo()">Collecter l'information</button>
     <button class="btn secondary" onclick="closeModal()">Retour</button>
   </div>
 </div>
 
-<!-- BUILDERS (QCM) for games 3,4,5,6 + summary -->
-<div id="builder" class="screen"><div class="container" id="builderContainer"></div></div>
-<div id="summary" class="screen"><div class="container" id="summaryContainer"></div></div>
-
 <script>
-/* ---------- Données modales (textes exacts) ---------- */
-/* TILESA A */
-const data1={
-  'Direction':{ text:"Le président vous accueille : « La santé et la sécurité sont mes priorités pour garantir le bon fonctionnement de l’entreprise et le bien-être des salariés. »", image:"images/tilesia_direction.png" },
-  'Technique':{ text:`Intervention pendant les heures ouvrables, sauf cas exceptionnel. Pour les locaux électriques, le titulaire sera accompagné d'un employé disposant des habilitations requises.
+  // Base
+  const screens=document.querySelectorAll('.screen');
+  const clickSound=document.getElementById('clickSound');
+  function playClick(){try{clickSound.currentTime=0;clickSound.play();}catch(e){}}
+  function goTo(id){screens.forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');}
+  function startGame(n){ goTo(n===1?'game1_intro':'game2_intro'); }
 
+  // Textes & images Jeu 1
+  const modalData1={
+    'Direction':{ text:"Le président vous accueille : « La santé et la sécurité sont mes priorités pour garantir le bon fonctionnement de l’entreprise et le bien-être des salariés. »", image:"images/tilesia_direction.png" },
+    'Technique':{ text:`Intervention pendant les heures ouvrables, sauf cas exceptionnel. Pour les locaux électriques, le titulaire sera accompagné d'un employé disposant des habilitations requises.
 Les espaces concernés sont les suivants : bureaux, couloirs, escaliers, ascenseur, sanitaires, vestiaires, réfectoires.
-
 Le titulaire remplira un avis de passage. Le rapport semestriel sera rédigé par le service technique.
 
 Les consommables à la charge du prestataire sont les suivants :
@@ -330,339 +269,186 @@ Les consommables à la charge du prestataire sont les suivants :
 - Le savon liquide à mains
 - Les sacs poubelles
 - Désodorisants.`, image:"images/tilesia_technique.png" },
-  'Salaries':{ text:"Il y a 300 salariés dans le bâtiment répartis sur les 4 étages. Le bâtiment dispose d’une superficie de 4100 m². Vous observez une ambiance de coopération et de réunions dans les locaux.", image:"images/tilesia_salaries.png" },
-  'Juridique':{ text:"La juriste rappelle les prescriptions du Décret 92-158 du 20 février 1992 reprises dans le Code du travail (articles R.237-1 et R.237-28), applicables aux travaux réalisés dans l’établissement par une entreprise extérieure.", image:"images/tilesia_juridique.png" }
-};
+    'Salaries':{ text:"Il y a 300 salariés dans le bâtiment répartis sur les 4 étages. Le bâtiment dispose d’une superficie de 4100 m². Vous observez une ambiance de coopération et de réunions dans les locaux.", image:"images/tilesia_salaries.png" },
+    'Juridique':{ text:"La juriste rappelle les prescriptions du Décret 92-158 du 20 février 1992 reprises dans le Code du travail (articles R.237-1 et R.237-28), applicables aux travaux réalisés dans l’établissement par une entreprise extérieure.", image:"images/tilesia_juridique.png" }
+  };
 
-/* LESATI A */
-const data2={
-  'Direction':{ text:'La directrice : "LESATI assure production, distribution et commercialisation à Saint Georges (800 clients). Priorité au service public et à la proximité client."', image:"images/direction_directrice_LESATI.png" },
-  'Service production':{ text:'Certains groupes ont atteint leurs limites techniques (...) \n\nNous aurons besoins de 3 groupes électrogènes d’une puissance nominale de 800 kVA, de type diesel avec les certifications "Ultra" et "Iso 9001". Il faut penser aux documents nécessaires pour la bonne utilisation du matériel.', image:"images/production_groupes_LESATI.png" },
-  'Salaries':{ text:"Les 30 salariés devant l’entrée du bâtiment principal. Ils sont pleinement investis (...).", image:"images/salaries_30_LESATI.png" },
-  'Juridique':{ text:"La juriste rappelle qu'il est indispensable d'ajouter une garantie technique lors de l'achat des groupes électrogènes, avec livraison à Saint Georges. Les groupes seront utilisés en continu dans un milieu humide et avec température élevée.", image:"images/juridique_garantie_LESATI.png" }
-};
-
-/* LESATI B */
-const data3={
-  'Direction B':{ text:`Pour répondre aux besoins énergétiques croissants de la Guyane au début des années 1980, le barrage a été construit au niveau d’un resserrement naturel du fleuve Sinnamary. Grâce à sa retenue d’eau, il alimente deux tiers des foyers du littoral guyanais.`, image:"images/direction_LESATI_B.png" },
-  'Manager':{ text:`Ce cahier des charges a pour objet la fourniture d’équipements destinés à l’exploitation et à la maintenance d’une centrale hydraulique (Sinnamary). Ces équipements doivent répondre aux exigences de performance, de durabilité, et de conformité aux normes en vigueur.`, image:"images/manager_LESATI_B.png" },
-  'Maintenance':{ text:`Les pièces de rechange sont utilisées sur les équipements suivants :
-
-- Les pompes,
-- Les moteurs électriques,
-- Les kits de maintenance des pompes,
-- Les capteurs analogiques et tout ou rien de niveaux, pressostats, manomètres, 
-- Les filtres,
-- Les clapets anti-retour,
-- Les vannes manuelles et motorisées,
-- Les actionneurs (ex. électrovannes).
-
-Les livrables attendus sont les suivants :
-
-- L’ensemble des équipements, accompagnés de leurs certificats de conformité, notices techniques, plans d'installation si nécessaire.
-- Rapport d’essais.`, image:"images/maintenance_LESATI_B.png" },
-  'Juridique B':{ text:`Le titulaire garantit les fournitures contre tout défaut de fabrication ou de matière pour une durée minimale de 24 mois à compter de la date de mise en service ou 30 mois après la livraison. En cas de défaillance, le remplacement ou la réparation des équipements sera pris en charge par le Titulaire.`, image:"images/juridique_LESATI_B.png" },
-  'Sécurité':{ text:`Les équipements devront être livrés avec protections contre l’humidité et les chocs. Une étiquette claire indiquant le contenu et la référence doit être visible sur chaque caisse.
-
-Adresse du site :
-Centrale hydraulique de Sinnamary
-97315 Sinnamary
-Guyane Française
-
-Horaires de livraison :
-Du lundi au vendredi de 08h00 à 12h00`, image:"images/securite_LESATI_B.png" }
-};
-
-/* COPAYA A */
-const data4={
-  'Direction Copaya':{ text:`L'élagage est essentiel pour prévenir les coupures d'électricité et assurer la continuité de l'alimentation électrique des clients. Copaya supervise l'élagage des arbres à proximité des lignes électriques pour éviter les dommages sur le réseau.`, image:"images/copaya_direction.png" },
-  'Clients Copaya':{ text:`Les propriétaires de terrain doivent veiller à l'entretien et à la taille régulière des arbres situés sur leurs propriétés, conformément à la réglementation. L’élagage à proximité des réseaux électriques doit être géré par des professionnels disposant d’une autorisation AIPR (Autorisation Intervention à Proximité des Réseaux). La pousse rapide de la végétation peut engendrer des problématiques de sécurité des tiers et également des coupures intempestives de la clientèle.`, image:"images/clients_copaya.png" },
-  'Maintenance Copaya':{ text:`Distances attendues :
-
-- 405 KM à élaguer par an sur le réseau HTA
-- 250 KM à élaguer par an sur le réseau HTB
-- 100 pieds de support par an + accès
-
-Nous souhaitons un compte rendu précis de chaque zone élaguée. 
-Le compte rendu est agrémenté de photos avant et après passage du Titulaire.
-
-Les procédures d’accès et les plans seront fournis par Copaya.
-Les documents d’accès sont de la responsabilité de Copaya.
-
-Les chantiers se réaliseront de préférence entre 6h30 et 17h00. 
-Tout chantier planifié en dehors de ces horaires sera réalisé avec l’accord écrit de Copaya.
-
-Avant toute intervention à proximité d’un ouvrage électrique, il est impératif d’envoyer une DT-DICT (Déclaration de Travaux - Déclaration d’Intention de Commencement de Travaux) au moins 15 jours avant le début des travaux.`, image:"images/copaya_maintenance.png" },
-  'Environnement Copaya':{ text:`l’intervention dans des zones protégées, la préservation des espèces (périodes de nidification, par exemple) et la gestion des risques d’incendie sont encadrées par une réglementation qui évolue, en même temps que la prise de conscience environnementale`, image:"images/copaya_environnement.png" },
-  'Sécurité Copaya':{ text:`Le Titulaire devra s’équiper d'Equipements de Protection Collectifs (EPC) et d’Equipements de Protection Individuels (EPI), à savoir :
-- Balisage des zones de travail avec cônes pour matérialiser la zone de travail sur route
-- Gyrophare/voyants lumineux
-- Panneaux de chantier posés a minima 50m avant le chantier
-- Casque
-- Gants de manutention
-- Protection auditive
-- Vêtement de protection
-- Chaussures de sécurité
-- Matériel d’ascension conforme (contrôle métrologique à jour)`, image:"images/copaya_securite.png" }
-};
-
-/* COPAYA B */
-const data5={
-  'Directrice Carl':{ 
-    text:`Ce projet est d’une grande importance pour l’entreprise COPAYA. Nous voulons fournir la même qualité de service à l’ensemble des habitants présents sur le territoire. Tous les moyens seront mis en œuvre pour respecter les délais et limiter les nuisances. Il est important de finaliser les travaux avant la prochaine saison des pluies.`,
-    image:"images/copaya_directrice.png"
-  },
-  'Équipe Carl':{
-    text:`Le titulaire transmettra son planning permettant de réaliser la fiche de déroulement des opérations (FDO).
-Les communications seront réalisées via un outil dont les modalités de connexion seront transmises ultérieurement.
-Copaya fournira les câbles, la boîte de jonction et un local de stockage tandis que le Titulaire devra nous transmettre les chambres de tirage.`,
-    image:"images/copaya_equipe.png"
-  },
-  'Manager Carl':{
-    text:`Voici les consignes :
-
-- Mise en souterrain de 20 km de réseau HTA et 15 km de fibres optiques
-- Confection de 60 boîtes de jonction HTA
-- Fourniture et pose de fourreaux
-- Réalisation d’une fouille pour la pose d’une armoire
-- Réalisation d’une dalle de propreté autour de l’armoire
-- Installation et mise en service de l’armoire
-- Raccordement et étiquetage des câbles HTA
-- Durée du chantier : 4 mois`,
-    image:"images/copaya_manager.png"
-  },
-  'Habitants Carl':{
-    text:`Nous attendons ces travaux avec impatience. Ces travaux permettront de stabiliser le réseau électrique. Nous espérons que les impacts sur la chaussée et sur le volume sonore seront minimisés dans le quartier.`,
-    image:"images/copaya_habitants.png"
-  },
-  'Juriste Carl':{
-    text:`Les tranchées devront respecter les conditions imposées par la DGTM (Direction Générale des Territoires et de la Mer) concernant les travaux prévus sur la voie publique.
-Avant tous travaux sur le domaine public, le prestataire devra effectuer une déclaration de commencement de travaux. Avant l’ouverture du chantier, il transmettra les éléments au Maître d’Ouvrage.
-Le Titulaire réalisera l’ensemble des investigations complémentaires (IC) et opérations de localisation (OL) nécessaires à l’exécution des travaux conformément au décret n°2011-12.`,
-    image:"images/copaya_juriste.png"
-  },
-  'Prévention Carl':{
-    text:`Le Titulaire devra prendre toutes les dispositions nécessaires pour assurer la sécurité des biens et des personnes :
-
-- Balisage des zones de travail avec cônes pour matérialiser la zone de travail sur route 
-- Gyrophare/voyants lumineux 
-- Panneaux de chantier posés a minima 50 m avant le chantier
- 
-Des visites régulières de prévention sécurité seront organisées par COPAYA pour s’assurer de la conformité du chantier.`,
-    image:"images/copaya_prevention.png"
-  }
-};
-
-/* TILESA B */
-const data6={
-  'Direction Tilesa B':{ 
-    text:`Dans le cadre de son engagement en faveur du développement durable et de la réduction des émissions de gaz à effet de serre, Tilesa souhaite électrifier sa flotte de véhicules en Guyane Française. La flotte actuelle compte 150 véhicules dont 30% doivent être remplacés par des modèles électriques.`,
-    image:"images/direction.png" 
-  },
-  'Manager Tilesa B':{ 
-    text:`Le Titulaire du marché devra assurer :
-
-- La fourniture de véhicules électriques neufs, homologués pour le territoire français et adaptés à l’environnement guyanais 
-- La livraison des véhicules sur les différents sites : Cayenne, Kourou, Saint-Laurent-du-Maroni…
-- La mise en service complète (immatriculation locale, première charge, vérifications fonctionnelles) 
-- La formation des utilisateurs à la conduite de véhicules électriques 
-- La fourniture de la documentation complète (certificats de conformité, manuels, garanties)
-- Le service après-vente assuré localement ou via un partenaire agréé en Guyane.
-- Les véhicules seront livrées lors des jours d’ouverture des sites`,
-    image:"images/manager.png" 
-  },
-  'Services Tilesa B':{ 
-    text:`Trois collègues échangent sur les besoins :
-
-- Service réseau : Véhicules tout-chemin électriques ou hybrides rechargeables pour zones d’accès difficile.
-- Clientèle :  Petits utilitaires électriques pour transport de matériel et d’équipes techniques
-- Finance : Berlines ou citadines électriques pour déplacements professionnels`,
-    image:"images/services.png" 
-  },
-  'Technique Tilesa B':{ 
-    text:`Le Titulaire prendra en charge :
-
-- Les frais d’acheminement jusqu’en Guyane (transport maritime, douane, manutention, livraison finale)
-- Les formalités administratives d’immatriculation sur le territoire
-- La fourniture de tous les équipements de base (câbles de recharge, kit sécurité, roue de secours ou kit anti-crevaison)
-
-L’entreprise assurera :
-- La mise à disposition des emplacements nécessaires à la réception et au stationnement des véhicules
-- L’assurance des véhicules
-- L’installation et l’entretien des bornes de recharge
-- Le suivi administratif (cartes grises, fiscalité, contrôles périodiques)`,
-    image:"images/technique.png" 
-  },
-  'Juriste Tilesa B':{ 
-    text:`Face à l’urgence climatique, l’Union européenne a mis en place un cadre réglementaire ambitieux pour accélérer l’électrification du parc automobile.  Parmi les mesures phares :
-
-- l’interdiction de la vente des voitures thermiques neuves à partir de 2035
-- la norme CAFE, le recyclage des batteries et la mise en place d’un passeport numérique de batterie.`,
-    image:"images/juriste.png" 
-  },
-  'Environnement Tilesa B':{ 
-    text:`Nos objectifs sont les suivants :
-- Réduction mesurable des émissions de CO₂ et des coûts énergétiques
-- Amélioration du confort de conduite et de la sécurité des utilisateurs
-- Fonctionnement optimal des véhicules malgré les contraintes territoriales.`,
-    image:"images/responsable_environnement.png" 
-  }
-};
-
-let currentGame=0,currentKey='';const sets={1:new Set(),2:new Set(),3:new Set(),4:new Set(),5:new Set(),6:new Set()};
-
-function openModal(key,game){
-  currentGame=game; currentKey=key;
-  const src= game===2?data2 : game===3?data3 : game===4?data4 : game===5?data5 : game===6?data6 : data1;
-  const it=src[key];
-  document.getElementById('modalTitle').textContent=key.replace(' Tilesa B','').replace(' B','').replace(' Copaya','').replace(' Carl','');
-  document.getElementById('modalImage').src=it.image;
-  document.getElementById('modalText').textContent=it.text;
-  document.getElementById('overlay').classList.add('active');
-  document.getElementById('modal').classList.add('active');
-}
-function closeModal(){document.getElementById('overlay').classList.remove('active');document.getElementById('modal').classList.remove('active');}
-
-function collectInfo(){
-  const set=sets[currentGame]; set.add(currentKey);
-  const el=document.getElementById('infoLog'+currentGame);
-  if(el) el.textContent="Infos collectées : "+Array.from(set).map(s=>s.replace(' Tilesa B','').replace(' B','').replace(' Copaya','').replace(' Carl','')).join(', ');
-  if(currentGame===2 && set.size>=4) document.getElementById('btnCCTP2').style.display='inline-block';
-}
-
-/* ----------------------- QCM reusable builder ----------------------- */
-const stepsCommon=[
-  { id:"objet", label:"Objet", help:"Il sert à définir l’objet du cahier des charges. Il ne doit pas comporter d’autre mention que cette définition.",
-    options:[ "Prestation de nettoyage intérieur des locaux du site TILESIA", "Périmètre: bureaux, circulation, escaliers, ascenseur, sanitaires, vestiaires, réfectoires", "Objectif: propreté, hygiène et confort des utilisateurs" ] },
-  { id:"contexte", label:"Contexte", help:"Situer le contexte de l’affaire (évènements historiques, politique d’entreprise).",
-    options:[ "Bâtiment R+3, 4100 m², ~300 salariés", "La politique santé sécurité est un enjeu majeur pour l’entreprise", "Locaux électriques accompagnés par personnel habilité" ] },
-  { id:"definition", label:"Définition de la prestation", help:"Définir la prestation ainsi que la volumétrie (tous les éléments quantitatifs et qualitatifs).",
-    options:[ "Nettoyage des sols (aspiration, balayage humide, lavage)", "Dépoussiérage des surfaces et mobiliers", "Désinfection des points de contact", "Sanitaires: nettoyage, désinfection et réassort" ] },
-  { id:"limites_titulaire", label:"Limites à la charge du titulaire", help:"Mentionner clairement les limites de la prestation du Titulaire (outillages, produits).",
-    options:[ "Approvisionnement consommables: papier toilette, essuie-mains, savon mains, sacs poubelles, désodorisants", "Fourniture matériels et produits de nettoyage", "Avis de passage après intervention" ] },
-  { id:"limites_entreprise", label:"Limites à la charge de l’entreprise", help:"Prestations et matériels à charge d’EDF.",
-    options:[ "Mise à disposition des locaux d’entretien et points d’eau", "Accompagnement zones électriques par agents habilités", "Accès / badges / consignes de sécurité" ] },
-  { id:"qualite", label:"Qualité", help:"Certification, homologation des produits.",
-    options:[ "Plan qualité et fiches techniques produits", "Traçabilité des interventions (registre / app)", "Indicateurs de propreté et plan d’amélioration" ] },
-  { id:"conditions", label:"Conditions d’interventions", help:"Précautions, délais horaires, conditions d’accès, sécurité.",
-    options:[ "Respect sécurité / environnement (tri, stockage produits)", "Signalisation des zones en intervention", "Interventions en heures ouvrables", "Décret 92-158 & C. travail (R.237-1 à R.237-28), normes d’hygiène" ] },
-  { id:"resultats", label:"Résultats attendus", help:"Quantifiables, mesurables et contrôlables (seuil, niveau, température).",
-    options:[ "Sols propres sans traces visibles", "Sanitaires propres, désinfectés et réapprovisionnés", "Mobilier dépoussiéré, points de contact désinfectés" ] },
-  { id:"reception_ref", label:"Réception", help:"Décrire les éléments qui permettront de réaliser la réception technique (livrables).",
-    options:[ "Rapport semestriel rédigé par le service technique", "Procès-verbal signé et daté par les deux parties", "Références: Décret 92-158 & C. travail (R.237-1 à R.237-28), normes d’hygiène" ] }
-];
-const answerKeyCommon={ objet:[0], contexte:[0,1], definition:[0,1,2,3], limites_titulaire:[0,1], limites_entreprise:[0,1,2], qualite:[0,2], conditions:[0,1,2,3], resultats:[0,1,2], reception_ref:[0,1] };
-
-function startBuilder(gameId, reset){
-  // Build UI dynamically into #builderContainer
-  const container=document.getElementById('builderContainer');
-  if(reset){ container.innerHTML=''; }
-  // Title
-  const titles={3:"LESATI — Jeu B",4:"COPAYA — Jeu A",5:"COPAYA — Jeu B",6:"TILESA — Jeu B"};
-  container.innerHTML = `<h2>${titles[gameId]} — Assistant (QCM)</h2>
-    <div class="small">Sélectionnez les éléments pertinents à chaque étape.</div>
-    <div class="progress"><span id="builderProgress"></span></div>
-    <div class="tabs" id="builderTabs"></div>
-    <div id="builderPanels"></div>
-    <div class="warn" id="builderWarn">Veuillez sélectionner au moins un élément dans cet onglet pour continuer.</div>
-    <div class="step-actions" style="display:flex;gap:.5rem;justify-content:space-between;margin-top:1rem;">
-      <button class="btn secondary" id="prevStep">◀ Précédent</button>
-      <div>
-        <button class="btn secondary" onclick="goTo('game'+gameId)">Sauvegarder & Revenir à la carte</button>
-        <button class="btn" id="nextStep">Suivant ▶</button>
-        <button class="btn" id="finishBuilder" style="display:none">Générer le résumé</button>
-      </div>
-    </div>`;
-  // Prepare selections state for this game
-  window._builderSelections = {}; window._builderIndex=0;
-  // Build tabs & panels
-  const tabs=document.getElementById('builderTabs');
-  const panels=document.getElementById('builderPanels');
-  stepsCommon.forEach((s,i)=>{
-    const b=document.createElement('button'); b.className='tab-btn'+(i===0?' active':''); b.textContent=`${i+1}. ${s.label}`; b.onclick=()=>goStep(i); tabs.appendChild(b);
-    const p=document.createElement('div'); p.className='tab-panel'+(i===0?' active':''); p.id=`panel-${s.id}`;
-    p.innerHTML=`
-      <h3>${i+1}. ${s.label}</h3>
-      <div class="help"><details><summary>Aide (facultatif)</summary><p>${s.help||""}</p></details></div>
-      <div class="helper">Sélectionnez les éléments pertinents pour votre CCTP.</div>
-      <div class="option-grid">
-        ${s.options.map((opt,idx)=>`
-          <div class="option"><label><input type="checkbox" data-step="${s.id}" data-opt="${idx}"> ${opt}</label></div>
-        `).join('')}
-      </div>`;
-    panels.appendChild(p);
-  });
-  panels.addEventListener('change',(e)=>{
-    const box=e.target; if(box && box.type==='checkbox'){
-      const stepId=box.dataset.step; const idx=Number(box.dataset.opt);
-      if(!window._builderSelections[stepId]) window._builderSelections[stepId]=new Set();
-      if(box.checked) window._builderSelections[stepId].add(idx); else window._builderSelections[stepId].delete(idx);
+  // Textes & images Jeu 2 (LESATI) — ***Mises à jour demandées***
+  const modalData2={
+    'Direction':{
+      text:'La directrice s\\'explique: "L\\'entreprise LESATI assure les missions de production, distribution et commercialisation de l\\'énergie dans la commune de Saint Georges. La mission de service public et la proximité client sont nos priorités".',
+      image:"images/direction_directrice_LESATI.png"
+    },
+    'Service production':{
+      text:"Certains de ces groupes ont atteint leurs limites techniques (dépassement du nombre d’heures limites prévues par le constructeur) et devront être révisés. A ce stade une révision des groupes coûte très chère, elle serait même plus onéreuse que l’achat de matériels neufs.",
+      image:"images/production_groupes_LESATI.png"
+    },
+    'Salaries':{
+      text:"Photo des 30 salariés de l'entreprise devant l'entrée du bâtiment. L'entreprise est en forte croissance et noue de plus en plus de partenariats stratégiques.",
+      image:"images/salaries_30_LESATI.png"
+    },
+    'Juridique':{
+      text:"La juriste rappelle qu'il est indispensable d'ajouter une garantie technique lors de l'achat des groupes 3 électrogènes avec la livraison à Saint Georges. Les groupes seront utilisées en continue dans un milieu humide et avec température élevée..",
+      image:"images/juridique_garantie_LESATI.png"
     }
-  });
-  document.getElementById('prevStep').onclick=()=>goStep(window._builderIndex-1);
-  document.getElementById('nextStep').onclick=()=>{
-    if(!hasAtLeastOne(stepsCommon[window._builderIndex].id)){document.getElementById('builderWarn').style.display='block';return;}
-    document.getElementById('builderWarn').style.display='none'; goStep(window._builderIndex+1);
   };
-  document.getElementById('finishBuilder').onclick=()=>{
-    if(!hasAtLeastOne(stepsCommon[window._builderIndex].id)){document.getElementById('builderWarn').style.display='block';return;}
-    document.getElementById('builderWarn').style.display='none'; finishBuilder(gameId);
-  };
-  goStep(0);
-  goTo('builder');
-}
-function hasAtLeastOne(stepId){const set=window._builderSelections[stepId];return set && set.size>0;}
-function goStep(i){
-  if(i<0||i>=stepsCommon.length) return; window._builderIndex=i;
-  [...document.querySelectorAll('#builderTabs .tab-btn')].forEach((b,k)=>b.classList.toggle('active',k===i));
-  [...document.querySelectorAll('#builderPanels .tab-panel')].forEach(p=>p.classList.remove('active'));
-  document.getElementById(`panel-${stepsCommon[i].id}`).classList.add('active');
-  const pct=Math.round((i)/(stepsCommon.length-1)*100); document.getElementById('builderProgress').style.width=pct+'%';
-  document.getElementById('prevStep').disabled=(i===0);
-  document.getElementById('nextStep').style.display=(i===stepsCommon.length-1)?'none':'inline-block';
-  document.getElementById('finishBuilder').style.display=(i===stepsCommon.length-1)?'inline-block':'none';
-}
-function levelBadge(pct){ if(pct<=50) return {label:"Intermédiaire",cls:"intermediaire"}; if(pct<=80) return {label:"Avancé",cls:"avance"}; return {label:"Expert",cls:"expert"}; }
-function finishBuilder(gameId){
-  let html='<h2>Résumé — '+({3:"LESATI — Jeu B",4:"COPAYA — Jeu A",5:"COPAYA — Jeu B",6:"TILESA — Jeu B"}[gameId])+'</h2>';
-  stepsCommon.forEach((s,i)=>{
-    const picked=[...(window._builderSelections[s.id]||[])].sort((a,b)=>a-b);
-    if(picked.length){ html+=`<h4>${i+1}. ${s.label}</h4><ul>`; picked.forEach(idx=>html+=`<li>${s.options[idx]}</li>`); html+='</ul>'; }
-  });
-  if(html==='') html="<p>Aucun élément sélectionné. Revenez dans l’assistant pour choisir vos options.</p>";
-  // score & erreurs
-  let totalCorrect=0, selectedCorrect=0; const errors=[];
-  for(const step of stepsCommon){
-    const key=answerKeyCommon[step.id]||[]; totalCorrect+=key.length;
-    const picked=window._builderSelections[step.id]?Array.from(window._builderSelections[step.id]):[];
-    const ok=picked.filter(i=>key.includes(i));
-    const wrong=picked.filter(i=>!key.includes(i));
-    const missed=key.filter(i=>!picked.includes(i));
-    selectedCorrect+=ok.length;
-    if(wrong.length||missed.length){ errors.push({label:step.label, wrong:wrong.map(i=>step.options[i]), missed:missed.map(i=>step.options[i])}); }
+
+  let currentService='';
+  let currentGame=1;
+  let collected1=new Set();
+  let collected2=new Set();
+
+  function openModal(service, game=1){
+    currentGame = game;
+    currentService = service;
+    const data = game===2 ? modalData2 : modalData1;
+    const item = data[service];
+    document.getElementById('modalTitle').innerText=service;
+    document.getElementById('modalContent').innerText=item.text;
+    document.getElementById('modalImage').src=item.image;
+    document.getElementById('overlay').classList.add('active');
+    document.getElementById('modal').classList.add('active');
   }
-  const pct=totalCorrect?Math.round((selectedCorrect/totalCorrect)*100):0; const level=levelBadge(pct);
-  html+=`<div class="score" style="display:block">Score : ${selectedCorrect} sur ${totalCorrect} (${pct}%) <span class="badge ${level.cls}">${level.label}</span></div>`;
-  if(errors.length){
-    html+=`<button class="btn toggle" id="toggleErrors">Voir mes erreurs</button>`;
-    html+=`<div class="errors" id="errorsPanel">`+errors.map(e=>{
-      let block=`<div style="margin:.4rem 0">`;
-      block+=`<h4>${e.label}</h4>`;
-      if(e.wrong.length) block+=`<div style="color:#b91c1c"><strong>Choix non attendus :</strong><ul>${e.wrong.map(t=>`<li>${t}</li>`).join('')}</ul></div>`;
-      if(e.missed.length) block+=`<div style="color:#92400e"><strong>À ne pas oublier :</strong><ul>${e.missed.map(t=>`<li>${t}</li>`).join('')}</ul></div>`;
-      block+=`</div>`; return block;
-    }).join('')+`</div>`;
+  function closeModal(){
+    document.getElementById('overlay').classList.remove('active');
+    document.getElementById('modal').classList.remove('active');
   }
-  html+=`<div style="display:flex; gap:.5rem; margin-top:12px;">
-      <button class="btn secondary" onclick="startBuilder(${gameId},true)">Modifier</button>
-      <button class="btn" onclick="goTo('game${gameId}')">Retour à la carte</button>
-    </div>`;
-  const container=document.getElementById('summaryContainer');
-  container.innerHTML=html;
-  goTo('summary');
-  const t=document.getElementById('toggleErrors'), panel=document.getElementById('errorsPanel');
-  if(t && panel){ t.onclick=()=>{ panel.style.display=(panel.style.display==='none' || panel.style.display==='')?'block':'none'; t.textContent=panel.style.display==='none'?'Voir mes erreurs':'Masquer les erreurs'; }; panel.style.display='none'; }
-}
+  function collectInfo(){
+    if(currentGame===2){
+      collected2.add(currentService);
+      document.getElementById('infoLog2').innerText=`Informations collectées (LESATI) : ${Array.from(collected2).join(', ')}`;
+      // Afficher le bouton quand 4 services visités, sans redirection
+      if(collected2.size>=4){
+        const btn = document.getElementById('btnCCTP2');
+        if(btn) btn.style.display='inline-block';
+      }
+    }else{
+      collected1.add(currentService);
+      document.getElementById('infoLog1').innerText=`Informations collectées : ${Array.from(collected1).join(', ')}`;
+    }
+    closeModal();
+  }
+
+  // ---------- Jeu 1 : Assistant QCM + score ----------
+  const steps1=[
+    { id:"objet", label:"Objet", help:"Il sert à définir l’objet du cahier des charges. Il ne doit pas comporter d’autre mention que cette définition.",
+      options:[ "Prestation de nettoyage intérieur des locaux du site TILESIA", "Périmètre: bureaux, circulation, escaliers, ascenseur, sanitaires, vestiaires, réfectoires", "Objectif: propreté, hygiène et confort des utilisateurs" ] },
+    { id:"contexte", label:"Contexte", help:"Situer le contexte de l’affaire (évènements historiques, politique d’entreprise).",
+      options:[ "Bâtiment R+3, 4100 m², ~300 salariés", "La politique santé sécurité est un enjeu majeur pour l’entreprise", "Locaux électriques accompagnés par personnel habilité" ] },
+    { id:"definition", label:"Définition de la prestation", help:"Définir la prestation ainsi que la volumétrie (tous les éléments quantitatifs et qualitatifs).",
+      options:[ "Nettoyage des sols (aspiration, balayage humide, lavage)", "Dépoussiérage des surfaces et mobiliers", "Désinfection des points de contact", "Sanitaires: nettoyage, désinfection et réassort" ] },
+    { id:"limites_titulaire", label:"Limites à la charge du titulaire", help:"Mentionner clairement les limites de la prestation du Titulaire (outillages, produits).",
+      options:[ "Approvisionnement consommables: papier toilette, essuie-mains, savon mains, sacs poubelles, désodorisants", "Fourniture matériels et produits de nettoyage", "Avis de passage après intervention" ] },
+    { id:"limites_entreprise", label:"Limites à la charge de l’entreprise", help:"Prestations et matériels à charge d’EDF.",
+      options:[ "Mise à disposition des locaux d’entretien et points d’eau", "Accompagnement zones électriques par agents habilités", "Accès / badges / consignes de sécurité" ] },
+    { id:"qualite", label:"Qualité", help:"Certification, homologation des produits.",
+      options:[ "Plan qualité et fiches techniques produits", "Traçabilité des interventions (registre / app)", "Indicateurs de propreté et plan d’amélioration" ] },
+    { id:"conditions", label:"Conditions d’interventions", help:"Précautions, délais horaires, conditions d’accès, sécurité.",
+      options:[ "Respect sécurité / environnement (tri, stockage produits)", "Signalisation des zones en intervention", "Interventions en heures ouvrables", "Décret 92-158 & C. travail (R.237-1 à R.237-28), normes d’hygiène" ] },
+    { id:"resultats", label:"Résultats attendus", help:"Quantifiables, mesurables et contrôlables (seuil, niveau, température).",
+      options:[ "Sols propres sans traces visibles", "Sanitaires propres, désinfectés et réapprovisionnés", "Mobilier dépoussiéré, points de contact désinfectés" ] },
+    { id:"reception_ref", label:"Réception", help:"Décrire les éléments qui permettront de réaliser la réception technique (livrables).",
+      options:[ "Rapport semestriel rédigé par le service technique", "Procès-verbal signé et daté par les deux parties", "Références: Décret 92-158 & C. travail (R.237-1 à R.237-28), normes d’hygiène" ] }
+  ];
+  const answerKey1={ objet:[0], contexte:[0,1], definition:[0,1,2,3], limites_titulaire:[0,1], limites_entreprise:[0,1,2], qualite:[0,2], conditions:[0,1,2,3], resultats:[0,1,2], reception_ref:[0,1] };
+  let builderSelections1={}, builderIndex1=0;
+
+  function validateCollection(game){
+    const set = game===1 ? collected1 : collected2;
+    if(set.size<4){ alert("Vous devez visiter tous les services avant de continuer."); return; }
+    if(game===1){ startBuilder1(true); }
+  }
+
+  function startBuilder1(reset=false){
+    const tabs=document.getElementById('builderTabs1');
+    const panels=document.getElementById('builderPanels1');
+    if(reset){builderSelections1={};tabs.innerHTML="";panels.innerHTML="";tabs.dataset.ready="";}
+    if(!tabs.dataset.ready){
+      steps1.forEach((s,i)=>{
+        const b=document.createElement('button'); b.className='tab-btn'+(i===0?' active':''); b.textContent=`${i+1}. ${s.label}`; b.onclick=()=>goStep1(i); tabs.appendChild(b);
+        const p=document.createElement('div'); p.className='tab-panel'+(i===0?' active':''); p.id=`panel1-${s.id}`;
+        p.innerHTML=`
+          <h3>${i+1}. ${s.label}</h3>
+          <div class="help"><details><summary>Aide (facultatif)</summary><p>${s.help||""}</p></details></div>
+          <div class="helper">Sélectionnez les éléments pertinents pour votre CCTP.</div>
+          <div class="option-grid">
+            ${s.options.map((opt,idx)=>`
+              <div class="option"><label><input type="checkbox" data-step="${s.id}" data-opt="${idx}"> ${opt}</label></div>
+            `).join('')}
+          </div>`;
+        panels.appendChild(p);
+      });
+      panels.addEventListener('change',(e)=>{
+        const box=e.target; if(box && box.type==='checkbox'){
+          const stepId=box.dataset.step; const idx=Number(box.dataset.opt);
+          if(!builderSelections1[stepId]) builderSelections1[stepId]=new Set();
+          if(box.checked) builderSelections1[stepId].add(idx); else builderSelections1[stepId].delete(idx);
+        }
+      });
+      document.getElementById('prevStep1').onclick=()=>goStep1(builderIndex1-1);
+      document.getElementById('nextStep1').onclick=()=>{
+        if(!hasAtLeastOne1(steps1[builderIndex1].id)){document.getElementById('builderWarn1').style.display='block';return;}
+        document.getElementById('builderWarn1').style.display='none'; goStep1(builderIndex1+1);
+      };
+      document.getElementById('finishBuilder1').onclick=()=>{
+        if(!hasAtLeastOne1(steps1[builderIndex1].id)){document.getElementById('builderWarn1').style.display='block';return;}
+        document.getElementById('builderWarn1').style.display='none'; finishBuilder1();
+      };
+      tabs.dataset.ready="1";
+    }
+    goStep1(0); goTo('builder1');
+  }
+  function hasAtLeastOne1(stepId){const set=builderSelections1[stepId];return set && set.size>0;}
+  function goStep1(i){
+    if(i<0||i>=steps1.length) return; builderIndex1=i;
+    [...document.querySelectorAll('#builderTabs1 .tab-btn')].forEach((b,k)=>b.classList.toggle('active',k===i));
+    [...document.querySelectorAll('#builderPanels1 .tab-panel')].forEach(p=>p.classList.remove('active'));
+    document.getElementById(`panel1-${steps1[i].id}`).classList.add('active');
+    const pct=Math.round((i)/(steps1.length-1)*100); document.getElementById('builderProgress1').style.width=pct+'%';
+    document.getElementById('prevStep1').disabled=(i===0);
+    document.getElementById('nextStep1').style.display=(i===steps1.length-1)?'none':'inline-block';
+    document.getElementById('finishBuilder1').style.display=(i===steps1.length-1)?'inline-block':'none';
+  }
+  function levelBadge(pct){ if(pct<=50) return {label:"Intermédiaire",cls:"intermediaire"}; if(pct<=80) return {label:"Avancé",cls:"avance"}; return {label:"Expert",cls:"expert"}; }
+  function finishBuilder1(){
+    let html=''; steps1.forEach((s,i)=>{
+      const picked=[...(builderSelections1[s.id]||[])].sort((a,b)=>a-b);
+      if(picked.length){ html+=`<h4>${i+1}. ${s.label}</h4><ul>`; picked.forEach(idx=>html+=`<li>${s.options[idx]}</li>`); html+='</ul>'; }
+    });
+    if(!html) html="<p>Aucun élément sélectionné. Revenez dans l’assistant pour choisir vos options.</p>";
+    document.getElementById('summaryContent1').innerHTML=html;
+
+    // score & erreurs
+    let totalCorrect=0, selectedCorrect=0; const errors=[];
+    for(const step of steps1){
+      const key=answerKey1[step.id]||[]; totalCorrect+=key.length;
+      const picked=builderSelections1[step.id]?Array.from(builderSelections1[step.id]):[];
+      const ok=picked.filter(i=>key.includes(i));
+      const wrong=picked.filter(i=>!key.includes(i));
+      const missed=key.filter(i=>!picked.includes(i));
+      selectedCorrect+=ok.length;
+      if(wrong.length||missed.length){ errors.push({label:step.label, wrong:wrong.map(i=>step.options[i]), missed:missed.map(i=>step.options[i])}); }
+    }
+    const pct=totalCorrect?Math.round((selectedCorrect/totalCorrect)*100):0; const level=levelBadge(pct);
+    const scoreEl=document.getElementById('scoreContent1'); scoreEl.style.display='block';
+    scoreEl.innerHTML=`Score : ${selectedCorrect} sur ${totalCorrect} (${pct}%) <span class="badge ${level.cls}">${level.label}</span>`;
+
+    const toggleBtn=document.getElementById('toggleErrors1'); const panel=document.getElementById('errorsPanel1');
+    if(errors.length){
+      toggleBtn.style.display='inline-block'; panel.style.display='none';
+      panel.innerHTML=errors.map(e=>{
+        let block=`<div style="margin:.4rem 0">`;
+        block+=`<h4>${e.label}</h4>`;
+        if(e.wrong.length) block+=`<div style="color:#b91c1c"><strong>Choix non attendus :</strong><ul>${e.wrong.map(t=>`<li>${t}</li>`).join('')}</ul></div>`;
+        if(e.missed.length) block+=`<div style="color:#92400e"><strong>À ne pas oublier :</strong><ul>${e.missed.map(t=>`<li>${t}</li>`).join('')}</ul></div>`;
+        block+=`</div>`; return block;
+      }).join('');
+      toggleBtn.onclick=()=>{ panel.style.display=(panel.style.display==='none')?'block':'none'; toggleBtn.textContent=panel.style.display==='none'?'Voir mes erreurs':'Masquer les erreurs'; };
+    }else{ toggleBtn.style.display='none'; panel.style.display='none'; panel.innerHTML=''; }
+
+    goTo('summary1');
+  }
 </script>
+
 </body>
 </html>
