@@ -60,6 +60,8 @@
 
 <script>
 (function () {
+  window.__SESSION_ID__=(Math.random().toString(36).slice(2)+Date.now().toString(36)).slice(0,12);
+  try{window._store=sessionStorage;}catch(e){window._store={};}
   function show(id) {
     var screens = document.querySelectorAll('.screen');
     for (var i = 0; i < screens.length; i++) screens[i].classList.remove('active');
@@ -70,7 +72,7 @@
   window.goTo = function (id) {
     show(id);
     try { history.replaceState(null, '', '#' + id); } catch (e) { location.hash = id; }
-   if(/^game\d+$/.test(id)){ var g=parseInt(id.replace('game','')); try{ const set=sets[g]; const total=Object.keys(g===2?data2: g===3?data3: g===4?data4: g===5?data5: g===6?data6: data1).length; const b=document.getElementById('btnCCTP'+g); if(b){ b.style.display=(set.size>=total)?'inline-block':'none'; } }catch(e){} } };
+   if(/^game\d+$/.test(id)){ var g=parseInt(id.replace('game','')); try{ const key='cctp_sets_'+__SESSION_ID__+'_'+g; if(_store && _store.getItem){ const arr=JSON.parse(_store.getItem(key)||'[]'); if(Array.isArray(arr)){ sets[g]=new Set(arr); const el=document.getElementById('infoLog'+g); if(el) el.textContent='Infos collectées : '+arr.join(', ');} } const set=sets[g]; const total=Object.keys(g===2?data2: g===3?data3: g===4?data4: g===5?data5: g===6?data6: data1).length; const b=document.getElementById('btnCCTP'+g); if(b){ b.style.display=(set.size>=total)?'inline-block':'none'; } }catch(e){} } };
   window.addEventListener('hashchange', function () {
     var id = (location.hash || '#home').slice(1);
     show(id);
@@ -340,7 +342,7 @@ Les consommables à la charge du prestataire sont les suivants :
 const data2={
   'Direction':{ text:'La directrice : "LESATI assure production, distribution et commercialisation à Saint Georges (800 clients). Priorité au service public et à la proximité client."', image:"images/direction_directrice_LESATI.png" },
   'Service production':{ text:'Certains groupes ont atteint leurs limites techniques (...) \n\nNous aurons besoins de 3 groupes électrogènes d’une puissance nominale de 800 kVA, de type diesel avec les certifications "Ultra" et "Iso 9001". Il faut penser aux documents nécessaires pour la bonne utilisation du matériel.', image:"images/production_groupes_LESATI.png" },
-  'Salaries':{ text:"Les 30 salariés devant l’entrée du bâtiment principal. Ils sont pleinement investis (...).", image:"images/salaries_30_LESATI.png" },
+  'Salaries':{ text:"Les 30 salariés devant l’entrée du bâtiment principal. Ils sont pleinement investis dans la croissance de leur entreprise au sein de la ville.", image:"images/salaries_30_LESATI.png" },
   'Juridique':{ text:"La juriste rappelle qu'il est indispensable d'ajouter une garantie technique lors de l'achat des groupes électrogènes, avec livraison à Saint Georges. Les groupes seront utilisés en continu dans un milieu humide et avec température élevée.", image:"images/juridique_garantie_LESATI.png" }
 };
 const data3={
@@ -516,7 +518,7 @@ function openModal(key,game){
   document.getElementById('modal').classList.add('active');
 }
 function closeModal(){document.getElementById('overlay').classList.remove('active');document.getElementById('modal').classList.remove('active');}
-function collectInfo(){const set=sets[currentGame]; set.add(currentKey); const el=document.getElementById('infoLog'+currentGame); if(el) el.textContent="Infos collectées : "+Array.from(set).map(s=>s.replace(' Tilesa B','').replace(' B','').replace(' Copaya','').replace(' Carl','')).join(', '); const total = Object.keys(currentGame===2?data2: currentGame===3?data3: currentGame===4?data4: currentGame===5?data5: currentGame===6?data6: data1).length; const b=document.getElementById('btnCCTP'+currentGame); if(b && sets[currentGame].size>=total){ b.style.display='inline-block'; } closeModal();}
+function collectInfo(){const set=sets[currentGame]; set.add(currentKey); const el=document.getElementById('infoLog'+currentGame); if(el) el.textContent="Infos collectées : "+Array.from(set).map(s=>s.replace(' Tilesa B','').replace(' B','').replace(' Copaya','').replace(' Carl','')).join(', '); const total = Object.keys(currentGame===2?data2: currentGame===3?data3: currentGame===4?data4: currentGame===5?data5: currentGame===6?data6: data1).length; const b=document.getElementById('btnCCTP'+currentGame); if(b && sets[currentGame].size>=total){ b.style.display='inline-block'; }  try{ const key='cctp_sets_'+__SESSION_ID__+'_'+currentGame;  let arr=Array.from(sets[currentGame]||[]);  if(window._store && _store.setItem){ _store.setItem(key, JSON.stringify(arr)); } }catch(e){}  closeModal();}
 
 /* ----------------------- Aides identiques pour 9 onglets ----------------------- */
 const helpByStep = {
@@ -532,38 +534,38 @@ const helpByStep = {
 };
 
 // === QCM personnalisés (votre liste OK/FAUX) — mêmes 9 onglets pour les 5 jeux ===
+
 function stepsFor(gameId){
   switch(gameId){
-    
     case 2: return [
       {id:"objet",label:"Objet",help:helpByStep.objet,options:[
         "Achat de 3 groupes électrogènes diesel de 800 kVA",
         "Achat d’un unique groupe électrogène de 1200 kVA",
-        "Remplacement des transformateurs HTA de Saint Georges",
+        "Remplacement des transformateurs",
         "Approvisionnement d’outillage pour l’atelier de production"
       ]},
       {id:"contexte",label:"Contexte",help:helpByStep.contexte,options:[
         "LESATI assure la production, la distribution et la commercialisation à Saint Georges (≈800 clients)",
         "Priorité au service public et à la proximité client",
         "Utilisation prévue en continu en milieu humide et chaud",
-        "Projet destiné à un site hors Guyane"
+        "Projet destiné sur un site protégé"
       ]},
       {id:"definition",label:"Définition de la prestation",help:helpByStep.definition,options:[
         "Fourniture de 3 groupes diesel 800 kVA avec notices et documents d’utilisation",
         "Groupes certifiés « Ultra » et « ISO 9001 »",
-        "Fourniture de panneaux solaires pour l’appoint",
-        "Fourniture d’un automate de gestion de barrage"
+        "Régime de 1500tr/min + Tension 400/230 V + Secours automatique",
+        "Fourniture d’un automate de gestion"
       ]},
       {id:"limites_titulaire",label:"Limites à la charge du titulaire",help:helpByStep.limites_titulaire,options:[
         "Livraison des groupes à Saint Georges",
         "Garantie technique et prise en charge remplacement/réparation en cas de défaut",
-        "Fourniture des certificats/conformités et notices",
-        "Mise à disposition du personnel d’exploitation"
+        "Manutention",
+        "Essais et mise en service"
       ]},
       {id:"limites_entreprise",label:"Limites à la charge de l’entreprise",help:helpByStep.limites_entreprise,options:[
-        "Réception et mise en exploitation des groupes",
-        "Planification de l’intégration au réseau local",
-        "Fourniture et certification des groupes par LESATI",
+        "Accès point d’eau",
+        "Local de stockage",
+        "Gestion des accès sur site",
         "Gestion de la distribution d’énergie aux clients finaux"
       ]},
       {id:"qualite",label:"Qualité",help:helpByStep.qualite,options:[
@@ -572,29 +574,85 @@ function stepsFor(gameId){
         "Aucune exigence de qualité spécifique",
         "Matériel adapté aux contraintes climatiques (humidité/température)"
       ]},
-      {id:"conditions",label:"Conditions d’intervention",help:helpByStep.conditions,options:[
-        "Livraison sur le site de Saint Georges",
-        "Exploitation prévue en continu",
-        "Aucune contrainte liée au climat local",
-        "Transport jusqu’à Cayenne uniquement"
+      {id:"conditions",label:"Conditions d’interventions",help:helpByStep.conditions,options:[
+        "Intervention prévue à Saint Georges (jours ouvrés)",
+        "Prise de rendez-vous J-30 avec le responsable du site",
+        "Interventions sur toute la Guyane",
+        "Humidité jusqu’à 90°"
       ]},
       {id:"resultats",label:"Résultats attendus",help:helpByStep.resultats,options:[
-        "Continuité du service public grâce aux nouveaux groupes",
-        "Groupes opérationnels et conformes aux spécifications",
+        "Atteinte de la puissance maximale 15 minutes après le démarrage",
+        "Matériel de bonne qualité",
         "Diminution de la qualité de service",
-        "Documentation et garanties remises"
+        "Autonomie de 24 heures"
       ]},
       {id:"reception_ref",label:"Réception",help:helpByStep.reception_ref,options:[
-        "Remise des certificats de conformité et notices",
-        "Vérifications fonctionnelles à la réception",
+        "Nature et resultats des test effectués",
+        "Relevés des constats d’écart et actions attendues",
         "Acceptation automatique sans contrôle",
         "Activation de la garantie technique"
       ]}
     ];
-case 4: return [
+    case 3: return [
+      {id:"objet",label:"Objet",help:helpByStep.objet,options:[
+        "Fourniture d’équipements destinés à l’exploitation et à la maintenance d’une centrale hydraulique",
+        "Achat de pompes et de moteurs",
+        "Maintenance de la centrale hydraulique",
+        "Achat d'équipements pour centrale de production"
+      ]},
+      {id:"contexte",label:"Contexte",help:helpByStep.contexte,options:[
+        "Le barrage de Petit Saut a été construit au niveau du fleuve Sinnamary",
+        "La mise en service a eu lieu en 1994",
+        "La retenue d’eau de 310 km² alimente deux tiers des foyers du littoral",
+        "Ce projet concerne une installation industrielle hors Guyane"
+      ]},
+      {id:"definition",label:"Définition de la prestation",help:helpByStep.definition,options:[
+        "Fourniture de pièces de rechange pour équipements hydrauliques",
+        "Les pompes et kits de maintenance, pièces pour moteur, capteurs, pressostats, manomètres, filtres, clapets anti-retour, vannes et actionneurs",
+        "Fourniture de systèmes d’air conditionné",
+        "Fourniture d’équipements pour centrale photovoltaïque"
+      ]},
+      {id:"limites_titulaire",label:"Limites à la charge du titulaire",help:helpByStep.limites_titulaire,options:[
+        "Mise en place d’un service après-vente",
+        "Livraison au transitaire",
+        "Fourniture des documents techniques",
+        "Le titulaire peut livrer sans emballage"
+      ]},
+      {id:"limites_entreprise",label:"Limites à la charge de l’entreprise",help:helpByStep.limites_entreprise,options:[
+        "Le transport et déchargement sur site",
+        "L’entreprise gère l'assurance transport",
+        "L’entreprise fournit les pièces si nécessaire"
+      ]},
+      {id:"qualite",label:"Qualité",help:helpByStep.qualite,options:[
+        "Certificats de conformité",
+        "Notices techniques",
+        "Plans d’installation si nécessaire",
+        "Rapport d’essais",
+        "Aucune documentation fournie"
+      ]},
+      {id:"conditions",label:"Conditions d’interventions",help:helpByStep.conditions,options:[
+        "Livraison du lundi au vendredi de 08h00 à 12h00",
+        "Livraison possible uniquement de nuit",
+        "Emballage avec protection contre l'humidité et les chocs",
+        "Étiquetage clair et de référence"
+      ]},
+      {id:"resultats",label:"Résultats attendus",help:helpByStep.resultats,options:[
+        "Matériels fonctionnels conformes aux spécifications",
+        "Documentation complète remise",
+        "Audit environnemental réalisé",
+        "Remplacement automatique des équipements au bout d’un an"
+      ]},
+      {id:"reception_ref",label:"Réception",help:helpByStep.reception_ref,options:[
+        "Contrôle technique des équipements",
+        "Possibilité de refus si colis non conforme",
+        "Réception automatique sans contrôle",
+        "Déchargement effectué par le transporteur"
+      ]}
+    ];
+    case 4: return [
       {id:"objet",label:"Objet",help:helpByStep.objet,options:[
         "Élagage de la végétation autour des ouvrages électriques HTA/HTB",
-        "Maintenance préventive des lignes issues du poste Étoile jusqu’au poste Margot",
+        "Maintenance préventive des lignes issues du poste Amandier jusqu’au poste Hibiscus",
         "Réalisation d’une visite préalable avec COPAYA avant les travaux",
         "Fourniture d’équipements électriques haute tension",
         "Construction d’un nouveau poste électrique"
@@ -607,8 +665,14 @@ case 4: return [
         "Projet lié à l’augmentation des besoins touristiques"
       ]},
       {id:"definition",label:"Définition de la prestation",help:helpByStep.definition,options:[
-        "Élagage manuel","Élagage au bulldozer","Élagage au gyrobroyeur","Gestion des accès aux pieds de support",
-        "Pose de câbles HTA","405 km à élaguer sur le réseau HTA","250 km à élaguer sur le réseau HTB","100 pieds de support + accès"
+        "Élagage manuel",
+        "Élagage au bulldozer",
+        "Élagage au gyrobroyeur",
+        "Gestion des accès aux pieds de support",
+        "Pose de câbles HTA",
+        "405 km à élaguer sur le réseau HTA",
+        "250 km à élaguer sur le réseau HTB",
+        "100 pieds de support + accès"
       ]},
       {id:"limites_titulaire",label:"Limites à la charge du titulaire",help:helpByStep.limites_titulaire,options:[
         "Organiser les moyens humains et matériels nécessaires",
@@ -622,173 +686,269 @@ case 4: return [
         "Mise à disposition du matériel d’ascension"
       ]},
       {id:"qualite",label:"Qualité",help:helpByStep.qualite,options:[
-        "Photos avant / après intervention","Rapport précis de chaque zone élaguée","Respect du décret du 20 février 1992","Certification ISO obligatoire"
+        "Photos avant / après intervention",
+        "Rapport précis de chaque zone élaguée",
+        "Respect du décret du 20 février 1992",
+        "Certification ISO obligatoire"
       ]},
-      {id:"conditions",label:"Conditions d’intervention",help:helpByStep.conditions,options:[
-        "Interventions préférentiellement entre 6h30 et 17h","DT-DICT envoyée 15 jours avant travaux","Inspection commune préalable obligatoire",
-        "Travaux en zone protégée soumis à réglementation environnementale","Travaux uniquement la nuit","Intervention sans prévenir COPAYA"
+      {id:"conditions",label:"Conditions d’interventions",help:helpByStep.conditions,options:[
+        "Interventions préférentiellement entre 6h30 et 17h",
+        "DT-DICT envoyée 15 jours avant travaux",
+        "Inspection commune préalable obligatoire",
+        "Travaux en zone protégée soumis à réglementation environnementale",
+        "Travaux uniquement la nuit",
+        "Intervention sans prévenir COPAYA"
       ]},
       {id:"resultats",label:"Résultats attendus",help:helpByStep.resultats,options:[
-        "Continuité de l’alimentation électrique","Suppression des risques de court-circuit dû aux végétaux","Diminution des coupures intempestives","Installation de nouveaux équipements HTA"
+        "Continuité de l’alimentation électrique",
+        "Abattage des arbres selon les normes règlementaires",
+        "Diminution des coupures intempestives",
+        "Installation de nouveaux équipements HTA"
       ]},
       {id:"reception_ref",label:"Réception",help:helpByStep.reception_ref,options:[
-        "Signature d’un rapport de visite préalable par les deux parties","COPAYA peut refuser un chantier non conforme","Photos justificatives obligatoires pour validation","Réception automatique sans contrôle"
+        "Signature d’un rapport de visite préalable par les deux parties",
+        "COPAYA peut refuser un chantier non conforme",
+        "Photos justificatives obligatoires pour validation",
+        "Réception automatique sans contrôle"
       ]}
     ];
     case 5: return [
-      {id:"objet",label:"Objet",help:helpByStep.objet,options:[
+      {id:"objet",label:"OBJET",help:helpByStep.objet,options:[
         "Raccordement au réseau électrique d'un village situé en Guyane Française",
-        "Réalisation de fouilles et de dalles de propreté","Stabilisation du réseau électrique pour les habitants","Respect des normes HTA et DT/DICT"
+        "Réalisation de fouilles et de dalles de propreté",
+        "Stabilisation du réseau électrique pour les habitants",
+        "Respect des normes HTA et DT/DICT"
       ]},
-      {id:"contexte",label:"Contexte",help:helpByStep.contexte,options:[
-        "Projet prioritaire pour maintenir le service public d’électricité","Limiter les nuisances et finaliser les travaux avant la saison des pluies",
-        "Attentes fortes des habitants concernant la qualité du réseau","Projet prévu uniquement pour augmenter la capacité de production locale"
+      {id:"contexte",label:"CONTEXTE",help:helpByStep.contexte,options:[
+        "Projet prioritaire pour maintenir le service public d’électricité",
+        "Limiter les nuisances et finaliser les travaux avant la saison des pluies",
+        "Attentes fortes des habitants concernant la qualité du réseau",
+        "Projet prévu uniquement pour augmenter la capacité de production locale"
       ]},
-      {id:"definition",label:"Définition de la prestation",help:helpByStep.definition,options:[
-        "Mise en souterrain de 20 km de réseau HTA et 15 km de fibre optique","Installation et mise en service d’armoires électriques & raccordements HTA",
-        "Confection de 60 boîtes de jonction HTA et fourniture/pose de fourreaux","Travaux de déboisement et construction de logements temporaires"
+      {id:"definition",label:"DÉFINITION DE LA PRESTATION",help:helpByStep.definition,options:[
+        "Mise en souterrain de 20 km de réseau HTA et 15 km de fibre optique",
+        "Installation et mise en service d’armoires électriques & raccordements HTA",
+        "Confection de 60 boîtes de jonction HTA et fourniture/pose de fourreaux",
+        "Travaux de déboisement et construction de logements temporaires"
       ]},
-      {id:"limites_titulaire",label:"Limites à la charge du titulaire",help:helpByStep.limites_titulaire,options:[
-        "Réalisation des fouilles et dalle de propreté","Raccordement, étiquetage câbles HTA et transmission chambres de tirage",
-        "Respect du balisage, panneaux, gyrophare et sécurité chantier","Fourniture des câbles et des boîtes de jonction"
+      {id:"limites_titulaire",label:"LIMITES À LA CHARGE DU TITULAIRE",help:helpByStep.limites_titulaire,options:[
+        "Réalisation des fouilles et dalle de propreté",
+        "Raccordement, étiquetage câbles HTA et transmission chambres de tirage",
+        "Respect du balisage, panneaux, gyrophare et sécurité chantier",
+        "Fourniture des câbles et des boîtes de jonction"
       ]},
-      {id:"limites_entreprise",label:"Limites à la charge de l’entreprise",help:helpByStep.limites_entreprise,options:[
-        "Fourniture des câbles","Fourniture des boîtes de jonction","Mise à disposition d’un local de stockage","Fourniture des chambres de tirage"
+      {id:"limites_entreprise",label:"LIMITES À LA CHARGE DE L’ENTREPRISE",help:helpByStep.limites_entreprise,options:[
+        "Fourniture des câbles",
+        "Fourniture des boîtes de jonction",
+        "Mise à disposition d’un local de stockage",
+        "Fourniture des chambres de tirage"
       ]},
-      {id:"qualite",label:"Qualité",help:helpByStep.qualite,options:[
-        "Travaux réalisés dans les délais pour éviter la saison des pluies","Respect des normes techniques HTA et DT/DICT",
-        "Limitation des nuisances (bruit, circulation)","Interventions uniquement de nuit pour limiter les impacts urbains"
+      {id:"qualite",label:"QUALITÉ",help:helpByStep.qualite,options:[
+        "Travaux réalisés dans les délais pour éviter la saison des pluies",
+        "Respect des normes techniques HTA et DT/DICT",
+        "Limitation des nuisances (bruit, circulation)",
+        "Interventions uniquement de nuit pour limiter les impacts urbains"
       ]},
-      {id:"conditions",label:"Conditions d’intervention",help:helpByStep.conditions,options:[
-        "Transmission d’un planning permettant d’établir la FDO","Visites régulières de prévention sécurité organisées par COPAYA",
-        "Communication via l’outil COPAYA dédié","Intervention uniquement durant les week-ends"
+      {id:"conditions",label:"CONDITIONS D’INTERVENTIONS",help:helpByStep.conditions,options:[
+        "Transmission d’un planning permettant d’établir la FDO",
+        "Visites régulières de prévention sécurité organisées par COPAYA",
+        "Communication via l’outil COPAYA dédié",
+        "Intervention uniquement durant les week-ends"
       ]},
-      {id:"resultats",label:"Résultats attendus",help:helpByStep.resultats,options:[
-        "Réseau souterrain opérationnel et fiable pour les habitants","Stabilisation du réseau et réduction du risque de coupures",
-        "Travaux conformes aux prescriptions réglementaires et techniques","Production d’électricité accrue dans la région"
+      {id:"resultats",label:"RÉSULTATS ATTENDUS",help:helpByStep.resultats,options:[
+        "Réseau souterrain opérationnel et fiable pour les habitants",
+        "Stabilisation du réseau et réduction du risque de coupures",
+        "Travaux conformes aux prescriptions réglementaires et techniques",
+        "Production d’électricité accrue dans la région"
       ]},
-      {id:"reception_ref",label:"Réception",help:helpByStep.reception_ref,options:[
-        "Contrôle des travaux par COPAYA","Réception après conformité réglementaire DGTM & IC/OL","Vérification des installations HTA et fibre avant mise en service","Réception automatique après fin de chantier"
-      ]}
-    ];
-    case 6: return [
-      {id:"objet",label:"Objet",help:helpByStep.objet,options:[
-        "Achat de véhicules électriques neufs pour renouveler la flotte de Tilesa","Remplacement des bornes de recharge existantes",
-        "Achat de vélos électriques pour les équipes","Maintenance du réseau fibre optique"
-      ]},
-      {id:"contexte",label:"Contexte",help:helpByStep.contexte,options:[
-        "Tilesa souhaite électrifier sa flotte pour réduire son impact environnemental","Tilesa souhaite uniquement augmenter la vitesse de ses véhicules",
-        "La flotte actuelle est déjà 100% électrique","Le projet répond aux engagements climatiques européens"
-      ]},
-      {id:"definition",label:"Définition de la prestation",help:helpByStep.definition,options:[
-        "Fourniture de véhicules électriques adaptés à la Guyane","Livraison sur plusieurs sites (Cayenne, Kourou, Saint-Laurent…)",
-        "Formation des utilisateurs à la conduite des VE","Achat de véhicules thermiques hybrides rechargeables uniquement"
-      ]},
-      {id:"limites_titulaire",label:"Limites à la charge du titulaire",help:helpByStep.limites_titulaire,options:[
-        "Acheminement jusqu'en Guyane, douane & livraison finale","Formalités d'immatriculation locale","Service après-vente local ou agréé","Assurance des véhicules"
-      ]},
-      {id:"limites_entreprise",label:"Limites à la charge de l’entreprise",help:helpByStep.limites_entreprise,options:[
-        "Mise à disposition des emplacements & stationnement","Assurance des véhicules","Installation des bornes de recharge","Fourniture des véhicules thermiques de secours"
-      ]},
-      {id:"qualite",label:"Qualité",help:helpByStep.qualite,options:[
-        "Véhicules adaptés au climat et aux routes locales","Documentation complète & garanties","Pas besoin de SAV local","Véhicules testés avant livraison"
-      ]},
-      {id:"conditions",label:"Conditions d’intervention",help:helpByStep.conditions,options:[
-        "Livraison uniquement en jours ouvrés","Vérification fonctionnelle à la réception","Livraison libre sans prise de rendez-vous","Livraison uniquement sur Cayenne"
-      ]},
-      {id:"resultats",label:"Résultats attendus",help:helpByStep.resultats,options:[
-        "Réduction mesurable des émissions CO₂","Amélioration du confort des utilisateurs","Fonctionnement optimal malgré contraintes territoriales","Réduction du nombre de sites opérationnels"
-      ]},
-      {id:"reception_ref",label:"Réception",help:helpByStep.reception_ref,options:[
-        "Remise de la documentation complète","Vérification fonctionnelle & première charge","Acceptation automatique sans contrôle","Enregistrement administratif conforme"
-      ]}
-    ];
-    case 3: return [
-      {id:"objet",label:"Objet",help:helpByStep.objet,options:[
-        "Fourniture d’équipements destinés à l’exploitation et à la maintenance d’une centrale hydraulique",
-        "Achat de pompes et de moteurs","Maintenance de la centrale hydraulique","Achat d'équipements pour centrale de production"
-      ]},
-      {id:"contexte",label:"Contexte",help:helpByStep.contexte,options:[
-        "Le barrage de Petit Saut a été construit au niveau du fleuve Sinnamary","La mise en service a eu lieu en 1994",
-        "La retenue d’eau de 310 km² alimente deux tiers des foyers du littoral","Ce projet concerne une installation industrielle hors Guyane"
-      ]},
-      {id:"definition",label:"Définition de la prestation",help:helpByStep.definition,options:[
-        "Fourniture de pièces de rechange pour pompe et équipements hydrauliques","Fourniture des équipements conformes aux normes en vigueur",
-        "Fourniture de systèmes d’air conditionné","Fourniture d’équipements pour centrale photovoltaïque"
-      ]},
-      {id:"limites_titulaire",label:"Limites à la charge du titulaire",help:helpByStep.limites_titulaire,options:[
-        "Remplacement ou réparation en cas de défaillance","Livraison dans les conditions spécifiées","Prévenir l’entreprise 21 jours avant la livraison",
-        "Fourniture des documents techniques","Le titulaire peut livrer sans emballage"
-      ]},
-      {id:"limites_entreprise",label:"Limites à la charge de l’entreprise",help:helpByStep.limites_entreprise,options:[
-        "Le transport et le déchargement sont à la charge du titulaire","L’entreprise prend en charge le déchargement des colis","L’entreprise gère l'assurance transport","L’entreprise fournit les pièces si nécessaire"
-      ]},
-      {id:"qualite",label:"Qualité",help:helpByStep.qualite,options:[
-        "Certificats de conformité","Notices techniques","Plans d’installation si nécessaire","Rapport d’essais","Aucune documentation fournie"
-      ]},
-      {id:"conditions",label:"Conditions d’intervention",help:helpByStep.conditions,options:[
-        "Livraison du lundi au vendredi de 08h00 à 12h00","Livraison possible uniquement de nuit","Emballage avec protection contre l'humidité et les chocs","Étiquetage clair et de référence"
-      ]},
-      {id:"resultats",label:"Résultats attendus",help:helpByStep.resultats,options:[
-        "Matériels fonctionnels conformes aux spécifications","Documentation complète remise","Audit environnemental réalisé","Remplacement automatique des équipements au bout d’un an"
-      ]},
-      {id:"reception_ref",label:"Réception",help:helpByStep.reception_ref,options:[
-        "Contrôle technique des équipements","Possibilité de refus si colis non conforme","Réception automatique sans contrôle","Déchargement effectué par le transporteur"
+      {id:"reception_ref",label:"RÉCEPTION",help:helpByStep.reception_ref,options:[
+        "Contrôle des travaux par COPAYA",
+        "Réception après conformité réglementaire DGTM & IC/OL",
+        "Vérification des installations HTA et fibre avant mise en service",
+        "Réception automatique après fin de chantier"
       ]}
     ];
     case 1: return [
       {id:"objet",label:"Objet",help:helpByStep.objet,options:[
-        "Prestation de nettoyage intérieur des locaux du site TILESIA","Périmètre: bureaux, circulation, escaliers, ascenseur, sanitaires, vestiaires, réfectoires","Objectif: propreté, hygiène et confort des utilisateurs"
+        "Prestation de nettoyage intérieur des locaux du site TILESA",
+        "Périmètre: bureaux, circulation, escaliers, ascenseur, sanitaires, vestiaires, réfectoires",
+        "Objectif: propreté, hygiène et confort des utilisateurs"
       ]},
       {id:"contexte",label:"Contexte",help:helpByStep.contexte,options:[
-        "Bâtiment R+3, 4100 m², ~300 salariés","La politique santé sécurité est un enjeu majeur pour l’entreprise","Locaux électriques accompagnés par personnel habilité"
+        "Bâtiment R+3, 4100 m², ~300 salariés",
+        "La politique santé sécurité est un enjeu majeur pour l’entreprise",
+        "Locaux électriques accompagnés par personnel habilité"
       ]},
       {id:"definition",label:"Définition de la prestation",help:helpByStep.definition,options:[
-        "Nettoyage des sols (aspiration, balayage humide, lavage)","Dépoussiérage des surfaces et mobiliers","Désinfection des points de contact","Sanitaires: nettoyage, désinfection et réassort"
+        "Nettoyage des sols (aspiration, balayage humide, lavage)",
+        "Dépoussiérage des surfaces et mobiliers",
+        "Désinfection des points de contact",
+        "Sanitaires: nettoyage, désinfection et réassort"
       ]},
       {id:"limites_titulaire",label:"Limites à la charge du titulaire",help:helpByStep.limites_titulaire,options:[
-        "Approvisionnement consommables: papier toilette, essuie-mains, savon mains, sacs poubelles, désodorisants","Fourniture matériels et produits de nettoyage","Avis de passage après intervention"
+        "Approvisionnement consommables: papier toilette, essuie-mains, savon mains, sacs poubelles, désodorisants",
+        "Fourniture matériels et produits de nettoyage",
+        "Avis de passage après intervention"
       ]},
       {id:"limites_entreprise",label:"Limites à la charge de l’entreprise",help:helpByStep.limites_entreprise,options:[
-        "Mise à disposition des locaux d’entretien et points d’eau","Accompagnement zones électriques par agents habilités","Accès / badges / consignes de sécurité"
+        "Mise à disposition des locaux d’entretien et points d’eau",
+        "Accompagnement zones électriques par agents habilités",
+        "Accès / badges / consignes de sécurité"
       ]},
       {id:"qualite",label:"Qualité",help:helpByStep.qualite,options:[
-        "Plan qualité et fiches techniques produits","Traçabilité des interventions (registre / app)","Indicateurs de propreté et plan d’amélioration"
+        "Plan qualité et fiches techniques produits",
+        "Traçabilité des interventions (registre / app)",
+        "Indicateurs de propreté et plan d’amélioration"
       ]},
-      {id:"conditions",label:"Conditions d’intervention",help:helpByStep.conditions,options:[
-        "Respect sécurité / environnement (tri, stockage produits)","Signalisation des zones en intervention","Interventions en heures ouvrables","Décret 92-158 & C. travail (R.237-1 à R.237-28), normes d’hygiène"
+      {id:"conditions",label:"Conditions d’interventions",help:helpByStep.conditions,options:[
+        "Respect sécurité / environnement (tri, stockage produits)",
+        "Signalisation des zones en intervention",
+        "Interventions en heures ouvrables",
+        "Décret 92-158 & C. travail (R.237-1 à R.237-28), normes d’hygiène"
       ]},
       {id:"resultats",label:"Résultats attendus",help:helpByStep.resultats,options:[
-        "Sols propres sans traces visibles","Sanitaires propres, désinfectés et réapprovisionnés","Mobilier dépoussiéré, points de contact désinfectés"
+        "Sols propres sans traces visibles",
+        "Sanitaires propres, désinfectés et réapprovisionnés",
+        "Mobilier dépoussiéré, points de contact désinfectés"
       ]},
       {id:"reception_ref",label:"Réception",help:helpByStep.reception_ref,options:[
-        "Rapport semestriel rédigé par le service technique","Procès-verbal signé et daté par les deux parties","Références: Décret 92-158 & C. travail (R.237-1 à R.237-28), normes d’hygiène"
+        "Rapport semestriel rédigé par le service technique",
+        "Procès-verbal signé et daté par les deux parties",
+        "Références: Décret 92-158 & C. travail (R.237-1 à R.237-28), normes d’hygiène"
+      ]}
+    ];
+    case 6: return [
+      {id:"objet",label:"Objet",help:helpByStep.objet,options:[
+        "Achat de véhicules électriques neufs pour renouveler la flotte de Tilesa",
+        "Remplacement des bornes de recharge existantes",
+        "Achat de vélos électriques pour les équipes",
+        "Maintenance du réseau fibre optique"
+      ]},
+      {id:"contexte",label:"Contexte",help:helpByStep.contexte,options:[
+        "Tilesa souhaite électrifier sa flotte pour réduire son impact environnemental",
+        "Tilesa souhaite uniquement augmenter la vitesse de ses véhicules",
+        "La flotte actuelle est déjà 100% électrique",
+        "Le projet répond aux engagements climatiques européens"
+      ]},
+      {id:"definition",label:"Définition de la prestation",help:helpByStep.definition,options:[
+        "Fourniture de véhicules électriques adaptés à la Guyane",
+        "Livraison sur plusieurs sites (Cayenne, Kourou, Saint-Laurent…)",
+        "Formation des utilisateurs à la conduite des VE",
+        "Achat de véhicules thermiques hybrides rechargeables uniquement"
+      ]},
+      {id:"limites_titulaire",label:"Limites à la charge du titulaire",help:helpByStep.limites_titulaire,options:[
+        "Acheminement jusqu'en Guyane, douane & livraison finale",
+        "Formalités d'immatriculation",
+        "Service après-vente local ou agréé",
+        "Assurance des véhicules"
+      ]},
+      {id:"limites_entreprise",label:"Limites à la charge de l’entreprise",help:helpByStep.limites_entreprise,options:[
+        "Mise à disposition des emplacements & stationnement",
+        "Assurance des véhicules",
+        "Installation des bornes de recharge",
+        "Fourniture des véhicules thermiques de secours"
+      ]},
+      {id:"qualite",label:"Qualité",help:helpByStep.qualite,options:[
+        "Véhicules adaptés au climat et aux routes locales",
+        "Documentation complète & garanties",
+        "Pas besoin de SAV local",
+        "Véhicules testés avant livraison"
+      ]},
+      {id:"conditions",label:"Conditions d’intervention",help:helpByStep.conditions,options:[
+        "Livraison uniquement en jours ouvrés",
+        "Vérification fonctionnelle à la réception",
+        "Livraison libre sans prise de rendez-vous",
+        "Livraison uniquement sur Cayenne"
+      ]},
+      {id:"resultats",label:"Résultats attendus",help:helpByStep.resultats,options:[
+        "Réduction mesurable des émissions CO₂",
+        "Amélioration du confort des utilisateurs",
+        "Fonctionnement optimal malgré contraintes territoriales",
+        "Réduction du nombre de sites opérationnels"
+      ]},
+      {id:"reception_ref",label:"Réception",help:helpByStep.reception_ref,options:[
+        "Remise de la documentation complète",
+        "Vérification fonctionnelle & première charge",
+        "Acceptation automatique sans contrôle",
+        "Enregistrement administratif conforme"
       ]}
     ];
     default: return [];
   }
 }
 
+
 // Clés de réponses — indices OK
+
 const answerKeys = {
-  
   2:{
+    objet:[0],
+    contexte:[0,1,2],
+    definition:[0,2],
+    limites_titulaire:[0,2,3],
+    limites_entreprise:[0,1,2],
+    qualite:[0,3],
+    conditions:[0,1,3],
+    resultats:[0,3],
+    reception_ref:[0,1]
+  },
+  3:{
     objet:[0],
     contexte:[0,1,2],
     definition:[0,1],
     limites_titulaire:[0,1,2],
-    limites_entreprise:[0,1,3],
-    qualite:[0,1,3],
-    conditions:[0,1],
-    resultats:[0,1,3],
+    limites_entreprise:[0],
+    qualite:[0,1,2,3],
+    conditions:[0,2,3],
+    resultats:[0,1],
     reception_ref:[0,1,3]
   },
-4:{objet:[0,1,2],contexte:[0,1,2],definition:[0,1,2,3,5,6,7],limites_titulaire:[0,1,2],limites_entreprise:[0,1],qualite:[0,1,2],conditions:[0,1,2,3],resultats:[0,1,2],reception_ref:[0,1,2]},
-  5:{objet:[0],contexte:[0,1,2],definition:[0,1,2],limites_titulaire:[0,1,2],limites_entreprise:[0,1,2],qualite:[0,1,2],conditions:[0,1,2],resultats:[0,1,2],reception_ref:[0,1,2]},
-  6:{objet:[0],contexte:[0,3],definition:[0,1,2],limites_titulaire:[0,1,2],limites_entreprise:[0,1,2],qualite:[0,1,3],conditions:[0,1],resultats:[0,1,2],reception_ref:[0,1,3]},
-  3:{objet:[0],contexte:[0,1,2],definition:[0,1],limites_titulaire:[0,1,2,3],limites_entreprise:[0],qualite:[0,1,2,3],conditions:[0,2,3],resultats:[0,1],reception_ref:[0,1,3]},
-  1:{objet:[0],contexte:[0,1],definition:[0,1,2,3],limites_titulaire:[0,1],limites_entreprise:[0,1,2],qualite:[0,1,2],conditions:[0,1,2,3],resultats:[0,1,2],reception_ref:[0,1,2]}
+  4:{
+    objet:[0,1,2],
+    contexte:[0,1,2],
+    definition:[0,1,2,3,5,6,7],
+    limites_titulaire:[0,1,2],
+    limites_entreprise:[0,1],
+    qualite:[0,1,2],
+    conditions:[0,1,2,3],
+    resultats:[0,1,2],
+    reception_ref:[0,1,2]
+  },
+  5:{
+    objet:[0],
+    contexte:[0,1,2],
+    definition:[0,1,2],
+    limites_titulaire:[0,1,2],
+    limites_entreprise:[0,1,2],
+    qualite:[0,1,2],
+    conditions:[0,1,2],
+    resultats:[0,1,2],
+    reception_ref:[0,1,2]
+  },
+  1:{
+    objet:[0],
+    contexte:[0,1],
+    definition:[0,1,2,3],
+    limites_titulaire:[0,1],
+    limites_entreprise:[0,1,2],
+    qualite:[0,1,2],
+    conditions:[0,1,2,3],
+    resultats:[0,1,2],
+    reception_ref:[0,1,2]
+  },
+  6:{
+    objet:[0],
+    contexte:[0,3],
+    definition:[0,1,2],
+    limites_titulaire:[0,1,2],
+    limites_entreprise:[0,1,2],
+    qualite:[0,1,3],
+    conditions:[0,1],
+    resultats:[0,1,2],
+    reception_ref:[0,1,3]
+  }
 };
+
 
 function startBuilder(gameId, reset){
   const steps = stepsFor(gameId);
@@ -874,11 +1034,33 @@ function levelBadge(pct){
   return {label:"Génie",cls:"genie"};
 }
 
+
 function finishBuilder(gameId, steps){
-  let html='<h2>Résumé — '+({1:"TILESA — Jeu A",3:"LESATI — Jeu B",4:"COPAYA — Jeu A",5:"COPAYA — Jeu B",6:"TILESA — Jeu B"}[gameId])+'</h2>';
+  const titles = {1:"TILESA — Jeu A",2:"LESATI — Jeu A",3:"LESATI — Jeu B",4:"COPAYA — Jeu A",5:"COPAYA — Jeu B",6:"TILESA — Jeu B"};
+  const keys = answerKeys[gameId]||{};
+  let htmlOut = '<h2>Résumé — '+titles[gameId]+'</h2>';
   steps.forEach((s,i)=>{
-    const picked=[...(window._builderSelections[s.id]||[])].sort((a,b)=>a-b);
-    if(picked.length){ html+=`<h4>${i+1}. ${s.label}</h4><ul>`; picked.forEach(idx=>html+=`<li>${s.options[idx]}</li>`); html+='</ul>'; }
+    const picked = [...(window._builderSelections[s.id]||[])].sort((a,b)=>a-b);
+    const correct = new Set(keys[s.id]||[]);
+    if(picked.length){
+      htmlOut += `<h4>${i+1}. ${s.label}</h4><ul>`;
+      s.options.forEach((opt,idx)=>{
+        if(picked.includes(idx)){
+          const ok = correct.has(idx);
+          htmlOut += `<li>${ok?'✅':'❌'} ${opt}</li>`;
+        }
+      });
+      const missed = (keys[s.id]||[]).filter(idx=>!picked.includes(idx));
+      if(missed.length){
+        htmlOut += `<li><em>Réponses correctes non cochées :</em></li>`;
+        missed.forEach(idx=> htmlOut += `<li>✅ ${s.options[idx]}</li>`);
+      }
+      htmlOut += '</ul>';
+    }
+  });
+  document.getElementById('summaryContainer').innerHTML = htmlOut;
+  goTo('summary');
+}
   });
   if(html==='') html="<p>Aucun élément sélectionné. Revenez dans l’assistant pour choisir vos options.</p>";
 
