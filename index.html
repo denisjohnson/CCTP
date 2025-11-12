@@ -70,7 +70,7 @@
   window.goTo = function (id) {
     show(id);
     try { history.replaceState(null, '', '#' + id); } catch (e) { location.hash = id; }
-  };
+   if(/^game\d+$/.test(id)){ var g=parseInt(id.replace('game','')); try{ const set=sets[g]; const total=Object.keys(g===2?data2: g===3?data3: g===4?data4: g===5?data5: g===6?data6: data1).length; const b=document.getElementById('btnCCTP'+g); if(b){ b.style.display=(set.size>=total)?'inline-block':'none'; } }catch(e){} } };
   window.addEventListener('hashchange', function () {
     var id = (location.hash || '#home').slice(1);
     show(id);
@@ -216,7 +216,7 @@
   </div>
   <div class="info-log" id="infoLog1"></div>
   <div style="margin-top:10px;display:flex;gap:.5rem;flex-wrap:wrap">
-    <button class="btn" onclick="startBuilder(1,true)">Rédiger le cahier des charges</button>
+    <button class="btn" id="btnCCTP1" style="display:none" onclick="startBuilder(1,true)">Rédiger le cahier des charges</button>
     <button class="btn secondary" onclick="goTo('domain_tertiaire')">⬅ Retour</button>
   </div>
 </div></div>
@@ -231,7 +231,7 @@
   </div>
   <div class="info-log" id="infoLog2"></div>
   <div style="margin-top:10px;display:flex;gap:.5rem;flex-wrap:wrap">
-    <button class="btn" onclick="startBuilder(2,true)">Rédiger le cahier des charges</button>
+    <button class="btn" id="btnCCTP2" style="display:none" onclick="startBuilder(2,true)">Rédiger le cahier des charges</button>
     <button class="btn secondary" onclick="goTo('domain_production')">⬅ Retour</button>
   </div>
 </div></div>
@@ -247,7 +247,7 @@
   </div>
   <div class="info-log" id="infoLog3"></div>
   <div style="margin-top:10px;display:flex;gap:.5rem;flex-wrap:wrap">
-    <button class="btn" onclick="startBuilder(3,true)">Rédiger le cahier des charges</button>
+    <button class="btn" id="btnCCTP3" style="display:none" onclick="startBuilder(3,true)">Rédiger le cahier des charges</button>
     <button class="btn secondary" onclick="goTo('domain_production')">⬅ Retour</button>
   </div>
 </div></div>
@@ -263,7 +263,7 @@
   </div>
   <div class="info-log" id="infoLog4"></div>
   <div style="margin-top:10px;display:flex;gap:.5rem;flex-wrap:wrap">
-    <button class="btn" onclick="startBuilder(4,true)">Rédiger le cahier des charges</button>
+    <button class="btn" id="btnCCTP4" style="display:none" onclick="startBuilder(4,true)">Rédiger le cahier des charges</button>
     <button class="btn secondary" onclick="goTo('domain_reseau')">⬅ Retour</button>
   </div>
 </div></div>
@@ -280,7 +280,7 @@
   </div>
   <div class="info-log" id="infoLog5"></div>
   <div style="margin-top:10px;display:flex;gap:.5rem;flex-wrap:wrap">
-    <button class="btn" onclick="startBuilder(5,true)">Rédiger le cahier des charges</button>
+    <button class="btn" id="btnCCTP5" style="display:none" onclick="startBuilder(5,true)">Rédiger le cahier des charges</button>
     <button class="btn secondary" onclick="goTo('domain_reseau')">⬅ Retour</button>
   </div>
 </div></div>
@@ -297,7 +297,7 @@
   </div>
   <div class="info-log" id="infoLog6"></div>
   <div style="margin-top:10px;display:flex;gap:.5rem;flex-wrap:wrap">
-    <button class="btn" onclick="startBuilder(6,true)">Rédiger le cahier des charges</button>
+    <button class="btn" id="btnCCTP6" style="display:none" onclick="startBuilder(6,true)">Rédiger le cahier des charges</button>
     <button class="btn secondary" onclick="goTo('domain_tertiaire')">⬅ Retour</button>
   </div>
 </div></div>
@@ -516,7 +516,7 @@ function openModal(key,game){
   document.getElementById('modal').classList.add('active');
 }
 function closeModal(){document.getElementById('overlay').classList.remove('active');document.getElementById('modal').classList.remove('active');}
-function collectInfo(){const set=sets[currentGame]; set.add(currentKey); const el=document.getElementById('infoLog'+currentGame); if(el) el.textContent="Infos collectées : "+Array.from(set).map(s=>s.replace(' Tilesa B','').replace(' B','').replace(' Copaya','').replace(' Carl','')).join(', '); closeModal();}
+function collectInfo(){const set=sets[currentGame]; set.add(currentKey); const el=document.getElementById('infoLog'+currentGame); if(el) el.textContent="Infos collectées : "+Array.from(set).map(s=>s.replace(' Tilesa B','').replace(' B','').replace(' Copaya','').replace(' Carl','')).join(', '); const total = Object.keys(currentGame===2?data2: currentGame===3?data3: currentGame===4?data4: currentGame===5?data5: currentGame===6?data6: data1).length; const b=document.getElementById('btnCCTP'+currentGame); if(b && sets[currentGame].size>=total){ b.style.display='inline-block'; } closeModal();}
 
 /* ----------------------- Aides identiques pour 9 onglets ----------------------- */
 const helpByStep = {
@@ -797,7 +797,7 @@ function startBuilder(gameId, reset){
   const container=document.getElementById('builderContainer');
   if(reset){ container.innerHTML=''; }
 
-  const titles={1:"TILESA — Jeu A",3:"LESATI — Jeu B",4:"COPAYA — Jeu A",5:"COPAYA — Jeu B",6:"TILESA — Jeu B"};
+  const titles={1:"TILESA — Jeu A",2:"LESATI — Jeu A",3:"LESATI — Jeu B",4:"COPAYA — Jeu A",5:"COPAYA — Jeu B",6:"TILESA — Jeu B"};
   container.innerHTML = `<h2>${titles[gameId]} — Assistant (QCM)</h2>
     <div class="small">Rédiger votre CCTP avec votre assistant.</div>
     <div class="progress"><span id="builderProgress"></span></div>
@@ -810,7 +810,7 @@ function startBuilder(gameId, reset){
         <button class="btn secondary" onclick="goTo('home')">🏠 Retour accueil</button>
       </div>
       <div style="display:flex;gap:.5rem;flex-wrap:wrap">
-        <button class="btn secondary" onclick="goTo('game'+gameId)">↩ Revenir aux services à explorer</button>
+        <button class="btn secondary" onclick="goTo('game${gameId}')">↩ Revenir aux services à explorer</button>
         <button class="btn" id="nextStep">Suivant ▶</button>
         <button class="btn" id="finishBuilder" style="display:none">Générer le résumé</button>
       </div>
