@@ -97,7 +97,7 @@
 <!-- ACCUEIL -->
 <div id="home" class="screen active">
   <div class="container">
-    <img class="hero" src="./images/accueil_salle_formation.png" alt="Salle de formation moderne en Guyane">
+    <img class="hero" src="images/accueil_salle_formation.png" alt="Salle de formation moderne en Guyane">
     <h2>Choisissez votre domaine</h2>
     <div class="grid">
       <div class="card">
@@ -134,6 +134,7 @@
       <button class="btn" onclick="goTo('game3_intro')">Lancer</button>
     </div>
   
+
     <div class="card">
       <h3>Jeu C — Smart Grid (Marie)</h3>
       <p class="muted">Centrale Smart Grid: explorez les services de la centrale Smart Grid, puis rédiger le cahier des charges.</p>
@@ -179,14 +180,14 @@
 
 <!-- INTROS -->
 <div id="game1_intro" class="screen"><div class="container">
-  <img class="hero" src="./images/tilesia_accueil_alex.png" alt="">
+  <img class="hero" src="images/tilesia_accueil_alex.png" alt="">
   <h2>TILESA — Jeu A (Nettoyage des sites)</h2>
   <button class="btn" onclick="goTo('game1')">Démarrer</button>
   <button class="btn secondary" onclick="goTo('domain_tertiaire')">⬅ Retour</button>
 </div></div>
 
 <div id="game2_intro" class="screen"><div class="container">
-  <img class="hero" src="./images/lea_centrale_LESATI.png" alt="">
+  <img class="hero" src="images/lea_centrale_LESATI.png" alt="">
   <h2>LESATI — Jeu A (Centrale Thermique)</h2>
   <p>Léa, chargée d'affaires du service production, est volontaire pour réaliser l'expression du besoin. Il s'agit de l'achat de 3 nouveaux groupes électrogènes.</p>
   <button class="btn" onclick="goTo('game2')">Démarrer</button>
@@ -194,26 +195,24 @@
 </div></div>
 
 <div id="game3_intro" class="screen"><div class="container">
-  <img class="hero" src="./images/leon_centrale_LESATI.png" alt="">
+  <img class="hero" src="images/leon_centrale_LESATI.png" alt="">
   <h2>LESATI — Jeu B (Centrale Hydraulique)</h2>
   <p>Léon, nouveau chef de projet de la centrale hydraulique, est volontaire pour rédiger le cahier des charges concernant l’achat de pièces de rechange.</p>
   <button class="btn" onclick="goTo('game3')">Démarrer</button>
   <button class="btn secondary" onclick="goTo('domain_production')">⬅ Retour</button>
-</div></div>
-
 
 <div id="game7_intro" class="screen"><div class="container">
-  <img class="hero" src="./images/marie_smartgrid_LESATI.png" alt="">
   <h2>LESATI — Jeu C (Smart Grid)</h2>
-  <p>Vous incarnez Marie, chargée de projet Smart Grid. Vous êtes en charge de la rédaction d’un cahier des charges pour l’intégration de nouveaux services Smart Grid sur le site.</p>
+  <p>Marie, chargée de projet Smart Grid, est volontaire pour rédiger le cahier des charges concernant la maintenance des centrales « Smart Grid ».</p>
   <button class="btn" onclick="goTo('game7')">Démarrer</button>
-  <img class="hero" src="./images/ACCUEIL_3.jpeg" alt="Marie — ACCUEIL_3">
+  <img class="hero" src="images/ACCUEIL_3.jpeg" alt="Accueil Marie Smart Grid" style="margin-top:12px;">
   <button class="btn secondary" onclick="goTo('domain_production')">⬅ Retour</button>
 </div></div>
 
+</div></div>
 
 <div id="game4_intro" class="screen"><div class="container">
-  <img class="hero" src="./images/copaya_accueil.png" alt="">
+  <img class="hero" src="images/copaya_accueil.png" alt="">
   <h2>COPAYA — Jeu A (Élagage)</h2>
   <p>Vous incarnez Sylvie, chargée d’affaires au sein de l’entreprise Copaya. Vous avez pour objectif de rédiger le cahier des charges pour les prestations d’élagage.</p>
   <button class="btn" onclick="goTo('game4')">Démarrer</button>
@@ -221,7 +220,7 @@
 </div></div>
 
 <div id="game5_intro" class="screen"><div class="container">
-  <img class="hero" src="./images/copaya_intro.png" alt="">
+  <img class="hero" src="images/copaya_intro.png" alt="">
   <h2>COPAYA — Jeu B (Raccordement HTA)</h2>
   <p>Vous incarnez Carl, nouveau chargé d’affaires du service réseau. Vous êtes en charge de la rédaction d’un cahier des charges pour le raccordement HTA d’un village.</p>
   <button class="btn" onclick="goTo('game5')">Démarrer</button>
@@ -229,7 +228,7 @@
 </div></div>
 
 <div id="game6_intro" class="screen"><div class="container">
-  <img class="hero" src="./images/accueil_sabrina.png" alt="">
+  <img class="hero" src="images/accueil_sabrina.png" alt="">
   <h2>TILESA — Jeu B (Véhicules Électriques)</h2>
   <p>Vous incarnez Manon, pilote de la maintenance des véhicules. Vous êtes en charge de la rédaction d’un cahier des charges pour l’achat de véhicules électriques neufs.</p>
   <button class="btn" onclick="goTo('game6')">Démarrer</button>
@@ -281,19 +280,17 @@
     <button class="btn" id="btnCCTP3" style="display:none" onclick="startBuilder(3,true)">Rédiger le cahier des charges</button>
     <button class="btn secondary" onclick="goTo('domain_production')">⬅ Retour</button>
   </div>
-</div></div>
-
 
 <div id="game7" class="screen"><div class="container">
   <h2>LESATI — Jeu C (Smart Grid)</h2>
-    <div class="map">
+  <div class="map">
     <div class="location" onclick="openModal('Direction',7)"><img src="https://cdn-icons-png.flaticon.com/512/219/219986.png" alt="">Direction</div>
-    <div class="location" onclick="openModal('Habitants',7)"><img src="https://cdn-icons-png.flaticon.com/512/1077/1077012.png" alt="">Habitants</div>
+    <div class="location" onclick="openModal('Habitants',7)"><img src="https://cdn-icons-png.flaticon.com/512/1484/1484825.png" alt="">Habitants</div>
     <div class="location" onclick="openModal('Contract Manager',7)"><img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="">Contract Manager</div>
-    <div class="location" onclick="openModal('Maintenance',7)"><img src="https://cdn-icons-png.flaticon.com/512/942/942748.png" alt="">Maintenance</div>
+    <div class="location" onclick="openModal('Maintenance',7)"><img src="https://cdn-icons-png.flaticon.com/512/1995/1995525.png" alt="">Maintenance</div>
     <div class="location" onclick="openModal('Juriste',7)"><img src="https://cdn-icons-png.flaticon.com/512/2569/2569069.png" alt="">Juriste</div>
-    <div class="location" onclick="openModal('Chef d\'équipe',7)"><img src="https://cdn-icons-png.flaticon.com/512/2942/2942809.png" alt="">Chef d'équipe</div>
-    <div class="location" onclick="openModal('Sécurité',7)"><img src="https://cdn-icons-png.flaticon.com/512/847/847969.png" alt="">Sécurité</div>
+    <div class="location" onclick="openModal('Chef d\'équipe',7)"><img src="https://cdn-icons-png.flaticon.com/512/847/847969.png" alt="">Chef d’équipe</div>
+    <div class="location" onclick="openModal('Sécurité',7)"><img src="https://cdn-icons-png.flaticon.com/512/1535/1535791.png" alt="">Sécurité</div>
   </div>
   <div class="info-log" id="infoLog7"></div>
   <div style="margin-top:10px;display:flex;gap:.5rem;flex-wrap:wrap">
@@ -302,6 +299,7 @@
   </div>
 </div></div>
 
+</div></div>
 
 <div id="game4" class="screen"><div class="container">
   <h2>COPAYA — Jeu A (Élagage)</h2>
@@ -372,7 +370,7 @@
 <script>
 /* ---------- Données modales (textes exacts d'origine) ---------- */
 const data1={
-  'Direction':{ text:"Le président vous accueille : « La santé et la sécurité sont mes priorités pour garantir le bon fonctionnement de l’entreprise et le bien-être des salariés. »", image:"./images/tilesia_direction.png" },
+  'Direction':{ text:"Le président vous accueille : « La santé et la sécurité sont mes priorités pour garantir le bon fonctionnement de l’entreprise et le bien-être des salariés. »", image:"images/tilesia_direction.png" },
   'Technique':{ text:`Intervention pendant les heures ouvrables, sauf cas exceptionnel. Pour les locaux électriques, le titulaire sera accompagné d'un employé disposant des habilitations requises.
 
 Les espaces concernés sont les suivants : bureaux, couloirs, escaliers, ascenseur, sanitaires, vestiaires, réfectoires.
@@ -384,19 +382,19 @@ Les consommables à la charge du prestataire sont les suivants :
 - Le papier essuie-mains
 - Le savon liquide à mains
 - Les sacs poubelles
-- Désodorisants.`, image:"./images/tilesia_technique.png" },
-  'Salaries':{ text:"Les\ 30\ salariés\ devant\ l’entrée\ du\ bâtiment\ principal\.\ Ils\ sont\ pleinement\ investis\ dans\ la\ croissance\ de\ leur\ entreprise\ au\ sein\ de\ la\ ville\.", image:"./images/tilesia_salaries.png" },
-  'Juridique':{ text:"La juriste rappelle les prescriptions du Décret 92-158 du 20 février 1992 reprises dans le Code du travail (articles R.237-1 et R.237-28), applicables aux travaux réalisés dans l’établissement par une entreprise extérieure.", image:"./images/tilesia_juridique.png" }
+- Désodorisants.`, image:"images/tilesia_technique.png" },
+  'Salaries':{ text:"Les\ 30\ salariés\ devant\ l’entrée\ du\ bâtiment\ principal\.\ Ils\ sont\ pleinement\ investis\ dans\ la\ croissance\ de\ leur\ entreprise\ au\ sein\ de\ la\ ville\.", image:"images/tilesia_salaries.png" },
+  'Juridique':{ text:"La juriste rappelle les prescriptions du Décret 92-158 du 20 février 1992 reprises dans le Code du travail (articles R.237-1 et R.237-28), applicables aux travaux réalisés dans l’établissement par une entreprise extérieure.", image:"images/tilesia_juridique.png" }
 };
 const data2={
-  'Direction':{ text:'La directrice : "LESATI assure production, distribution et commercialisation à Saint Georges (800 clients). Priorité au service public et à la proximité client."', image:"./images/direction_directrice_LESATI.png" },
-  'Service production':{ text:'Certains groupes ont atteint leurs limites techniques (...) \n\nNous aurons besoins de 3 groupes électrogènes d’une puissance nominale de 800 kVA, de type diesel avec les certifications "Ultra" et "Iso 9001". Il faut penser aux documents nécessaires pour la bonne utilisation du matériel.', image:"./images/production_groupes_LESATI.png" },
-  'Salaries':{ text:"Les 30 salariés devant l’entrée du bâtiment principal. Ils sont pleinement investis (...).", image:"./images/salaries_30_LESATI.png" },
-  'Juridique':{ text:"La juriste rappelle qu'il est indispensable d'ajouter une garantie technique lors de l'achat des groupes électrogènes, avec livraison à Saint Georges. Les groupes seront utilisés en continu dans un milieu humide et avec température élevée.", image:"./images/juridique_garantie_LESATI.png" }
+  'Direction':{ text:'La directrice : "LESATI assure production, distribution et commercialisation à Saint Georges (800 clients). Priorité au service public et à la proximité client."', image:"images/direction_directrice_LESATI.png" },
+  'Service production':{ text:'Certains groupes ont atteint leurs limites techniques (...) \n\nNous aurons besoins de 3 groupes électrogènes d’une puissance nominale de 800 kVA, de type diesel avec les certifications "Ultra" et "Iso 9001". Il faut penser aux documents nécessaires pour la bonne utilisation du matériel.', image:"images/production_groupes_LESATI.png" },
+  'Salaries':{ text:"Les 30 salariés devant l’entrée du bâtiment principal. Ils sont pleinement investis (...).", image:"images/salaries_30_LESATI.png" },
+  'Juridique':{ text:"La juriste rappelle qu'il est indispensable d'ajouter une garantie technique lors de l'achat des groupes électrogènes, avec livraison à Saint Georges. Les groupes seront utilisés en continu dans un milieu humide et avec température élevée.", image:"images/juridique_garantie_LESATI.png" }
 };
 const data3={
-  'Direction B':{ text:`Pour répondre aux besoins énergétiques croissants de la Guyane au début des années 1980, le barrage a été construit au niveau d’un resserrement naturel du fleuve Sinnamary. Grâce à sa retenue d’eau, il alimente deux tiers des foyers du littoral guyanais.`, image:"./images/direction_LESATI_B.png" },
-  'Manager':{ text:`Ce cahier des charges a pour objet la fourniture d’équipements destinés à l’exploitation et à la maintenance d’une centrale hydraulique (Sinnamary). Ces équipements doivent répondre aux exigences de performance, de durabilité, et de conformité aux normes en vigueur.`, image:"./images/manager_LESATI_B.png" },
+  'Direction B':{ text:`Pour répondre aux besoins énergétiques croissants de la Guyane au début des années 1980, le barrage a été construit au niveau d’un resserrement naturel du fleuve Sinnamary. Grâce à sa retenue d’eau, il alimente deux tiers des foyers du littoral guyanais.`, image:"images/direction_LESATI_B.png" },
+  'Manager':{ text:`Ce cahier des charges a pour objet la fourniture d’équipements destinés à l’exploitation et à la maintenance d’une centrale hydraulique (Sinnamary). Ces équipements doivent répondre aux exigences de performance, de durabilité, et de conformité aux normes en vigueur.`, image:"images/manager_LESATI_B.png" },
   'Maintenance':{ text:`Les pièces de rechange sont utilisées sur les équipements suivants :
 
 - Les pompes,
@@ -411,8 +409,8 @@ const data3={
 Les livrables attendus sont les suivants :
 
 - L’ensemble des équipements, accompagnés de leurs certificats de conformité, notices techniques, plans d'installation si nécessaire.
-- Rapport d’essais.`, image:"./images/maintenance_LESATI_B.png" },
-  'Juridique B':{ text:`Le titulaire garantit les fournitures contre tout défaut de fabrication ou de matière pour une durée minimale de 24 mois à compter de la date de mise en service ou 30 mois après la livraison. En cas de défaillance, le remplacement ou la réparation des équipements sera pris en charge par le Titulaire.`, image:"./images/juridique_LESATI_B.png" },
+- Rapport d’essais.`, image:"images/maintenance_LESATI_B.png" },
+  'Juridique B':{ text:`Le titulaire garantit les fournitures contre tout défaut de fabrication ou de matière pour une durée minimale de 24 mois à compter de la date de mise en service ou 30 mois après la livraison. En cas de défaillance, le remplacement ou la réparation des équipements sera pris en charge par le Titulaire.`, image:"images/juridique_LESATI_B.png" },
   'Sécurité':{ text:`Les équipements devront être livrés avec protections contre l’humidité et les chocs. Une étiquette claire indiquant le contenu et la référence doit être visible sur chaque caisse.
 
 Adresse du site :
@@ -421,11 +419,11 @@ Centrale hydraulique de Sinnamary
 Guyane Française
 
 Horaires de livraison :
-Du lundi au vendredi de 08h00 à 12h00`, image:"./images/securite_LESATI_B.png" }
+Du lundi au vendredi de 08h00 à 12h00`, image:"images/securite_LESATI_B.png" }
 };
 const data4={
-  'Direction Copaya':{ text:`L'élagage est essentiel pour prévenir les coupures d'électricité et assurer la continuité de l'alimentation électrique des clients. Copaya supervise l'élagage des arbres à proximité des lignes électriques pour éviter les dommages sur le réseau.`, image:"./images/copaya_direction.png" },
-  'Clients Copaya':{ text:`Les propriétaires de terrain doivent veiller à l'entretien et à la taille régulière des arbres situés sur leurs propriétés, conformément à la réglementation. L’élagage à proximité des réseaux électriques doit être géré par des professionnels disposant d’une autorisation AIPR (Autorisation Intervention à Proximité des Réseaux). La pousse rapide de la végétation peut engendrer des problématiques de sécurité des tiers et également des coupures intempestives de la clientèle.`, image:"./images/clients_copaya.png" },
+  'Direction Copaya':{ text:`L'élagage est essentiel pour prévenir les coupures d'électricité et assurer la continuité de l'alimentation électrique des clients. Copaya supervise l'élagage des arbres à proximité des lignes électriques pour éviter les dommages sur le réseau.`, image:"images/copaya_direction.png" },
+  'Clients Copaya':{ text:`Les propriétaires de terrain doivent veiller à l'entretien et à la taille régulière des arbres situés sur leurs propriétés, conformément à la réglementation. L’élagage à proximité des réseaux électriques doit être géré par des professionnels disposant d’une autorisation AIPR (Autorisation Intervention à Proximité des Réseaux). La pousse rapide de la végétation peut engendrer des problématiques de sécurité des tiers et également des coupures intempestives de la clientèle.`, image:"images/clients_copaya.png" },
   'Maintenance Copaya':{ text:`Distances attendues :
 
 - 405 KM à élaguer par an sur le réseau HTA
@@ -441,8 +439,8 @@ Les documents d’accès sont de la responsabilité de Copaya.
 Les chantiers se réaliseront de préférence entre 6h30 et 17h00. 
 Tout chantier planifié en dehors de ces horaires sera réalisé avec l’accord écrit de Copaya.
 
-Avant toute intervention à proximité d’un ouvrage électrique, il est impératif d’envoyer une DT-DICT (Déclaration de Travaux - Déclaration d’Intention de Commencement de Travaux) au moins 15 jours avant le début des travaux.`, image:"./images/copaya_maintenance.png" },
-  'Environnement Copaya':{ text:`l’intervention dans des zones protégées, la préservation des espèces (périodes de nidification, par exemple) et la gestion des risques d’incendie sont encadrées par une réglementation qui évolue, en même temps que la prise de conscience environnementale`, image:"./images/copaya_environnement.png" },
+Avant toute intervention à proximité d’un ouvrage électrique, il est impératif d’envoyer une DT-DICT (Déclaration de Travaux - Déclaration d’Intention de Commencement de Travaux) au moins 15 jours avant le début des travaux.`, image:"images/copaya_maintenance.png" },
+  'Environnement Copaya':{ text:`l’intervention dans des zones protégées, la préservation des espèces (périodes de nidification, par exemple) et la gestion des risques d’incendie sont encadrées par une réglementation qui évolue, en même temps que la prise de conscience environnementale`, image:"images/copaya_environnement.png" },
   'Sécurité Copaya':{ text:`Le Titulaire devra s’équiper d'Equipements de Protection Collectifs (EPC) et d’Equipements de Protection Individuels (EPI), à savoir :
 - Balisage des zones de travail avec cônes pour matérialiser la zone de travail sur route
 - Gyrophare/voyants lumineux
@@ -452,18 +450,18 @@ Avant toute intervention à proximité d’un ouvrage électrique, il est impér
 - Protection auditive
 - Vêtement de protection
 - Chaussures de sécurité
-- Matériel d’ascension conforme (contrôle métrologique à jour)`, image:"./images/copaya_securite.png" }
+- Matériel d’ascension conforme (contrôle métrologique à jour)`, image:"images/copaya_securite.png" }
 };
 const data5={
   'Directrice Carl':{ 
     text:`Ce projet est d’une grande importance pour l’entreprise COPAYA. Nous voulons fournir la même qualité de service à l’ensemble des habitants présents sur le territoire. Tous les moyens seront mis en œuvre pour respecter les délais et limiter les nuisances. Il est important de finaliser les travaux avant la prochaine saison des pluies.`,
-    image:"./images/copaya_directrice.png"
+    image:"images/copaya_directrice.png"
   },
   'Équipe Carl':{
     text:`Le titulaire transmettra son planning permettant de réaliser la fiche de déroulement des opérations (FDO).
 Les communications seront réalisées via un outil dont les modalités de connexion seront transmises ultérieurement.
 Copaya fournira les câbles, la boîte de jonction et un local de stockage tandis que le Titulaire devra nous transmettre les chambres de tirage.`,
-    image:"./images/copaya_equipe.png"
+    image:"images/copaya_equipe.png"
   },
   'Manager Carl':{
     text:`Voici les consignes :
@@ -476,17 +474,17 @@ Copaya fournira les câbles, la boîte de jonction et un local de stockage tandi
 - Installation et mise en service de l’armoire
 - Raccordement et étiquetage des câbles HTA
 - Durée du chantier : 4 mois`,
-    image:"./images/copaya_manager.png"
+    image:"images/copaya_manager.png"
   },
   'Habitants Carl':{
     text:`Nous attendons ces travaux avec impatience. Ces travaux permettront de stabiliser le réseau électrique. Nous espérons que les impacts sur la chaussée et sur le volume sonore seront minimisés dans le quartier.`,
-    image:"./images/copaya_habitants.png"
+    image:"images/copaya_habitants.png"
   },
   'Juriste Carl':{
     text:`Les tranchées devront respecter les conditions imposées par la DGTM (Direction Générale des Territoires et de la Mer) concernant les travaux prévus sur la voie publique.
 Avant tous travaux sur le domaine public, le prestataire devra effectuer une déclaration de commencement de travaux. Avant l’ouverture du chantier, il transmettra les éléments au Maître d’Ouvrage.
 Le Titulaire réalisera l’ensemble des investigations complémentaires (IC) et opérations de localisation (OL) nécessaires à l’exécution des travaux conformément au décret n°2011-12.`,
-    image:"./images/copaya_juriste.png"
+    image:"images/copaya_juriste.png"
   },
   'Prévention Carl':{
     text:`Le Titulaire devra prendre toutes les dispositions nécessaires pour assurer la sécurité des biens et des personnes :
@@ -496,13 +494,13 @@ Le Titulaire réalisera l’ensemble des investigations complémentaires (IC) et
 - Panneaux de chantier posés a minima 50 m avant le chantier
  
 Des visites régulières de prévention sécurité seront organisées par COPAYA pour s’assurer de la conformité du chantier.`,
-    image:"./images/copaya_prevention.png"
+    image:"images/copaya_prevention.png"
   }
 };
 const data6={
   'Direction Tilesa B':{ 
     text:`Dans le cadre de son engagement en faveur du développement durable et de la réduction des émissions de gaz à effet de serre, Tilesa souhaite électrifier sa flotte de véhicules en Guyane Française. La flotte actuelle compte 150 véhicules dont 30% doivent être remplacés par des modèles électriques.`,
-    image:"./images/direction.png" 
+    image:"images/direction.png" 
   },
   'Manager Tilesa B':{ 
     text:`Le Titulaire du marché devra assurer :
@@ -514,7 +512,7 @@ const data6={
 - La fourniture de la documentation complète (certificats de conformité, manuels, garanties)
 - Le service après-vente assuré localement ou via un partenaire agréé en Guyane.
 - Les véhicules seront livrées lors des jours d’ouverture des sites`,
-    image:"./images/manager.png" 
+    image:"images/manager.png" 
   },
   'Services Tilesa B':{ 
     text:`Trois collègues échangent sur les besoins :
@@ -522,7 +520,7 @@ const data6={
 - Service réseau : Véhicules tout-chemin électriques ou hybrides rechargeables pour zones d’accès difficile.
 - Clientèle :  Petits utilitaires électriques pour transport de matériel et d’équipes techniques
 - Finance : Berlines ou citadines électriques pour déplacements professionnels`,
-    image:"./images/services.png" 
+    image:"images/services.png" 
   },
   'Technique Tilesa B':{ 
     text:`Le Titulaire prendra en charge :
@@ -536,102 +534,84 @@ L’entreprise assurera :
 - L’assurance des véhicules
 - L’installation et l’entretien des bornes de recharge
 - Le suivi administratif (cartes grises, fiscalité, contrôles périodiques)`,
-    image:"./images/technique.png" 
+    image:"images/technique.png" 
   },
   'Juriste Tilesa B':{ 
     text:`Face à l’urgence climatique, l’Union européenne a mis en place un cadre réglementaire ambitieux pour accélérer l’électrification du parc automobile.  Parmi les mesures phares :
 
 - l’interdiction de la vente des voitures thermiques neuves à partir de 2035
 - la norme CAFE, le recyclage des batteries et la mise en place d’un passeport numérique de batterie.`,
-    image:"./images/juriste.png" 
+    image:"images/juriste.png" 
   },
   'Environnement Tilesa B':{ 
     text:`Nos objectifs sont les suivants :
 - Réduction mesurable des émissions de CO₂ et des coûts énergétiques
 - Amélioration du confort de conduite et de la sécurité des utilisateurs
 - Fonctionnement optimal des véhicules malgré les contraintes territoriales.`,
-    image:"./images/responsable_environnement.png" 
+    image:"images/responsable_environnement.png" 
   }
-};
 
 const data7={
-  'Direction':{
-    text:`Afin d’atteindre l’objectif d’autonomie énergétique d’ici 2030, LESATI développe avec ses partenaires (collectivités, industriels, start-up,…) des projets « smart grid » avec pour objectif de :
+  'Direction':{ text:`Afin d’atteindre l’objectif d’autonomie énergétique d’ici 2030, LESATI développe avec ses partenaires (collectivités, industriels, start-up,…) des projets « smart grid » avec pour objectif de :
 • Renforcer les énergies renouvelables locales ;
 • Développer des systèmes de stockage de l’électricité ;
 • Instaurer des plateformes de pilotage intelligent de l’offre et de la demande en énergie ;
 • Limiter la dépendance aux énergies fossiles
-LESATI s’occupe de 6 nouvelles centrales de production dites hybrides combinant photovoltaïque avec stockage d’énergie.`,
-    image:'./images/DIRECTION_3.jpeg'
-  },
-  'Habitants':{
-    text:`Situées dans la forêt tropicale humide du sud ouest de la Guyane, à la frontière du Suriname, les communes de l’intérieur se caractérisent par leur étendue et leur enclavement. Historiquement, certains hameaux reculés de ces communes, appelés écarts, accessibles uniquement en pirogue, n’avaient pas un accès permanent à l’éléctricité.`,
-    image:'./images/HABITANTS_3.jpeg'
-  },
-  'Contract Manager':{
-    text:`Il faudra prendre en compte les difficultés rencontrées lors du précédent marché :
+
+LESATI s’occupe de 6 nouvelles centrales de production dites hybrides combinant photovoltaïque avec stockage d’énergie.`, image:"images/DIRECTION_3.jpeg" },
+
+  'Habitants':{ text:`Situées dans la forêt tropicale humide du sud ouest de la Guyane, à la frontière du Suriname, les communes de l’intérieur se caractérisent par leur étendue et leur enclavement. Historiquement, certains hameaux reculés de ces communes, appelés écarts, accessibles uniquement en pirogue, n’avaient pas un accès permanent à l’éléctricité.`, image:"images/HABITANTS_3.jpeg" },
+
+  'Contract Manager':{ text:`Il faudra prendre en compte les difficultés rencontrées lors du précédent marché :
 - Manque de points d’eau à proximité des installations
-- Difficultés d’accès à certains sites avec le transport aérien
-- Non-respect contractuel du précédent Titulaire concernant la supervision
+- Difficultés d’accès à certains sites avec le transport aérien 
+- Non-respect contractuel du précédent Titulaire concernant la supervision 
 - Maintenance du contrôle-commande : pilotage automatique de la centrale
-Pour faciliter le contrôle du résultat, le Titulaire produira les documents suivants :
+
+Pour faciliter le contrôle du résultat, le Titulaire produira les documents suivants : 
 - Les notices techniques des matériels
 - La mise à jour du registre de maintenance propre à chaque matériel (une fois par an)
-- Les plans et schémas à jour après travaux de modification dans un délai ne pouvant excéder un mois.
-- Les plannings de travaux mis à jour tous les trimestres.`,
-    image:'./images/CONTRACT_MANAGER_3.jpeg'
-  },
-  'Maintenance':{
-    text:`Les prestations comprendront la maintenance préventive, la maintenance corrective, les interventions de dépannage en urgence, la supervision (suivi des alarmes), le suivi énergétique pour l’optimisation de la performance énergétique des centrales photovoltaïques avec stockage. Le marché intègre également le remplacement des batteries de stockage
+- Les plans et schémas à jou après travaux de modification dans un délai ne pouvant excéder un mois. 
+- Les plannings de travaux mis à jour tous les trimestres.`, image:"images/CONTRACT_MANAGER_3.jpeg" },
+
+  'Maintenance':{ text:`Les prestations comprendront la maintenance préventive, la maintenance corrective, les interventions de dépannage en urgence, la supervision (suivi des alarmes), le suivi énergétique pour l’optimisation de la performance énergétique des centrales photovoltaïques avec stockage. Le marché intègre également le remplacement des batteries de stockage.
 
 Les centrales hybrides comprennent les éléments suivants :
  Le sous-ensemble photovoltaïque (panneaux solaires, elements de structure, coffrets de protections
-
- Le sous-ensemble conversion d’énergie (régulateurs de charge, onduleurs, armoires électriques)
-
+ Le sous-ensemble conversion d’énergie (régulateurs de charge, onduleurs, armoires électriques)   
  Le sous-ensemble de stockage de l’énergie : (batteries, bacs de rétention, coffrets de protection)
-
- Les équipements du monitoring et de pilotage (pour la supervision) : automates, capteurs, PC
-
- Le circuit de mise à la terre générale
-
+ Les équipements du monitoring et de pilotage (pour la supervision) :  automates, capteurs, PC
+ Le circuit de mise à la terre générale 
  Les circuits électriques : câbles, chemins de câbles, dalles
+ L’installation électrique intérieure du bâtiment : câblage, petits appareillages, contrôle d’accès anti-intrusion…`, image:"images/MAINTENANCE_3.jpeg" },
 
- L’installation électrique intérieure du bâtiment : câblage, petits appareillages, contrôle d’accès anti-intrusion…`,
-    image:'./images/MAINTENANCE_3.jpeg'
-  },
-  'Juriste':{
-    text:`Il faut impérativment penser au stock de pièces de rechange en cas de panne. Ce stock de pièces (compte tenu des durées d’approvisionnement) nous garantira le respect des délais de maintenance curative. Le futur titulaire devra répondre aux exigences techniques d’équipements et de pièces identiques aux équipements d’origine.
-Les interventions se dérouleront dans le respect des dispositions légales sur le temps de travail journalier et hebdomadaire.
-Les sites sont accessibles principalement par voie fluviale. Les saisons doivent être prises en compte pour l’accessibilité des centrales.`,
-    image:'./images/JURISTE_3.jpeg'
-  },
-  'Chef d'Chef d\'équipe':{
-    text:`On distingue deux niveaux de maintenance :
-• Maintenance préventive et systématique sur site, exécutée à des intervalles régulières. La maintenance préventive est destinée à réduire la probabilité de défaillance ou de dégradation du fonctionnement des installations.
+  'Juriste':{ text:`Il faut impérativment penser au stock de pièces de rechange en cas de panne. Ce stock de pièces (compte tenu des durées d’approvisionnement) nous garantira le respect des délais de maintenance curative. Le futur titulaire devra répondre aux exigences techniques d’équipements et de pièces identiques aux équipements d’origine.
+
+Les interventions se dérouleront dans le respect des dispositions légales sur le temps de travail journalier et hebdomadaire. 
+Les sites sont accessibles principalement par voie fluviale. Les saisons doivent être prises en compte pour l’accessibilité des centrales.`, image:"images/JURISTE_3.jpeg" },
+
+  'Chef d\'équipe':{ text:`On distingue deux niveaux de maintenance : 
+• Maintenance préventive et systématique sur site, exécutée à des intervalles régulières. La maintenance préventive est destinée à réduire la probabilité de défaillance ou de dégradation du fonctionnement des installations. 
 
 • Maintenance curative (dépannage) faisant suite à la survenance de pannes critiques, comme par exemple, un arrêt complet de la central. Elle est exécutée à la demande de LESATI, au cas par cas après analyse de la situation.
 
 Comme tout système de production d’énergie, les systèmes photovoltaïques doivent être entretenus régulièrement. Le Titulaire s’engage à respecter les consignes d’exploitation, d’entretien et de maintenance des divers équipements et matériels.
 
-Des visites systématiques sont donc effectuées suivant un planning établi selon le plan de maintenance général de la centrale. La périodicité des taches à réaliser respecte les préconisations des constructeurs.`,
-    image:'./images/CHEF_EQUIPE_3.jpeg'
-  },
-  'Sécurité':{
-    text:`Pour son intervention, le Titulaire devra :
-- Mettre en place les protections nécessaires pour limiter l’impact environnemental.
-- Prévoir les moyens de manutention et de levage. Aucun équipement ne pourra lui être mis à disposition.
+Des visites systématiques sont donc effectuées suivant un planning établi selon le plan de maintenance général de la centrale. La périodicité des taches à réaliser respecte les préconisations des constructeurs.`, image:"images/CHEF_EQUIPE_3.jpeg" },
 
-Cette prestation est soumise aux arrêtés et décrets concernant la sécurité et aux prescriptions relatives à la prévention, l'hygiène, l’environnement et la sécurité en vigueur à LESATI. Un plan de prévention sera élaboré avec chaque Titulaire conformément au décret du 20/02/92.
-Lors de ses interventions, le ou les Titulaire(s) pourront être soumis :
-- Au bruit (le groupe électrogène pourra être en marche lors des visites de maintenance).
-- À la chaleur
-- À une exposition directe au soleil
-- À la présence de nuisibles ou des insectes.`,
-    image:'./images/SECURITE_3.jpeg'
-  }
+  'Sécurité':{ text:`Pour son intervention, le Titulaire devra : 
+- Mettre en place les protections nécessaires pour limiter l’impact environnemental. 
+- Prévoir les moyens de manutention et de levage. Aucun équipement ne pourra lui être mis à disposition. 
+
+Cette prestation est soumise aux arrêtés et décrets concernant la sécurité et aux prescriptions relatives à la prévention, l'hygiène, l’environnement et la sécurité en vigueur à LESATI. Un plan de prévention sera élaboré avec chaque Titulaire conformément au décret du 20/02/92. 
+
+Lors de ses interventions, le ou les Titulaire(s) pourront être soumis : 
+- Au bruit (le groupe électrogène pourra être en marche lors des visites de maintenance). 
+- À la chaleur  
+- À une exposition directe au soleil 
+- À la présence de nuisibles ou des insectes.`, image:"images/SECURITE_3.jpeg" }
 };
-
+};
 
 let currentGame=0,currentKey='';const sets={1:new Set(),2:new Set(),3:new Set(),4:new Set(),5:new Set(),6:new Set(),7:new Set()};
 
@@ -640,7 +620,7 @@ function openModal(key,game){
   const src= game===2?data2 : game===3?data3 : game===4?data4 : game===5?data5 : game===6?data6 : game===7?data7 : data1;
   const it=src[key];
   document.getElementById('modalTitle').textContent=key.replace(' Tilesa B','').replace(' B','').replace(' Copaya','').replace(' Carl','');
-  document.getElementById('modalImage').src=(it.image||it.img||'');
+  document.getElementById('modalImage').src=it.image;
   document.getElementById('modalText').textContent=it.text;
   document.getElementById('overlay').classList.add('active');
   document.getElementById('modal').classList.add('active');
@@ -906,9 +886,9 @@ case 4: return [
       ]},
       {id:"contexte",label:"Contexte",help:helpByStep.contexte,options:[
         "Développement de projets smartgrid pour assurer l’autonomie énergétique d’ici 2030",
-        "Les communes de l’intérieur se caractérisent par leur étendue et leur enclavement",
-        "Accès partiel à l’électricité dans les écarts",
-        "Maintenance du contrôle-commande",
+        "Les communes de l’intérieur se caractèrisent pas leur étendue et leur enclavement",
+        "Accès partiel à l’éléctricité dans les écarts",
+        "Maintenance du contrôle commande",
         "Limiter la dépendance aux énergies fossiles"
       ]},
       {id:"definition",label:"Définition de la prestation",help:helpByStep.definition,options:[
@@ -916,11 +896,11 @@ case 4: return [
         "Dépannages en urgence",
         "Supervision et détection des incidents à distance",
         "Remplacement des batteries de stockage",
-        "Frais logistiques comprenant transport, hébergement et restauration"
+        "Frais logistiques comprenant transport, hebergement et restauration"
       ]},
       {id:"limites_titulaire",label:"Limites à la charge du titulaire",help:helpByStep.limites_titulaire,options:[
-        "Fourniture d’un stock de pièces de rechange",
-        "Garantie technique et prise en charge du remplacement/réparation en cas de défaut",
+        "Fourniture d’un stock de pièce de rechange",
+        "Garantie technique et prise en charge remplacement/réparation en cas de défaut",
         "Moyens de manutention et de levage",
         "Mise à jour du registre de maintenance pour chaque équipement"
       ]},
@@ -937,26 +917,26 @@ case 4: return [
       ]},
       {id:"conditions",label:"Conditions d’intervention",help:helpByStep.conditions,options:[
         "Exposition bruit, chaleur, nuisibles",
-        "Les sites sont principalement accessibles par voie fluviale",
+        "Les sites sont principalent accessibles par voie fluviale",
         "Interventions sur toute la Guyane",
         "Moyens matériels pour limiter l’impact environnemental"
       ]},
       {id:"resultats",label:"Résultats attendus",help:helpByStep.resultats,options:[
-        "Réalisation de 4 maintenances annuelles avec transmission systématique d’état des lieux et de propositions pour limiter les défaillances",
+        "Réalisation de 4 maintenances annuelles avec transmission systématique d’état des lieux et de proposition pour limiter les défaillances",
         "Maintenir un taux de bon fonctionnement annuel des équipements à 95% tout au long de l’année",
         "Mise en place d’un système de supervision permettant de détecter les défauts à distance avant de planifier les déplacements sur site et assurer la mise à jour annuelle de l’outil",
         "Port des équipements individuels de protection"
       ]},
       {id:"reception_ref",label:"Réception",help:helpByStep.reception_ref,options:[
-        "Nature et résultats des tests effectués",
-        "Remise du rapport provisoire suite à la supervision",
+        "Nature et resultats des test effectués",
+        "Remise du rapport provisioire suite à la supervision",
         "Remise du rapport de fin d’intervention",
         "Acceptation automatique sans contrôle",
         "Activation de la garantie technique"
-      ]},
+      ]}
     ];
 
-case 3: return [
+    case 3: return [
       {id:"objet",label:"Objet",help:helpByStep.objet,options:[
         "Fourniture d\u2019\u00e9quipements destin\u00e9s \u00e0 l\u2019exploitation et \u00e0 la maintenance d\u2019une centrale hydraulique",
         "Achat de pompes et de moteurs",
@@ -1066,21 +1046,13 @@ case 3: return [
 }
 
 // Clés de réponses — indices OK
-
-// --- Jeu 7 (Smart Grid) : éléments pour la rédaction du cahier des charges (choix multiples)
-// Remplissez le tableau ci-dessous avec vos items.
-// Format: { label: 'Texte de l’item', isTrue: true/false }
-const cdcItems7 = [
-  // { label: 'Exemple (VRAI)', isTrue: true },
-  // { label: 'Exemple (FAUX)', isTrue: false },
-];
 const answerKeys = {
+  7:{objet:[2], contexte:[0,1,2,4], definition:[0,1,2,3], limites_titulaire:[0,1,2,3], limites_entreprise:[0,1,3], qualite:[0,2], conditions:[0,1,3], resultats:[0,2], reception_ref:[0,1,2]},
   2:{objet:[0], contexte:[0,1,2], definition:[0,2], limites_titulaire:[0,2,3], limites_entreprise:[0,1,2], qualite:[0,3], conditions:[0,1,3], resultats:[0,3], reception_ref:[0,1]},
   4:{objet:[0,1,2], contexte:[0,1,2], definition:[0,1,2,3,5,6,7], limites_titulaire:[0,1,2], limites_entreprise:[0,1], qualite:[0,1,2], conditions:[0,1,2,3], resultats:[0,1,2], reception_ref:[0,1,2]},
   5:{objet:[0], contexte:[0,1,2], definition:[0,1,2], limites_titulaire:[0,1,2], limites_entreprise:[0,1,2], qualite:[0,1,2], conditions:[0,1,2], resultats:[0,1,2], reception_ref:[0,1,2]},
   6:{objet:[0], contexte:[0,3], definition:[0,1,2], limites_titulaire:[0,1,2], limites_entreprise:[0,1,2], qualite:[0,1,3], conditions:[0,1], resultats:[0,1,2], reception_ref:[0,1,3]},
-  7:{objet:[2], contexte:[0,1,2,4], definition:[0,1,2,3], limites_titulaire:[0,1,2,3], limites_entreprise:[0,1,3], qualite:[0,2], conditions:[0,1,3], resultats:[0,2], reception_ref:[0,1,2]},
-3:{objet:[0], contexte:[0,1,2], definition:[0,1], limites_titulaire:[0,1,2], limites_entreprise:[0], qualite:[0,1,2,3], conditions:[0,2,3], resultats:[0,1], reception_ref:[0,1,3]},
+  3:{objet:[0], contexte:[0,1,2], definition:[0,1], limites_titulaire:[0,1,2], limites_entreprise:[0], qualite:[0,1,2,3], conditions:[0,2,3], resultats:[0,1], reception_ref:[0,1,3]},
   1:{objet:[0], contexte:[0,1], definition:[0,1,2,3], limites_titulaire:[0,1], limites_entreprise:[0,1,2], qualite:[0,1,2], conditions:[0,1,2,3], resultats:[0,1,2], reception_ref:[0,1,2]},
 };
 
@@ -1091,7 +1063,7 @@ function startBuilder(gameId, reset){
   const container=document.getElementById('builderContainer');
   if(reset){ container.innerHTML=''; }
 
-  const titles={1:"TILESA — Jeu A",2:"LESATI — Jeu A",3:"LESATI — Jeu B",4:"COPAYA — Jeu A",5:"COPAYA — Jeu B",6:"TILESA — Jeu B",7:"LESATI — Jeu C"};
+  const titles={1:"TILESA — Jeu A",2:"LESATI — Jeu A",3:"LESATI — Jeu B",4:"COPAYA — Jeu A",5:"COPAYA — Jeu B",6:"TILESA — Jeu B"};
   container.innerHTML = `<h2>${titles[gameId]} — Assistant (QCM)</h2>
     <div class="small">Rédiger votre CCTP avec votre assistant.</div>
     <div class="progress"><span id="builderProgress"></span></div>
@@ -1170,7 +1142,7 @@ function levelBadge(pct){
 
 function finishBuilder(gameId, steps){
 
-  let html='<h2>Résumé — '+({1:"TILESA — Jeu A",2:"LESATI — Jeu A",3:"LESATI — Jeu B",4:"COPAYA — Jeu A",5:"COPAYA — Jeu B",6:"TILESA — Jeu B",7:"LESATI — Jeu C"}[gameId])+'</h2>';
+  let html='<h2>Résumé — '+({1:"TILESA — Jeu A",2:"LESATI — Jeu A",3:"LESATI — Jeu B",4:"COPAYA — Jeu A",5:"COPAYA — Jeu B",6:"TILESA — Jeu B"}[gameId])+'</h2>';
   // Récap simple des choix
   steps.forEach((s,i)=>{
     const picked=[...(window._builderSelections[s.id]||[])].sort((a,b)=>a-b);
