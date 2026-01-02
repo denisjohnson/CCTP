@@ -133,14 +133,14 @@
       <p class="muted">Centrale Hydraulique : explorez les services de la centrale hydraulique, puis rédigez le cahier des charges.</p>
       <button class="btn" onclick="goTo('game3_intro')">Lancer</button>
     </div>
-  
 
     <div class="card">
       <h3>Jeu C — Smart Grid (Marie)</h3>
       <p class="muted">Centrale Smart Grid: explorez les services de la centrale Smart Grid, puis rédiger le cahier des charges.</p>
       <button class="btn" onclick="goTo('game7_intro')">Lancer</button>
     </div>
-</div>
+
+  </div>
   <button class="btn secondary" onclick="goTo('home')">⬅ Retour</button>
 </div></div>
 
@@ -200,15 +200,15 @@
   <p>Léon, nouveau chef de projet de la centrale hydraulique, est volontaire pour rédiger le cahier des charges concernant l’achat de pièces de rechange.</p>
   <button class="btn" onclick="goTo('game3')">Démarrer</button>
   <button class="btn secondary" onclick="goTo('domain_production')">⬅ Retour</button>
+</div></div>
+
 
 <div id="game7_intro" class="screen"><div class="container">
   <h2>LESATI — Jeu C (Smart Grid)</h2>
-  <p>Marie, chargée de projet Smart Grid, est volontaire pour rédiger le cahier des charges concernant la maintenance des centrales « Smart Grid ».</p>
+  <p>Marie vous accueille pour explorer les services de la centrale Smart Grid, puis rédiger le cahier des charges.</p>
   <button class="btn" onclick="goTo('game7')">Démarrer</button>
-  <img class="hero" src="images/ACCUEIL_3.jpeg" alt="Accueil Marie Smart Grid" style="margin-top:12px;">
+  <img class="hero" src="images/ACCUEIL_3.jpeg" alt="Accueil Smart Grid (Marie)" style="max-height:50vh;margin-top:12px">
   <button class="btn secondary" onclick="goTo('domain_production')">⬅ Retour</button>
-</div></div>
-
 </div></div>
 
 <div id="game4_intro" class="screen"><div class="container">
@@ -280,25 +280,25 @@
     <button class="btn" id="btnCCTP3" style="display:none" onclick="startBuilder(3,true)">Rédiger le cahier des charges</button>
     <button class="btn secondary" onclick="goTo('domain_production')">⬅ Retour</button>
   </div>
+</div></div>
+
 
 <div id="game7" class="screen"><div class="container">
   <h2>LESATI — Jeu C (Smart Grid)</h2>
   <div class="map">
     <div class="location" onclick="openModal('Direction',7)"><img src="https://cdn-icons-png.flaticon.com/512/219/219986.png" alt="">Direction</div>
     <div class="location" onclick="openModal('Habitants',7)"><img src="https://cdn-icons-png.flaticon.com/512/1484/1484825.png" alt="">Habitants</div>
-    <div class="location" onclick="openModal('Contract Manager',7)"><img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="">Contract Manager</div>
+    <div class="location" onclick="openModal('Contract Manager',7)"><img src="https://cdn-icons-png.flaticon.com/512/847/847969.png" alt="">Contract Manager</div>
     <div class="location" onclick="openModal('Maintenance',7)"><img src="https://cdn-icons-png.flaticon.com/512/1995/1995525.png" alt="">Maintenance</div>
     <div class="location" onclick="openModal('Juriste',7)"><img src="https://cdn-icons-png.flaticon.com/512/2569/2569069.png" alt="">Juriste</div>
-    <div class="location" onclick="openModal('Chef d\'équipe',7)"><img src="https://cdn-icons-png.flaticon.com/512/847/847969.png" alt="">Chef d’équipe</div>
-    <div class="location" onclick="openModal('Sécurité',7)"><img src="https://cdn-icons-png.flaticon.com/512/1535/1535791.png" alt="">Sécurité</div>
+    <div class="location" onclick="openModal('Chef d\u2019équipe',7)"><img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="">Chef d’équipe</div>
+    <div class="location" onclick="openModal('Sécurité',7)"><img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="">Sécurité</div>
   </div>
   <div class="info-log" id="infoLog7"></div>
   <div style="margin-top:10px;display:flex;gap:.5rem;flex-wrap:wrap">
     <button class="btn" id="btnCCTP7" style="display:none" onclick="startBuilder(7,true)">Rédiger le cahier des charges</button>
     <button class="btn secondary" onclick="goTo('domain_production')">⬅ Retour</button>
   </div>
-</div></div>
-
 </div></div>
 
 <div id="game4" class="screen"><div class="container">
@@ -550,67 +550,85 @@ L’entreprise assurera :
 - Fonctionnement optimal des véhicules malgré les contraintes territoriales.`,
     image:"images/responsable_environnement.png" 
   }
+};
+
 
 const data7={
-  'Direction':{ text:`Afin d’atteindre l’objectif d’autonomie énergétique d’ici 2030, LESATI développe avec ses partenaires (collectivités, industriels, start-up,…) des projets « smart grid » avec pour objectif de :
-• Renforcer les énergies renouvelables locales ;
-• Développer des systèmes de stockage de l’électricité ;
-• Instaurer des plateformes de pilotage intelligent de l’offre et de la demande en énergie ;
-• Limiter la dépendance aux énergies fossiles
-
-LESATI s’occupe de 6 nouvelles centrales de production dites hybrides combinant photovoltaïque avec stockage d’énergie.`, image:"images/DIRECTION_3.jpeg" },
-
-  'Habitants':{ text:`Situées dans la forêt tropicale humide du sud ouest de la Guyane, à la frontière du Suriname, les communes de l’intérieur se caractérisent par leur étendue et leur enclavement. Historiquement, certains hameaux reculés de ces communes, appelés écarts, accessibles uniquement en pirogue, n’avaient pas un accès permanent à l’éléctricité.`, image:"images/HABITANTS_3.jpeg" },
-
-  'Contract Manager':{ text:`Il faudra prendre en compte les difficultés rencontrées lors du précédent marché :
-- Manque de points d’eau à proximité des installations
-- Difficultés d’accès à certains sites avec le transport aérien 
-- Non-respect contractuel du précédent Titulaire concernant la supervision 
-- Maintenance du contrôle-commande : pilotage automatique de la centrale
-
+  'Direction':{ 
+    text:`Afin d’atteindre l’objectif d’autonomie énergétique d’ici 2030, LESATI développe avec ses partenaires (collectivités, industriels, start-up,…) des projets « smart grid » avec pour objectif de :
+•	Renforcer les énergies renouvelables locales ;
+•	Développer des systèmes de stockage de l’électricité ;
+•	Instaurer des plateformes de pilotage intelligent de l’offre et de la demande en énergie ;
+•	Limiter la dépendance aux énergies fossiles
+LESATI s’occupe de 6 nouvelles centrales de production dites hybrides combinant photovoltaïque avec stockage d’énergie.`,
+    image:"images/DIRECTION_3.jpeg"
+  },
+  'Habitants':{
+    text:`Situées dans la forêt tropicale humide du sud ouest de la Guyane, à la frontière du Suriname, les communes de l’intérieur se caractérisent par leur étendue et leur enclavement. Historiquement, certains hameaux reculés de ces communes, appelés écarts, accessibles uniquement en pirogue, n’avaient pas un accès permanent à l’éléctricité.`,
+    image:"images/HABITANTS_3.jpeg"
+  },
+  'Contract Manager':{
+    text:`Il faudra prendre en compte les difficultés rencontrées lors du précédent marché :
+-	Manque de points d’eau à proximité des installations
+-	Difficultés d’accès à certains sites avec le transport aérien 
+-	Non-respect contractuel du précédent Titulaire concernant la supervision 
+-	Maintenance du contrôle-commande : pilotage automatique de la centrale
 Pour faciliter le contrôle du résultat, le Titulaire produira les documents suivants : 
-- Les notices techniques des matériels
-- La mise à jour du registre de maintenance propre à chaque matériel (une fois par an)
-- Les plans et schémas à jou après travaux de modification dans un délai ne pouvant excéder un mois. 
-- Les plannings de travaux mis à jour tous les trimestres.`, image:"images/CONTRACT_MANAGER_3.jpeg" },
-
-  'Maintenance':{ text:`Les prestations comprendront la maintenance préventive, la maintenance corrective, les interventions de dépannage en urgence, la supervision (suivi des alarmes), le suivi énergétique pour l’optimisation de la performance énergétique des centrales photovoltaïques avec stockage. Le marché intègre également le remplacement des batteries de stockage.
+-	Les notices techniques des matériels
+-	La mise à jour du registre de maintenance propre à chaque matériel (une fois par an)
+-	Les plans et schémas à jou après travaux de modification dans un délai ne pouvant excéder un mois. 
+-	Les plannings de travaux mis à jour tous les trimestres.`,
+    image:"images/CONTRACT_MANAGER_3.jpeg"
+  },
+  'Maintenance':{
+    text:`Les prestations comprendront la maintenance préventive, la maintenance corrective, les interventions de dépannage en urgence, la supervision (suivi des alarmes), le suivi énergétique pour l’optimisation de la performance énergétique des centrales photovoltaïques avec stockage. Le marché intègre également le remplacement des batteries de stockage
 
 Les centrales hybrides comprennent les éléments suivants :
- Le sous-ensemble photovoltaïque (panneaux solaires, elements de structure, coffrets de protections
- Le sous-ensemble conversion d’énergie (régulateurs de charge, onduleurs, armoires électriques)   
- Le sous-ensemble de stockage de l’énergie : (batteries, bacs de rétention, coffrets de protection)
- Les équipements du monitoring et de pilotage (pour la supervision) :  automates, capteurs, PC
- Le circuit de mise à la terre générale 
- Les circuits électriques : câbles, chemins de câbles, dalles
- L’installation électrique intérieure du bâtiment : câblage, petits appareillages, contrôle d’accès anti-intrusion…`, image:"images/MAINTENANCE_3.jpeg" },
+	Le sous-ensemble photovoltaïque (panneaux solaires, elements de structure, coffrets de protections
 
-  'Juriste':{ text:`Il faut impérativment penser au stock de pièces de rechange en cas de panne. Ce stock de pièces (compte tenu des durées d’approvisionnement) nous garantira le respect des délais de maintenance curative. Le futur titulaire devra répondre aux exigences techniques d’équipements et de pièces identiques aux équipements d’origine.
+	Le sous-ensemble conversion d’énergie (régulateurs de charge, onduleurs, armoires électriques)   
 
+	Le sous-ensemble de stockage de l’énergie : (batteries, bacs de rétention, coffrets de protection)
+
+	Les équipements du monitoring et de pilotage (pour la supervision) :  automates, capteurs, PC
+
+	Le circuit de mise à la terre générale 
+
+	Les circuits électriques : câbles, chemins de câbles, dalles
+
+	L’installation électrique intérieure du bâtiment : câblage, petits appareillages, contrôle d’accès anti-intrusion…`,
+    image:"images/MAINTENANCE_3.jpeg"
+  },
+  'Juriste':{
+    text:`Il faut impérativment penser au stock de pièces de rechange en cas de panne. Ce stock de pièces (compte tenu des durées d’approvisionnement) nous garantira le respect des délais de maintenance curative. Le futur titulaire devra répondre aux exigences techniques d’équipements et de pièces identiques aux équipements d’origine.
 Les interventions se dérouleront dans le respect des dispositions légales sur le temps de travail journalier et hebdomadaire. 
-Les sites sont accessibles principalement par voie fluviale. Les saisons doivent être prises en compte pour l’accessibilité des centrales.`, image:"images/JURISTE_3.jpeg" },
+Les sites sont accessibles principalement par voie fluviale. Les saisons doivent être prises en compte pour l’accessibilité des centrales.`,
+    image:"images/JURISTE_3.jpeg"
+  },
+  'Chef d\u2019équipe':{
+    text:`On distingue deux niveaux de maintenance : 
+•	Maintenance préventive et systématique sur site, exécutée à des intervalles régulières. La maintenance préventive est destinée à réduire la probabilité de défaillance ou de dégradation du fonctionnement des installations. 
 
-  'Chef d\'équipe':{ text:`On distingue deux niveaux de maintenance : 
-• Maintenance préventive et systématique sur site, exécutée à des intervalles régulières. La maintenance préventive est destinée à réduire la probabilité de défaillance ou de dégradation du fonctionnement des installations. 
+•	Maintenance curative (dépannage) faisant suite à la survenance de pannes critiques, comme par exemple, un arrêt complet de la central. Elle est exécutée à la demande de LESATI, au cas par cas après analyse de la situation.
 
-• Maintenance curative (dépannage) faisant suite à la survenance de pannes critiques, comme par exemple, un arrêt complet de la central. Elle est exécutée à la demande de LESATI, au cas par cas après analyse de la situation.
+Comme tout système de production d’énergie, les systèmes photovoltaïques doivent être entretenus régulièrement.  Le Titulaire s’engage à respecter les consignes d’exploitation, d’entretien et de maintenance des divers équipements et matériels.
 
-Comme tout système de production d’énergie, les systèmes photovoltaïques doivent être entretenus régulièrement. Le Titulaire s’engage à respecter les consignes d’exploitation, d’entretien et de maintenance des divers équipements et matériels.
-
-Des visites systématiques sont donc effectuées suivant un planning établi selon le plan de maintenance général de la centrale. La périodicité des taches à réaliser respecte les préconisations des constructeurs.`, image:"images/CHEF_EQUIPE_3.jpeg" },
-
-  'Sécurité':{ text:`Pour son intervention, le Titulaire devra : 
-- Mettre en place les protections nécessaires pour limiter l’impact environnemental. 
-- Prévoir les moyens de manutention et de levage. Aucun équipement ne pourra lui être mis à disposition. 
+Des visites systématiques sont donc effectuées suivant un planning établi selon le plan de maintenance général de la centrale. La périodicité des taches à réaliser respecte les préconisations des constructeurs.`,
+    image:"images/CHEF_EQUIPE_3.jpeg"
+  },
+  'Sécurité':{
+    text:`Pour son intervention, le Titulaire devra : 
+-	Mettre en place les protections nécessaires pour limiter l’impact environnemental. 
+-	Prévoir les moyens de manutention et de levage. Aucun équipement ne pourra lui être mis à disposition. 
 
 Cette prestation est soumise aux arrêtés et décrets concernant la sécurité et aux prescriptions relatives à la prévention, l'hygiène, l’environnement et la sécurité en vigueur à LESATI. Un plan de prévention sera élaboré avec chaque Titulaire conformément au décret du 20/02/92. 
-
 Lors de ses interventions, le ou les Titulaire(s) pourront être soumis : 
-- Au bruit (le groupe électrogène pourra être en marche lors des visites de maintenance). 
-- À la chaleur  
-- À une exposition directe au soleil 
-- À la présence de nuisibles ou des insectes.`, image:"images/SECURITE_3.jpeg" }
-};
+-	Au bruit (le groupe électrogène pourra être en marche lors des visites de maintenance). 
+-	À la chaleur  
+-	À une exposition directe au soleil 
+-	À la présence de nuisibles ou des insectes.`,
+    image:"images/SECURITE_3.jpeg"
+  }
 };
 
 let currentGame=0,currentKey='';const sets={1:new Set(),2:new Set(),3:new Set(),4:new Set(),5:new Set(),6:new Set(),7:new Set()};
@@ -876,66 +894,6 @@ case 4: return [
         "Enregistrement administratif conforme"
       ]}
     ];
-
-    case 7: return [
-      {id:"objet",label:"Objet",help:helpByStep.objet,options:[
-        "Renforcer les énergies renouvelables",
-        "Achat et maintenance des centrales de production thermique",
-        "Maintenance préventive et corrective des centrales « Smart Grid »",
-        "Supervision et assistance dans le pilotage des centrales"
-      ]},
-      {id:"contexte",label:"Contexte",help:helpByStep.contexte,options:[
-        "Développement de projets smartgrid pour assurer l’autonomie énergétique d’ici 2030",
-        "Les communes de l’intérieur se caractèrisent pas leur étendue et leur enclavement",
-        "Accès partiel à l’éléctricité dans les écarts",
-        "Maintenance du contrôle commande",
-        "Limiter la dépendance aux énergies fossiles"
-      ]},
-      {id:"definition",label:"Définition de la prestation",help:helpByStep.definition,options:[
-        "Maintenance préventive et curative",
-        "Dépannages en urgence",
-        "Supervision et détection des incidents à distance",
-        "Remplacement des batteries de stockage",
-        "Frais logistiques comprenant transport, hebergement et restauration"
-      ]},
-      {id:"limites_titulaire",label:"Limites à la charge du titulaire",help:helpByStep.limites_titulaire,options:[
-        "Fourniture d’un stock de pièce de rechange",
-        "Garantie technique et prise en charge remplacement/réparation en cas de défaut",
-        "Moyens de manutention et de levage",
-        "Mise à jour du registre de maintenance pour chaque équipement"
-      ]},
-      {id:"limites_entreprise",label:"Limites à la charge de l’entreprise",help:helpByStep.limites_entreprise,options:[
-        "Mise en place d’un local de stockage et d’un point d’eau",
-        "Gestion des accès sur site",
-        "Gestion de la distribution d’énergie aux clients finaux",
-        "Recyclage des déchets"
-      ]},
-      {id:"qualite",label:"Qualité",help:helpByStep.qualite,options:[
-        "Délivrance des notices techniques des équipements",
-        "Aucune exigence de qualité spécifique",
-        "Application des arrêtés et décrets en vigueur concernant la prévention, l’hygiène, la sécurité et l’environnement"
-      ]},
-      {id:"conditions",label:"Conditions d’intervention",help:helpByStep.conditions,options:[
-        "Exposition bruit, chaleur, nuisibles",
-        "Les sites sont principalent accessibles par voie fluviale",
-        "Interventions sur toute la Guyane",
-        "Moyens matériels pour limiter l’impact environnemental"
-      ]},
-      {id:"resultats",label:"Résultats attendus",help:helpByStep.resultats,options:[
-        "Réalisation de 4 maintenances annuelles avec transmission systématique d’état des lieux et de proposition pour limiter les défaillances",
-        "Maintenir un taux de bon fonctionnement annuel des équipements à 95% tout au long de l’année",
-        "Mise en place d’un système de supervision permettant de détecter les défauts à distance avant de planifier les déplacements sur site et assurer la mise à jour annuelle de l’outil",
-        "Port des équipements individuels de protection"
-      ]},
-      {id:"reception_ref",label:"Réception",help:helpByStep.reception_ref,options:[
-        "Nature et resultats des test effectués",
-        "Remise du rapport provisioire suite à la supervision",
-        "Remise du rapport de fin d’intervention",
-        "Acceptation automatique sans contrôle",
-        "Activation de la garantie technique"
-      ]}
-    ];
-
     case 3: return [
       {id:"objet",label:"Objet",help:helpByStep.objet,options:[
         "Fourniture d\u2019\u00e9quipements destin\u00e9s \u00e0 l\u2019exploitation et \u00e0 la maintenance d\u2019une centrale hydraulique",
@@ -1041,19 +999,80 @@ case 4: return [
         "R\u00e9f\u00e9rences: D\u00e9cret 92-158 & C. travail (R.237-1 \u00e0 R.237-28), normes d\u2019hygi\u00e8ne"
       ]}
     ];
+
+    case 7: return [
+      {id:"objet",label:"Objet",help:helpByStep.objet,options:[
+        "Renforcer les énergies renouvelables",
+        "Achat et maintenance des centrales de production thermique",
+        "Maintenance préventive et corrective des centrales « Smart Grid »",
+        "Supervision et assistance dans le pilotage des centrales"
+      ]},
+      {id:"contexte",label:"Contexte",help:helpByStep.contexte,options:[
+        "Développement de projets smartgrid pour assurer l’autonomie énergétique d’ici 2030",
+        "Les communes de l’intérieur se caractèrisent par leur étendue et leur enclavement",
+        "Accès partiel à l’éléctricité dans les écarts",
+        "Maintenance du contrôle commande",
+        "Limiter la dépendance aux énergies fossiles"
+      ]},
+      {id:"definition",label:"Définition de la prestation",help:helpByStep.definition,options:[
+        "Maintenance préventive et curative",
+        "Dépannages en urgence",
+        "Supervision et détection des incidents à distance",
+        "Remplacement des batteries de stockage",
+        "Frais logistiques comprenant transport, hebergement et restauration"
+      ]},
+      {id:"limites_titulaire",label:"Limites à la charge du titulaire",help:helpByStep.limites_titulaire,options:[
+        "Fourniture d’un stock de pièce de rechange",
+        "Garantie technique et prise en charge remplacement/réparation en cas de défaut",
+        "Moyens de manutention et de levage",
+        "Mise à jour du registre de maintenance pour chaque équipement"
+      ]},
+      {id:"limites_entreprise",label:"Limites à la charge de l’entreprise",help:helpByStep.limites_entreprise,options:[
+        "Mise en place d’un local de stockage et d’un point d’eau",
+        "Gestion des accès sur site",
+        "Gestion de la distribution d’énergie aux clients finaux",
+        "Recyclage des déchets"
+      ]},
+      {id:"qualite",label:"Qualité",help:helpByStep.qualite,options:[
+        "Délivrance des notices techniques des équipements",
+        "Aucune exigence de qualité spécifique",
+        "Application des arrêtés et décrets en vigueur concernant la prévention, l’hygiène, la sécurité et l’environnement"
+      ]},
+      {id:"conditions",label:"Conditions d’intervention",help:helpByStep.conditions,options:[
+        "Exposition bruit, chaleur, nuisibles",
+        "Les sites sont principalent accessibles par voie fluviale",
+        "Interventions sur toute la Guyane",
+        "Moyens matériels pour limiter l’impact environnemental"
+      ]},
+      {id:"resultats",label:"Résultats attendus",help:helpByStep.resultats,options:[
+        "Réalisation de 4 maintenances annuelles avec transmission systématique d’état des lieux et de propostion pour limiter les défaillances",
+        "Maintenir un taux de bon fonctionnement annuel des équipements à 95% tout au long de l’année",
+        "Mise en place d’un système de supervision permettant de détecter les défauts à distance avant de planifier les déplacements sur site et assurer la mise à jour annuelle de l’outil",
+        "Port des équipements individuels de protection"
+      ]},
+      {id:"reception_ref",label:"Réception",help:helpByStep.reception_ref,options:[
+        "Nature et resultats des test effectués",
+        "Remise du rapport provisioire suite à la supervision",
+        "Remise du rapport de fin d’intervention",
+        "Acceptation automatique sans contrôle",
+        "Activation de la garantie technique"
+      ]}
+    ];
+
     default: return [];
   }
 }
 
 // Clés de réponses — indices OK
 const answerKeys = {
-  7:{objet:[2], contexte:[0,1,2,4], definition:[0,1,2,3], limites_titulaire:[0,1,2,3], limites_entreprise:[0,1,3], qualite:[0,2], conditions:[0,1,3], resultats:[0,2], reception_ref:[0,1,2]},
   2:{objet:[0], contexte:[0,1,2], definition:[0,2], limites_titulaire:[0,2,3], limites_entreprise:[0,1,2], qualite:[0,3], conditions:[0,1,3], resultats:[0,3], reception_ref:[0,1]},
   4:{objet:[0,1,2], contexte:[0,1,2], definition:[0,1,2,3,5,6,7], limites_titulaire:[0,1,2], limites_entreprise:[0,1], qualite:[0,1,2], conditions:[0,1,2,3], resultats:[0,1,2], reception_ref:[0,1,2]},
   5:{objet:[0], contexte:[0,1,2], definition:[0,1,2], limites_titulaire:[0,1,2], limites_entreprise:[0,1,2], qualite:[0,1,2], conditions:[0,1,2], resultats:[0,1,2], reception_ref:[0,1,2]},
   6:{objet:[0], contexte:[0,3], definition:[0,1,2], limites_titulaire:[0,1,2], limites_entreprise:[0,1,2], qualite:[0,1,3], conditions:[0,1], resultats:[0,1,2], reception_ref:[0,1,3]},
   3:{objet:[0], contexte:[0,1,2], definition:[0,1], limites_titulaire:[0,1,2], limites_entreprise:[0], qualite:[0,1,2,3], conditions:[0,2,3], resultats:[0,1], reception_ref:[0,1,3]},
   1:{objet:[0], contexte:[0,1], definition:[0,1,2,3], limites_titulaire:[0,1], limites_entreprise:[0,1,2], qualite:[0,1,2], conditions:[0,1,2,3], resultats:[0,1,2], reception_ref:[0,1,2]},
+  7:{objet:[2], contexte:[0,1,2,4], definition:[0,1,2,3], limites_titulaire:[0,1,2,3], limites_entreprise:[0,1,3], qualite:[0,2], conditions:[0,1,3], resultats:[0,2], reception_ref:[0,1,2]},
+
 };
 
 function startBuilder(gameId, reset){
