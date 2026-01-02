@@ -204,10 +204,10 @@
 
 
 <div id="game7_intro" class="screen"><div class="container">
+  <img class="hero" src="images/ACCUEIL_3.jpeg" alt="">
   <h2>LESATI — Jeu C (Smart Grid)</h2>
   <p>Marie vous accueille pour explorer les services de la centrale Smart Grid, puis rédiger le cahier des charges.</p>
   <button class="btn" onclick="goTo('game7')">Démarrer</button>
-  <img class="hero" src="images/ACCUEIL_3.jpeg" alt="Accueil Smart Grid (Marie)" style="max-height:50vh;margin-top:12px">
   <button class="btn secondary" onclick="goTo('domain_production')">⬅ Retour</button>
 </div></div>
 
@@ -1082,7 +1082,7 @@ function startBuilder(gameId, reset){
   const container=document.getElementById('builderContainer');
   if(reset){ container.innerHTML=''; }
 
-  const titles={1:"TILESA — Jeu A",2:"LESATI — Jeu A",3:"LESATI — Jeu B",4:"COPAYA — Jeu A",5:"COPAYA — Jeu B",6:"TILESA — Jeu B"};
+  const titles={1:"TILESA — Jeu A",2:"LESATI — Jeu A",3:"LESATI — Jeu B",4:"COPAYA — Jeu A",5:"COPAYA — Jeu B",6:"TILESA — Jeu B",7:"LESATI — Jeu C"};
   container.innerHTML = `<h2>${titles[gameId]} — Assistant (QCM)</h2>
     <div class="small">Rédiger votre CCTP avec votre assistant.</div>
     <div class="progress"><span id="builderProgress"></span></div>
@@ -1161,7 +1161,7 @@ function levelBadge(pct){
 
 function finishBuilder(gameId, steps){
 
-  let html='<h2>Résumé — '+({1:"TILESA — Jeu A",2:"LESATI — Jeu A",3:"LESATI — Jeu B",4:"COPAYA — Jeu A",5:"COPAYA — Jeu B",6:"TILESA — Jeu B"}[gameId])+'</h2>';
+  let html='<h2>Résumé - '+({1:"TILESA — Jeu A",2:"LESATI — Jeu A",3:"LESATI — Jeu B",4:"COPAYA — Jeu A",5:"COPAYA — Jeu B",6:"TILESA — Jeu B",7:"LESATI — Jeu C"}[gameId])+'</h2>';
   // Récap simple des choix
   steps.forEach((s,i)=>{
     const picked=[...(window._builderSelections[s.id]||[])].sort((a,b)=>a-b);
