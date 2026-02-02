@@ -839,11 +839,10 @@ function stepsFor(gameId){
         "Approvisionnement d\u2019outillage pour l\u2019atelier de production"
       ]},
       {id:"contexte",label:"Contexte",help:helpByStep.contexte,options:[
-        "Besoin d’un accès rapide et homogène à l’information interne (RH, procédures, outils)",
-        "Sollicitations répétitives des équipes support (RH/DSI)",
-        "Recherche d’une assistance 24h/24 pour les équipes terrain",
-        "Objectif principal : remplacer entièrement les équipes RH",
-        "Nécessité d’un canal de remontée vers un humain en cas de question complexe"
+        "LESATI assure la production, la distribution et la commercialisation \u00e0 Saint Georges (\u2248800 clients)",
+        "Priorit\u00e9 au service public et \u00e0 la proximit\u00e9 client",
+        "Utilisation pr\u00e9vue en continu en milieu humide et chaud",
+        "Projet destin\u00e9 sur un site prot\u00e9g\u00e9"
       ]},
       {id:"definition",label:"Définition de la prestation",help:helpByStep.definition,options:[
         "Fourniture de 3 groupes diesel 800 kVA avec notices et documents d\u2019utilisation",
@@ -852,11 +851,10 @@ function stepsFor(gameId){
         "Fourniture d\u2019un automate de gestion"
       ]},
       {id:"limites_titulaire",label:"Limites à la charge du titulaire",help:helpByStep.limites_titulaire,options:[
-        "Réalisation des développements, tests et corrections",
-        "Fourniture de la documentation (utilisateur + administrateur) et formation",
-        "Mise en œuvre des mesures de cybersécurité (chiffrement, contrôle d’accès, tests OWASP)",
-        "Support et maintenance pendant la durée du marché",
-        "Fourniture des informations RH officielles à jour"
+        "Livraison des groupes \u00e0 Saint Georges",
+        "Garantie technique et prise en charge remplacement/r\u00e9paration en cas de d\u00e9faut",
+        "Manutention",
+        "Essais et mise en service"
       ]},
       {id:"limites_entreprise",label:"Limites à la charge de l’entreprise",help:helpByStep.limites_entreprise,options:[
         "Acc\u00e8s point d\u2019eau",
@@ -871,15 +869,16 @@ function stepsFor(gameId){
         "Mat\u00e9riel adapt\u00e9 aux contraintes climatiques (humidit\u00e9/temp\u00e9rature)"
       ]},
       {id:"conditions",label:"Conditions d’intervention",help:helpByStep.conditions,options:[
-        "Ateliers de cadrage (2 fois par an) avec le service RH",
-        "Phases de tests avant mise en production",
-        "Respect des règles SSI et procédures internes",
-        "Mise en service sans validation préalable"
+        "Intervention pr\u00e9vue \u00e0 Saint Georges (jours ouvr\u00e9s)",
+        "Prise de rendez-vous J-30 avec le responsable du site",
+        "Interventions sur toute la Guyane",
+        "Humidit\u00e9 jusqu\u2019\u00e0 90\u00b0"
       ]},
       {id:"resultats",label:"Résultats attendus",help:helpByStep.resultats,options:[
-        "Amélioration des indicateurs : taux de satisfaction, taux de résolution et temps de réponse",
-        "Un chatbot opérationnel (24/7) répondant aux questions fréquentes et orientant vers un humain si nécessaire",
-        "Remplacement total des échanges humains"
+        "Atteinte de la puissance maximale 15 minutes apr\u00e8s le d\u00e9marrage",
+        "Mat\u00e9riel de bonne qualit\u00e9",
+        "Diminution de la qualit\u00e9 de service",
+        "Autonomie de 24 heures"
       ]},
       {id:"reception_ref",label:"Réception",help:helpByStep.reception_ref,options:[
         "Nature et resultats des test effectu\u00e9s",
@@ -1334,7 +1333,7 @@ case 4: return [
         "Mise en service sans validation préalable"
       ]},
       {id:"resultats",label:"Résultats attendus",help:helpByStep.resultats,options:[
-        "Amélioration des indicateurs taux de satisfaction, taux de résolution et temps de réponse",
+        "Amélioration des indicateurs : taux de satisfaction, taux de résolution et temps de réponse",
         "Un chatbot opérationnel (24/7) répondant aux questions fréquentes et orientant vers un humain si nécessaire",
         "Remplacement total des échanges humains"
       ]},
@@ -1362,7 +1361,9 @@ const answerKeys = {
   7:{objet:[2], contexte:[0,1,2,4], definition:[0,1,2,3], limites_titulaire:[0,1,2,3], limites_entreprise:[0,1,3], qualite:[0,2], conditions:[0,1,3], resultats:[0,2], reception_ref:[0,1,2]},
 
   8:{objet:[0], contexte:[0,1,2], definition:[0,1,2], limites_titulaire:[0,1,2], limites_entreprise:[0,1,2], qualite:[0,1,2], conditions:[0,1], resultats:[0,1,2], reception_ref:[0,1]},
+
   9:{objet:[0], contexte:[0,1,2,4], definition:[0,1,2,3], limites_titulaire:[0,1,2,3], limites_entreprise:[0,1,2], qualite:[0,1,2], conditions:[0,1,2], resultats:[0,1], reception_ref:[0,1,2]}
+
 };
 
 function startBuilder(gameId, reset){
